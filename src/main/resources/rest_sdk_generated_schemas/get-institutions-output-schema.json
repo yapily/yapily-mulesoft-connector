@@ -1,0 +1,523 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "$ref": "#/definitions/ApiListResponseOfInstitution",
+  "definitions": {
+    "RawRequest": {
+      "additionalProperties": true,
+      "type": "object",
+      "properties": {
+        "headers": {
+          "additionalProperties": {"type": "string"},
+          "type": "object"
+        },
+        "bodyParameters": {
+          "additionalProperties": {"type": "string"},
+          "type": "object"
+        },
+        "method": {"type": "string"},
+        "requestInstant": {
+          "format": "date-time",
+          "type": "string"
+        },
+        "startedAt": {
+          "format": "date-time",
+          "type": "string"
+        },
+        "startTime": {
+          "format": "date-time",
+          "type": "string"
+        },
+        "body": {
+          "additionalProperties": true,
+          "type": "object"
+        },
+        "url": {"type": "string"}
+      }
+    },
+    "ResponseForwardedData": {
+      "additionalProperties": true,
+      "type": "object",
+      "properties": {
+        "headers": {
+          "additionalProperties": {"type": "string"},
+          "type": "object"
+        },
+        "url": {"type": "string"}
+      }
+    },
+    "ApiCall": {
+      "additionalProperties": true,
+      "type": "object"
+    },
+    "CredentialsType": {
+      "description": "The type of credentials required to register the `Institution`",
+      "type": "string",
+      "enum": [
+        "OAUTH1",
+        "OAUTH2",
+        "OAUTH2_NOSECRET",
+        "OAUTH2_SIGNATURE",
+        "OPEN_BANKING_UK_MANUAL",
+        "OPEN_BANKING_UK_AUTO",
+        "OPEN_BANKING_IBM",
+        "OPEN_BANKING_AUTO",
+        "OPEN_BANKING_AUTO_EMAIL",
+        "OPEN_BANKING_MANUAL",
+        "OPEN_BANKING_WITH_TPP_ID_AND_SECRET",
+        "API_KEY",
+        "OPEN_BANKING_NO_KEY",
+        "OPEN_BANKING_NO_TRANSPORT",
+        "TOKEN_IO"
+      ]
+    },
+    "ApiListResponseOfInstitution": {
+      "x-amf-examples": {"Example Response": {
+        "description": "Example Response",
+        "value": {
+          "data": [{
+            "features": [
+              "ACCOUNT_BALANCES",
+              "INITIATE_BULK_PAYMENT",
+              "ACCOUNT_BENEFICIARIES",
+              "ACCOUNT_SCHEDULED_PAYMENTS",
+              "EXISTING_PAYMENTS_DETAILS",
+              "ACCOUNT_TRANSACTIONS",
+              "ACCOUNT_STATEMENTS",
+              "INITIATE_DOMESTIC_PERIODIC_PAYMENT",
+              "INITIATE_ACCOUNT_REQUEST",
+              "IDENTITY",
+              "ACCOUNT_PERIODIC_PAYMENTS",
+              "ACCOUNT_REQUEST_DETAILS",
+              "ACCOUNT_TRANSACTIONS_WITH_MERCHANT",
+              "INITIATE_SINGLE_PAYMENT_SORTCODE",
+              "INITIATE_DOMESTIC_SINGLE_PAYMENT",
+              "INITIATE_DOMESTIC_SCHEDULED_PAYMENT",
+              "ACCOUNT_STATEMENT",
+              "CREATE_DOMESTIC_SINGLE_PAYMENT",
+              "ACCOUNT_STATEMENT_FILE",
+              "CREATE_DOMESTIC_PERIODIC_PAYMENT",
+              "CREATE_DOMESTIC_SCHEDULED_PAYMENT",
+              "EXISTING_PAYMENT_INITIATION_DETAILS",
+              "INITIATE_INTERNATIONAL_SINGLE_PAYMENT",
+              "CREATE_SINGLE_PAYMENT_SORTCODE",
+              "CREATE_BULK_PAYMENT",
+              "CREATE_INTERNATIONAL_SINGLE_PAYMENT",
+              "ACCOUNT",
+              "PERIODIC_PAYMENT_FREQUENCY_EXTENDED",
+              "ACCOUNT_DIRECT_DEBITS",
+              "ACCOUNTS"
+            ],
+            "environmentType": "SANDBOX",
+            "name": "Modelo Sandbox",
+            "fullName": "Modelo Sandbox",
+            "credentialsType": "OPEN_BANKING_UK_AUTO",
+            "id": "modelo-sandbox",
+            "countries": [{
+              "displayName": "United Kingdom",
+              "countryCode2": "GB"
+            }],
+            "media": [
+              {
+                "source": "https://images.yapily.com/image/ce2bfdbf-1ae2-4919-ab7b-e8b3d5e93b36?size=0",
+                "type": "icon"
+              },
+              {
+                "source": "https://images.yapily.com/image/ca502f24-d6df-4785-b4b8-1034b100af77?size=0",
+                "type": "logo"
+              }
+            ]
+          }],
+          "meta": {
+            "tracingId": "1304b771e4e34f67b39977bde6b1a8e2",
+            "count": 1
+          }
+        }
+      }},
+      "additionalProperties": true,
+      "type": "object",
+      "properties": {
+        "tracingId": {"type": "string"},
+        "data": {
+          "type": "array",
+          "items": {"$ref": "#/definitions/Institution"}
+        },
+        "meta": {"$ref": "#/definitions/ResponseListMeta"},
+        "raw": {
+          "type": "array",
+          "items": {"$ref": "#/definitions/RawResponse"}
+        },
+        "links": {
+          "additionalProperties": {"type": "string"},
+          "type": "object"
+        },
+        "forwardedData": {
+          "type": "array",
+          "items": {"$ref": "#/definitions/ResponseForwardedData"}
+        },
+        "paging": {"$ref": "#/definitions/FilteredClientPayloadListInstitution"}
+      }
+    },
+    "Media": {
+      "description": "Contains links to the logo and the icons for the `Institution`",
+      "additionalProperties": true,
+      "type": "object",
+      "properties": {
+        "source": {"type": "string"},
+        "type": {"type": "string"}
+      }
+    },
+    "MonitoringStatusEnum": {
+      "type": "string",
+      "enum": [
+        "Up",
+        "Down",
+        "Warning",
+        "Unknown",
+        "Expired"
+      ]
+    },
+    "Institution": {
+      "x-amf-examples": {"Example Response": {
+        "description": "Example Response",
+        "value": {
+          "features": [
+            "ACCOUNT_BALANCES",
+            "INITIATE_BULK_PAYMENT",
+            "ACCOUNT_BENEFICIARIES",
+            "ACCOUNT_SCHEDULED_PAYMENTS",
+            "EXISTING_PAYMENTS_DETAILS",
+            "ACCOUNT_TRANSACTIONS",
+            "ACCOUNT_STATEMENTS",
+            "INITIATE_DOMESTIC_PERIODIC_PAYMENT",
+            "INITIATE_ACCOUNT_REQUEST",
+            "IDENTITY",
+            "ACCOUNT_PERIODIC_PAYMENTS",
+            "ACCOUNT_REQUEST_DETAILS",
+            "ACCOUNT_TRANSACTIONS_WITH_MERCHANT",
+            "INITIATE_SINGLE_PAYMENT_SORTCODE",
+            "INITIATE_DOMESTIC_SINGLE_PAYMENT",
+            "INITIATE_DOMESTIC_SCHEDULED_PAYMENT",
+            "ACCOUNT_STATEMENT",
+            "CREATE_DOMESTIC_SINGLE_PAYMENT",
+            "ACCOUNT_STATEMENT_FILE",
+            "CREATE_DOMESTIC_PERIODIC_PAYMENT",
+            "CREATE_DOMESTIC_SCHEDULED_PAYMENT",
+            "EXISTING_PAYMENT_INITIATION_DETAILS",
+            "INITIATE_INTERNATIONAL_SINGLE_PAYMENT",
+            "CREATE_SINGLE_PAYMENT_SORTCODE",
+            "CREATE_BULK_PAYMENT",
+            "CREATE_INTERNATIONAL_SINGLE_PAYMENT",
+            "ACCOUNT",
+            "PERIODIC_PAYMENT_FREQUENCY_EXTENDED",
+            "ACCOUNT_DIRECT_DEBITS",
+            "ACCOUNTS"
+          ],
+          "environmentType": "SANDBOX",
+          "name": "Modelo Sandbox",
+          "fullName": "Modelo Sandbox",
+          "credentialsType": "OPEN_BANKING_UK_AUTO",
+          "id": "modelo-sandbox",
+          "countries": [{
+            "displayName": "United Kingdom",
+            "countryCode2": "GB"
+          }],
+          "media": [
+            {
+              "source": "https://images.yapily.com/image/ce2bfdbf-1ae2-4919-ab7b-e8b3d5e93b36?size=0",
+              "type": "icon"
+            },
+            {
+              "source": "https://images.yapily.com/image/ca502f24-d6df-4785-b4b8-1034b100af77?size=0",
+              "type": "logo"
+            }
+          ]
+        }
+      }},
+      "additionalProperties": true,
+      "type": "object",
+      "properties": {
+        "features": {
+          "uniqueItems": true,
+          "type": "array",
+          "items": {"$ref": "#/definitions/FeatureEnum"}
+        },
+        "environmentType": {"$ref": "#/definitions/EnvironmentType"},
+        "name": {
+          "description": "The friendly name of the `Institution`",
+          "type": "string"
+        },
+        "fullName": {
+          "description": "The full name of the `Institution`",
+          "type": "string"
+        },
+        "credentialsType": {"$ref": "#/definitions/CredentialsType"},
+        "id": {
+          "description": "The Yapily Id for the `Institution`",
+          "type": "string"
+        },
+        "countries": {
+          "uniqueItems": true,
+          "description": "An array of `Country` denoting which regions the `Institution` provides coverage for",
+          "type": "array",
+          "items": {"$ref": "#/definitions/Country"}
+        },
+        "media": {
+          "uniqueItems": true,
+          "description": "Contains links to the logo and the icons for the `Institution`",
+          "type": "array",
+          "items": {"$ref": "#/definitions/Media"}
+        },
+        "monitoring": {
+          "additionalProperties": {
+            "additionalProperties": true,
+            "type": "object",
+            "properties": {
+              "lastTested": {
+                "format": "date-time",
+                "type": "string"
+              },
+              "span": {
+                "format": "iso8601",
+                "type": "string"
+              },
+              "status": {"$ref": "#/definitions/MonitoringStatusEnum"}
+            }
+          },
+          "type": "object"
+        }
+      }
+    },
+    "FilteredClientPayloadListInstitution": {
+      "additionalProperties": true,
+      "type": "object",
+      "properties": {
+        "data": {
+          "type": "array",
+          "items": {"$ref": "#/definitions/Institution"}
+        },
+        "apiCall": {"$ref": "#/definitions/ApiCall"},
+        "totalCount": {
+          "maximum": 9.223372036854776E+18,
+          "type": "integer",
+          "minimum": -9.223372036854776E+18
+        },
+        "nextCursorHash": {"type": "string"},
+        "nextLink": {"type": "string"},
+        "pagingMap": {
+          "additionalProperties": {
+            "additionalProperties": true,
+            "type": "object",
+            "properties": {
+              "cursor": {"type": "string"},
+              "offset": {
+                "maximum": 2147483647,
+                "type": "integer",
+                "minimum": -2147483648
+              },
+              "before": {
+                "format": "date-time",
+                "type": "string"
+              },
+              "limit": {
+                "maximum": 2147483647,
+                "type": "integer",
+                "minimum": -2147483648
+              },
+              "from": {
+                "format": "date-time",
+                "type": "string"
+              },
+              "sort": {"$ref": "#/definitions/SortEnum"}
+            }
+          },
+          "type": "object"
+        }
+      }
+    },
+    "Pagination": {
+      "additionalProperties": true,
+      "type": "object",
+      "properties": {
+        "next": {"$ref": "#/definitions/Next"},
+        "self": {"$ref": "#/definitions/FilterAndSort"},
+        "totalCount": {
+          "maximum": 9.223372036854776E+18,
+          "type": "integer",
+          "minimum": -9.223372036854776E+18
+        }
+      }
+    },
+    "EnvironmentType": {
+      "description": "The environment type. <br><br>See [Institution Configuration](https://docs.yapily.com/guides/applications/institutions/#configuration) for more information",
+      "type": "string",
+      "enum": [
+        "SANDBOX",
+        "MOCK",
+        "LIVE"
+      ]
+    },
+    "FilterAndSort": {
+      "additionalProperties": true,
+      "type": "object",
+      "properties": {
+        "cursor": {"type": "string"},
+        "offset": {
+          "maximum": 2147483647,
+          "type": "integer",
+          "minimum": -2147483648
+        },
+        "before": {
+          "format": "date-time",
+          "type": "string"
+        },
+        "limit": {
+          "maximum": 2147483647,
+          "type": "integer",
+          "minimum": -2147483648
+        },
+        "from": {
+          "format": "date-time",
+          "type": "string"
+        },
+        "sort": {"$ref": "#/definitions/SortEnum"}
+      }
+    },
+    "ResponseListMeta": {
+      "additionalProperties": true,
+      "type": "object",
+      "properties": {
+        "tracingId": {"type": "string"},
+        "pagination": {"$ref": "#/definitions/Pagination"},
+        "count": {
+          "maximum": 2147483647,
+          "type": "integer",
+          "minimum": -2147483648
+        }
+      }
+    },
+    "Next": {
+      "additionalProperties": true,
+      "type": "object",
+      "properties": {
+        "cursor": {"type": "string"},
+        "before": {
+          "format": "date-time",
+          "type": "string"
+        },
+        "limit": {
+          "maximum": 2147483647,
+          "type": "integer",
+          "minimum": -2147483648
+        },
+        "from": {
+          "format": "date-time",
+          "type": "string"
+        }
+      }
+    },
+    "Country": {
+      "description": "An array of `Country` denoting which regions the `Institution` provides coverage for",
+      "additionalProperties": true,
+      "type": "object",
+      "properties": {
+        "displayName": {"type": "string"},
+        "countryCode2": {"type": "string"}
+      }
+    },
+    "FeatureEnum": {
+      "description": "Used to describe what functions are supported by the associated `Institution`.        <br><br>For more information on each feature, see the following links:        <ul>          <li>[Financial Data Features](https://docs.yapily.com/guides/financial-data/features/)<\/li>          <li>[Payments Features](https://docs.yapily.com/guides/payments/features/)<\/li>        <\/ul>",
+      "type": "string",
+      "enum": [
+        "INITIATE_PRE_AUTHORISATION",
+        "INITIATE_PRE_AUTHORISATION_ACCOUNTS",
+        "INITIATE_PRE_AUTHORISATION_PAYMENTS",
+        "INITIATE_ACCOUNT_REQUEST",
+        "INITIATE_EMBEDDED_ACCOUNT_REQUEST",
+        "ACCOUNT_REQUEST_DETAILS",
+        "ACCOUNTS",
+        "ACCOUNT",
+        "ACCOUNT_TRANSACTIONS",
+        "ACCOUNT_STATEMENTS",
+        "ACCOUNT_STATEMENT",
+        "ACCOUNT_STATEMENT_FILE",
+        "ACCOUNT_SCHEDULED_PAYMENTS",
+        "ACCOUNT_DIRECT_DEBITS",
+        "ACCOUNT_PERIODIC_PAYMENTS",
+        "ACCOUNT_TRANSACTIONS_WITH_MERCHANT",
+        "IDENTITY",
+        "ACCOUNTS_WITHOUT_BALANCE",
+        "ACCOUNT_WITHOUT_BALANCE",
+        "ACCOUNT_BALANCES",
+        "INITIATE_SINGLE_PAYMENT_SORTCODE",
+        "EXISTING_PAYMENT_INITIATION_DETAILS",
+        "CREATE_SINGLE_PAYMENT_SORTCODE",
+        "EXISTING_PAYMENTS_DETAILS",
+        "INITIATE_DOMESTIC_SINGLE_PAYMENT",
+        "INITIATE_EMBEDDED_DOMESTIC_SINGLE_PAYMENT",
+        "CREATE_DOMESTIC_SINGLE_PAYMENT",
+        "INITIATE_EMBEDDED_BULK_PAYMENT",
+        "INITIATE_DOMESTIC_SINGLE_INSTANT_PAYMENT",
+        "CREATE_DOMESTIC_SINGLE_INSTANT_PAYMENT",
+        "INITIATE_DOMESTIC_VARIABLE_RECURRING_PAYMENT",
+        "CREATE_DOMESTIC_VARIABLE_RECURRING_PAYMENT",
+        "INITIATE_DOMESTIC_SCHEDULED_PAYMENT",
+        "CREATE_DOMESTIC_SCHEDULED_PAYMENT",
+        "INITIATE_DOMESTIC_PERIODIC_PAYMENT",
+        "CREATE_DOMESTIC_PERIODIC_PAYMENT",
+        "PERIODIC_PAYMENT_FREQUENCY_EXTENDED",
+        "INITIATE_INTERNATIONAL_VARIABLE_RECURRING_PAYMENT",
+        "CREATE_INTERNATIONAL_VARIABLE_RECURRING_PAYMENT",
+        "INITIATE_INTERNATIONAL_SCHEDULED_PAYMENT",
+        "CREATE_INTERNATIONAL_SCHEDULED_PAYMENT",
+        "INITIATE_INTERNATIONAL_PERIODIC_PAYMENT",
+        "CREATE_INTERNATIONAL_PERIODIC_PAYMENT",
+        "INITIATE_INTERNATIONAL_SINGLE_PAYMENT",
+        "CREATE_INTERNATIONAL_SINGLE_PAYMENT",
+        "INITIATE_BULK_PAYMENT",
+        "CREATE_BULK_PAYMENT",
+        "TRANSFER",
+        "OPEN_DATA_PERSONAL_CURRENT_ACCOUNTS",
+        "OPEN_DATA_ATMS",
+        "READ_DOMESTIC_SINGLE_REFUND",
+        "READ_DOMESTIC_SCHEDULED_REFUND",
+        "READ_DOMESTIC_PERIODIC_PAYMENT_REFUND",
+        "READ_INTERNATIONAL_SINGLE_REFUND",
+        "READ_INTERNATIONAL_SCHEDULED_REFUND",
+        "ACCOUNT_BENEFICIARIES",
+        "INITIATE_ONETIME_PRE_AUTHORISATION_PAYMENTS"
+      ]
+    },
+    "SortEnum": {
+      "description": "Valid options for the sort parameter",
+      "type": "string",
+      "enum": [
+        "date",
+        "-date"
+      ]
+    },
+    "RawResponse": {
+      "additionalProperties": true,
+      "type": "object",
+      "properties": {
+        "duration": {
+          "format": "iso8601",
+          "type": "string"
+        },
+        "result": {
+          "additionalProperties": true,
+          "type": "object"
+        },
+        "request": {"$ref": "#/definitions/RawRequest"},
+        "headers": {
+          "additionalProperties": {"type": "string"},
+          "type": "object"
+        },
+        "resultCode": {
+          "maximum": 2147483647,
+          "type": "integer",
+          "minimum": -2147483648
+        }
+      }
+    }
+  }
+}

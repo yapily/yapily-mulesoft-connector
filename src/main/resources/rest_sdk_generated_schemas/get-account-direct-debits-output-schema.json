@@ -1,0 +1,400 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "$ref": "#/definitions/ApiListResponseOfDirectDebitResponse",
+  "definitions": {
+    "RawRequest": {
+      "additionalProperties": true,
+      "type": "object",
+      "properties": {
+        "headers": {
+          "additionalProperties": {"type": "string"},
+          "type": "object"
+        },
+        "bodyParameters": {
+          "additionalProperties": {"type": "string"},
+          "type": "object"
+        },
+        "method": {"type": "string"},
+        "requestInstant": {
+          "format": "date-time",
+          "type": "string"
+        },
+        "startedAt": {
+          "format": "date-time",
+          "type": "string"
+        },
+        "startTime": {
+          "format": "date-time",
+          "type": "string"
+        },
+        "body": {
+          "additionalProperties": true,
+          "type": "object"
+        },
+        "url": {"type": "string"}
+      }
+    },
+    "PaymentIsoStatusCodeEnum": {
+      "description": "The ISO 20022 `PaymentStatusCode`.",
+      "type": "string",
+      "enum": [
+        "ACCC",
+        "ACCP",
+        "ACSC",
+        "ACSP",
+        "ACTC",
+        "ACWC",
+        "ACWP",
+        "RCVD",
+        "PDNG",
+        "RJCT",
+        "CANC",
+        "ACFC",
+        "PATC",
+        "PART"
+      ],
+      "example": "ACCC"
+    },
+    "DirectDebitResponse": {
+      "additionalProperties": true,
+      "type": "object",
+      "properties": {
+        "reference": {"type": "string"},
+        "previousPaymentDateTime": {
+          "format": "date-time",
+          "type": "string"
+        },
+        "payeeDetails": {"$ref": "#/definitions/DirectDebitPayee"},
+        "statusDetails": {"$ref": "#/definitions/PaymentStatusDetails"},
+        "id": {"type": "string"},
+        "previousPaymentAmount": {"$ref": "#/definitions/Amount"}
+      }
+    },
+    "ResponseForwardedData": {
+      "additionalProperties": true,
+      "type": "object",
+      "properties": {
+        "headers": {
+          "additionalProperties": {"type": "string"},
+          "type": "object"
+        },
+        "url": {"type": "string"}
+      }
+    },
+    "ApiCall": {
+      "additionalProperties": true,
+      "type": "object"
+    },
+    "Amount": {
+      "description": "__Mandatory__. The `Amount` object that contains the amount and currency of the payment.",
+      "additionalProperties": true,
+      "type": "object",
+      "required": [
+        "amount",
+        "currency"
+      ],
+      "properties": {
+        "amount": {
+          "description": "__Mandatory__. The monetary value",
+          "type": "number",
+          "example": 10
+        },
+        "currency": {
+          "description": "__Mandatory__. The [ISO 4217](https://www.xe.com/iso4217.php) currency code",
+          "type": "string",
+          "example": "GBP"
+        }
+      }
+    },
+    "ApiListResponseOfDirectDebitResponse": {
+      "x-amf-examples": {"OBIE Example Response": {
+        "description": "OBIE Example Response",
+        "value": {
+          "data": [
+            {
+              "reference": "671018097704",
+              "previousPaymentDateTime": "2016-10-05T00:00:00Z",
+              "payeeDetails": {"name": "EDF ENERGY"},
+              "statusDetails": {"status": "INACTIVE"},
+              "id": "700009000000000000000076",
+              "previousPaymentAmount": {
+                "amount": 145,
+                "currency": "GBP"
+              }
+            },
+            {
+              "reference": "40118272",
+              "previousPaymentDateTime": "2017-12-01T00:00:00Z",
+              "payeeDetails": {"name": "SANTANDER MORTGAGE"},
+              "statusDetails": {"status": "ACTIVE"},
+              "id": "700009000000000000000038",
+              "previousPaymentAmount": {
+                "amount": 1000,
+                "currency": "GBP"
+              }
+            }
+          ],
+          "meta": {
+            "tracingId": "c2dec674a3fb402e8543129565491244",
+            "pagination": {
+              "self": {"limit": 1000},
+              "totalCount": 2
+            },
+            "count": 2
+          },
+          "links": {"self": "https://api.yapily.com/accounts/700004000000000000000002/direct-debits?limit=1000"}
+        }
+      }},
+      "additionalProperties": true,
+      "type": "object",
+      "properties": {
+        "tracingId": {"type": "string"},
+        "data": {
+          "type": "array",
+          "items": {"$ref": "#/definitions/DirectDebitResponse"}
+        },
+        "meta": {"$ref": "#/definitions/ResponseListMeta"},
+        "raw": {
+          "type": "array",
+          "items": {"$ref": "#/definitions/RawResponse"}
+        },
+        "links": {
+          "additionalProperties": {"type": "string"},
+          "type": "object"
+        },
+        "forwardedData": {
+          "type": "array",
+          "items": {"$ref": "#/definitions/ResponseForwardedData"}
+        },
+        "paging": {"$ref": "#/definitions/FilteredClientPayloadListDirectDebitResponse"}
+      }
+    },
+    "PaymentStatusDetails": {
+      "additionalProperties": true,
+      "type": "object",
+      "properties": {
+        "statusReason": {"type": "string"},
+        "statusReasonDescription": {"type": "string"},
+        "statusUpdateDate": {
+          "format": "date-time",
+          "type": "string"
+        },
+        "multiAuthorisationStatus": {"$ref": "#/definitions/MultiAuthorisation"},
+        "isoStatus": {"$ref": "#/definitions/PaymentIsoStatus"},
+        "status": {"$ref": "#/definitions/PaymentStatus"}
+      }
+    },
+    "MultiAuthorisation": {
+      "additionalProperties": true,
+      "type": "object",
+      "properties": {
+        "expirationDateTime": {
+          "format": "date-time",
+          "type": "string"
+        },
+        "numberOfAuthorisationReceived": {
+          "maximum": 2147483647,
+          "type": "integer",
+          "minimum": -2147483648
+        },
+        "numberOfAuthorisationRequired": {
+          "maximum": 2147483647,
+          "type": "integer",
+          "minimum": -2147483648
+        },
+        "lastUpdatedDateTime": {
+          "format": "date-time",
+          "type": "string"
+        },
+        "status": {"type": "string"}
+      }
+    },
+    "Pagination": {
+      "additionalProperties": true,
+      "type": "object",
+      "properties": {
+        "next": {"$ref": "#/definitions/Next"},
+        "self": {"$ref": "#/definitions/FilterAndSort"},
+        "totalCount": {
+          "maximum": 9.223372036854776E+18,
+          "type": "integer",
+          "minimum": -9.223372036854776E+18
+        }
+      }
+    },
+    "DirectDebitPayee": {
+      "additionalProperties": true,
+      "type": "object",
+      "properties": {"name": {
+        "description": "__Mandatory__. The account holder name.",
+        "type": "string",
+        "example": "Tempus Risus Company"
+      }}
+    },
+    "FilterAndSort": {
+      "additionalProperties": true,
+      "type": "object",
+      "properties": {
+        "cursor": {"type": "string"},
+        "offset": {
+          "maximum": 2147483647,
+          "type": "integer",
+          "minimum": -2147483648
+        },
+        "before": {
+          "format": "date-time",
+          "type": "string"
+        },
+        "limit": {
+          "maximum": 2147483647,
+          "type": "integer",
+          "minimum": -2147483648
+        },
+        "from": {
+          "format": "date-time",
+          "type": "string"
+        },
+        "sort": {"$ref": "#/definitions/SortEnum"}
+      }
+    },
+    "ResponseListMeta": {
+      "additionalProperties": true,
+      "type": "object",
+      "properties": {
+        "tracingId": {"type": "string"},
+        "pagination": {"$ref": "#/definitions/Pagination"},
+        "count": {
+          "maximum": 2147483647,
+          "type": "integer",
+          "minimum": -2147483648
+        }
+      }
+    },
+    "Next": {
+      "additionalProperties": true,
+      "type": "object",
+      "properties": {
+        "cursor": {"type": "string"},
+        "before": {
+          "format": "date-time",
+          "type": "string"
+        },
+        "limit": {
+          "maximum": 2147483647,
+          "type": "integer",
+          "minimum": -2147483648
+        },
+        "from": {
+          "format": "date-time",
+          "type": "string"
+        }
+      }
+    },
+    "FilteredClientPayloadListDirectDebitResponse": {
+      "additionalProperties": true,
+      "type": "object",
+      "properties": {
+        "data": {
+          "type": "array",
+          "items": {"$ref": "#/definitions/DirectDebitResponse"}
+        },
+        "apiCall": {"$ref": "#/definitions/ApiCall"},
+        "totalCount": {
+          "maximum": 9.223372036854776E+18,
+          "type": "integer",
+          "minimum": -9.223372036854776E+18
+        },
+        "nextCursorHash": {"type": "string"},
+        "nextLink": {"type": "string"},
+        "pagingMap": {
+          "additionalProperties": {
+            "additionalProperties": true,
+            "type": "object",
+            "properties": {
+              "cursor": {"type": "string"},
+              "offset": {
+                "maximum": 2147483647,
+                "type": "integer",
+                "minimum": -2147483648
+              },
+              "before": {
+                "format": "date-time",
+                "type": "string"
+              },
+              "limit": {
+                "maximum": 2147483647,
+                "type": "integer",
+                "minimum": -2147483648
+              },
+              "from": {
+                "format": "date-time",
+                "type": "string"
+              },
+              "sort": {"$ref": "#/definitions/SortEnum"}
+            }
+          },
+          "type": "object"
+        }
+      }
+    },
+    "PaymentIsoStatus": {
+      "additionalProperties": true,
+      "type": "object",
+      "properties": {
+        "code": {"$ref": "#/definitions/PaymentIsoStatusCodeEnum"},
+        "name": {
+          "description": "The full name of the ISO 20022 `PaymentStatusCode`.",
+          "type": "string",
+          "example": "AcceptedCreditSettlementCompleted"
+        }
+      }
+    },
+    "SortEnum": {
+      "description": "Valid options for the sort parameter",
+      "type": "string",
+      "enum": [
+        "date",
+        "-date"
+      ]
+    },
+    "PaymentStatus": {
+      "description": "The status of the Payment. <br><br>For more information, see [Payment Status](/guides/payments/payment-status/)",
+      "type": "string",
+      "enum": [
+        "PENDING",
+        "FAILED",
+        "DECLINED",
+        "COMPLETED",
+        "COMPLETED_SETTLEMENT_IN_PROCESS",
+        "EXPIRED",
+        "UNKNOWN",
+        "ACTIVE",
+        "INACTIVE"
+      ]
+    },
+    "RawResponse": {
+      "additionalProperties": true,
+      "type": "object",
+      "properties": {
+        "duration": {
+          "format": "iso8601",
+          "type": "string"
+        },
+        "result": {
+          "additionalProperties": true,
+          "type": "object"
+        },
+        "request": {"$ref": "#/definitions/RawRequest"},
+        "headers": {
+          "additionalProperties": {"type": "string"},
+          "type": "object"
+        },
+        "resultCode": {
+          "maximum": 2147483647,
+          "type": "integer",
+          "minimum": -2147483648
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,130 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "$ref": "#/definitions/ApiResponseOfAccountStatement",
+  "definitions": {
+    "RawRequest": {
+      "additionalProperties": true,
+      "type": "object",
+      "properties": {
+        "headers": {
+          "additionalProperties": {"type": "string"},
+          "type": "object"
+        },
+        "bodyParameters": {
+          "additionalProperties": {"type": "string"},
+          "type": "object"
+        },
+        "method": {"type": "string"},
+        "requestInstant": {
+          "format": "date-time",
+          "type": "string"
+        },
+        "startedAt": {
+          "format": "date-time",
+          "type": "string"
+        },
+        "startTime": {
+          "format": "date-time",
+          "type": "string"
+        },
+        "body": {
+          "additionalProperties": true,
+          "type": "object"
+        },
+        "url": {"type": "string"}
+      }
+    },
+    "ResponseForwardedData": {
+      "additionalProperties": true,
+      "type": "object",
+      "properties": {
+        "headers": {
+          "additionalProperties": {"type": "string"},
+          "type": "object"
+        },
+        "url": {"type": "string"}
+      }
+    },
+    "ApiResponseOfAccountStatement": {
+      "x-amf-examples": {"Example Response": {
+        "description": "Example Response",
+        "value": {
+          "data": {
+            "startDateTime": "2017-08-01T00:00:00Z",
+            "id": "700014000000000000000002",
+            "endDateTime": "2017-08-31T23:59:59Z",
+            "creationDateTime": "2017-09-01T00:00:00Z"
+          },
+          "meta": {"tracingId": "8bacaae3025647efa1891157993e32fb"}
+        }
+      }},
+      "additionalProperties": true,
+      "type": "object",
+      "properties": {
+        "tracingId": {"type": "string"},
+        "data": {"$ref": "#/definitions/AccountStatement"},
+        "meta": {"$ref": "#/definitions/ResponseMeta"},
+        "raw": {
+          "type": "array",
+          "items": {"$ref": "#/definitions/RawResponse"}
+        },
+        "links": {
+          "additionalProperties": {"type": "string"},
+          "type": "object"
+        },
+        "forwardedData": {
+          "type": "array",
+          "items": {"$ref": "#/definitions/ResponseForwardedData"}
+        }
+      }
+    },
+    "ResponseMeta": {
+      "additionalProperties": true,
+      "type": "object",
+      "properties": {"tracingId": {"type": "string"}}
+    },
+    "AccountStatement": {
+      "additionalProperties": true,
+      "type": "object",
+      "properties": {
+        "startDateTime": {
+          "format": "date-time",
+          "type": "string"
+        },
+        "id": {"type": "string"},
+        "endDateTime": {
+          "format": "date-time",
+          "type": "string"
+        },
+        "creationDateTime": {
+          "format": "date-time",
+          "type": "string"
+        }
+      }
+    },
+    "RawResponse": {
+      "additionalProperties": true,
+      "type": "object",
+      "properties": {
+        "duration": {
+          "format": "iso8601",
+          "type": "string"
+        },
+        "result": {
+          "additionalProperties": true,
+          "type": "object"
+        },
+        "request": {"$ref": "#/definitions/RawRequest"},
+        "headers": {
+          "additionalProperties": {"type": "string"},
+          "type": "object"
+        },
+        "resultCode": {
+          "maximum": 2147483647,
+          "type": "integer",
+          "minimum": -2147483648
+        }
+      }
+    }
+  }
+}

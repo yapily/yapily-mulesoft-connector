@@ -1,0 +1,497 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "$ref": "#/definitions/ApiResponseOfPaymentEmbeddedAuthorisationRequestResponse",
+  "definitions": {
+    "RawRequest": {
+      "additionalProperties": true,
+      "type": "object",
+      "properties": {
+        "headers": {
+          "additionalProperties": {"type": "string"},
+          "type": "object"
+        },
+        "bodyParameters": {
+          "additionalProperties": {"type": "string"},
+          "type": "object"
+        },
+        "method": {"type": "string"},
+        "requestInstant": {
+          "format": "date-time",
+          "type": "string"
+        },
+        "startedAt": {
+          "format": "date-time",
+          "type": "string"
+        },
+        "startTime": {
+          "format": "date-time",
+          "type": "string"
+        },
+        "body": {
+          "additionalProperties": true,
+          "type": "object"
+        },
+        "url": {"type": "string"}
+      }
+    },
+    "RateTypeEnum": {
+      "description": "__Mandatory__. The type used to complete the currency exchange.",
+      "type": "string",
+      "enum": [
+        "ACTUAL",
+        "AGREED",
+        "INDICATIVE"
+      ]
+    },
+    "ResponseForwardedData": {
+      "additionalProperties": true,
+      "type": "object",
+      "properties": {
+        "headers": {
+          "additionalProperties": {"type": "string"},
+          "type": "object"
+        },
+        "url": {"type": "string"}
+      }
+    },
+    "Amount": {
+      "description": "__Mandatory__. The `Amount` object that contains the amount and currency of the payment.",
+      "additionalProperties": true,
+      "type": "object",
+      "required": [
+        "amount",
+        "currency"
+      ],
+      "properties": {
+        "amount": {
+          "description": "__Mandatory__. The monetary value",
+          "type": "number",
+          "example": 10
+        },
+        "currency": {
+          "description": "__Mandatory__. The [ISO 4217](https://www.xe.com/iso4217.php) currency code",
+          "type": "string",
+          "example": "GBP"
+        }
+      }
+    },
+    "AuthorisationStatus": {
+      "type": "string",
+      "enum": [
+        "AWAITING_AUTHORIZATION",
+        "AWAITING_FURTHER_AUTHORIZATION",
+        "AWAITING_RE_AUTHORIZATION",
+        "AUTHORIZED",
+        "CONSUMED",
+        "REJECTED",
+        "REVOKED",
+        "FAILED",
+        "EXPIRED",
+        "UNKNOWN",
+        "INVALID",
+        "AWAITING_DECOUPLED_PRE_AUTHORIZATION",
+        "AWAITING_PRE_AUTHORIZATION",
+        "PRE_AUTHORIZED",
+        "AWAITING_DECOUPLED_AUTHORIZATION",
+        "AWAITING_SCA_METHOD",
+        "AWAITING_SCA_CODE"
+      ]
+    },
+    "Type": {
+      "description": "The type of sca method available for the user",
+      "type": "string",
+      "enum": [
+        "SMS_OTP",
+        "CHIP_OTP",
+        "PHOTO_OTP",
+        "PUSH_OTP"
+      ]
+    },
+    "ApiResponseOfPaymentEmbeddedAuthorisationRequestResponse": {
+      "x-amf-examples": {
+        "Berlin Group EUR Single Domestic Payment (SCA Code) Example Response": {
+          "description": "Berlin Group EUR Single Domestic Payment (SCA Code) Example Response",
+          "value": {
+            "data": {
+              "createdAt": "2021-01-25T18:32:23.933Z",
+              "institutionId": "postbank-sandbox",
+              "userUuid": "95f71ebc-c8ae-4e25-aded-86e9bbd62966",
+              "applicationUserId": "john.doe@company.com",
+              "authorizedAt": "2021-01-25T18:33:18.248Z",
+              "id": "1767d386-c20a-4136-a311-0a455dd41a78",
+              "state": "048a1187a9324652bedb6a653211a8a3",
+              "featureScope": [
+                "CREATE_DOMESTIC_SINGLE_PAYMENT",
+                "EXISTING_PAYMENT_INITIATION_DETAILS",
+                "EXISTING_PAYMENTS_DETAILS"
+              ],
+              "status": "AUTHORIZED"
+            },
+            "meta": {"tracingId": "94563449b4634d13b89b8f1c78c21882"}
+          }
+        },
+        "Berlin Group EUR Single Domestic Payment (Selected SCA Method) Example Response": {
+          "description": "Berlin Group EUR Single Domestic Payment (Selected SCA Method) Example Response",
+          "value": {
+            "data": {
+              "createdAt": "2021-01-25T18:32:23.933Z",
+              "institutionId": "postbank-sandbox",
+              "userUuid": "95f71ebc-c8ae-4e25-aded-86e9bbd62966",
+              "applicationUserId": "john.doe@company.com",
+              "selectedScaMethod": {"id": "591655"},
+              "id": "1767d386-c20a-4136-a311-0a455dd41a78",
+              "state": "048a1187a9324652bedb6a653211a8a3",
+              "featureScope": [
+                "CREATE_DOMESTIC_SINGLE_PAYMENT",
+                "EXISTING_PAYMENT_INITIATION_DETAILS",
+                "EXISTING_PAYMENTS_DETAILS"
+              ],
+              "status": "AWAITING_SCA_CODE"
+            },
+            "meta": {"tracingId": "f69f66322b4b482c93099a206d9f003e"}
+          }
+        },
+        "Berlin Group EUR Embedded Bulk Payment Example Response": {
+          "description": "Berlin Group EUR Embedded Bulk Payment Example Response",
+          "value": {
+            "data": {
+              "createdAt": "2021-08-02T14:58:45.446Z",
+              "scaMethods": [{
+                "description": "SmartTAN plus",
+                "id": "932",
+                "type": "CHIP_OTP"
+              }],
+              "institutionId": "fiducia-sandbox",
+              "userUuid": "3ddf5dd0-aa48-4d0f-baa7-fa057e9e911d",
+              "applicationUserId": "john.doe@company.com",
+              "selectedScaMethod": {
+                "description": "SmartTAN plus",
+                "id": "932",
+                "type": "CHIP_OTP"
+              },
+              "id": "6117b6dd-5a43-4f26-8e36-b91b9bf3c434",
+              "state": "85853421299c44e0829debefffd8622e",
+              "featureScope": [
+                "EXISTING_PAYMENT_INITIATION_DETAILS",
+                "CREATE_BULK_PAYMENT",
+                "EXISTING_PAYMENTS_DETAILS"
+              ],
+              "status": "AWAITING_SCA_CODE",
+              "institutionConsentId": "0515485612080120206PSDLT-BL-LB002045PA9545RW"
+            },
+            "meta": {"tracingId": "4ab90c8cc13a4b74ba855a48100d6084"}
+          }
+        },
+        "Berlin Group EUR Single Domestic Payment Example Response": {
+          "description": "Berlin Group EUR Single Domestic Payment Example Response",
+          "value": {
+            "data": {
+              "createdAt": "2021-01-26T23:31:45.443Z",
+              "scaMethods": [
+                {
+                  "description": "Testkarte Hr. Haubach_1, optisch",
+                  "id": "258211#OPTICAL",
+                  "type": "CHIP_OTP"
+                },
+                {
+                  "description": "Testkarte Hr. Haubach_1, manuell",
+                  "id": "258211#MANUEL",
+                  "type": "CHIP_OTP"
+                },
+                {
+                  "description": "RolandmTAN",
+                  "id": "591655",
+                  "type": "SMS_OTP"
+                },
+                {
+                  "description": "RSRolandIP2",
+                  "id": "591656",
+                  "type": "PUSH_OTP"
+                }
+              ],
+              "institutionId": "postbank-sandbox",
+              "userUuid": "95f71ebc-c8ae-4e25-aded-86e9bbd62966",
+              "applicationUserId": "john.doe@company.com",
+              "id": "7c3f0355-f59b-4cc6-b13f-e1b5349b5caf",
+              "state": "551440fc13794010855ad81c8463c926",
+              "featureScope": [
+                "CREATE_DOMESTIC_SINGLE_PAYMENT",
+                "EXISTING_PAYMENTS_DETAILS",
+                "EXISTING_PAYMENT_INITIATION_DETAILS"
+              ],
+              "status": "AWAITING_SCA_METHOD"
+            },
+            "meta": {"tracingId": "bcebc29b55434cc8b2aae80cb782edff"}
+          }
+        },
+        "Berlin Group EUR Embedded Bulk Payment (SCA Code) Example Response": {
+          "description": "Berlin Group EUR Embedded Bulk Payment (SCA Code) Example Response",
+          "value": {
+            "data": {
+              "createdAt": "2021-08-02T14:58:45.446Z",
+              "institutionId": "fiducia-sandbox",
+              "userUuid": "3ddf5dd0-aa48-4d0f-baa7-fa057e9e911d",
+              "applicationUserId": "john.doe@company.com",
+              "authorizedAt": "2021-08-02T14:59:29.174Z",
+              "id": "6117b6dd-5a43-4f26-8e36-b91b9bf3c434",
+              "state": "85853421299c44e0829debefffd8622e",
+              "featureScope": [
+                "EXISTING_PAYMENT_INITIATION_DETAILS",
+                "CREATE_BULK_PAYMENT",
+                "EXISTING_PAYMENTS_DETAILS"
+              ],
+              "status": "AUTHORIZED",
+              "institutionConsentId": "0515485612080120206PSDLT-BL-LB002045PA9545RW"
+            },
+            "meta": {"tracingId": "cfa351c5de6f4398bb9deea04041acc5"}
+          }
+        }
+      },
+      "additionalProperties": true,
+      "type": "object",
+      "properties": {
+        "tracingId": {"type": "string"},
+        "data": {"$ref": "#/definitions/PaymentEmbeddedAuthorisationRequestResponse"},
+        "meta": {"$ref": "#/definitions/ResponseMeta"},
+        "raw": {
+          "type": "array",
+          "items": {"$ref": "#/definitions/RawResponse"}
+        },
+        "links": {
+          "additionalProperties": {"type": "string"},
+          "type": "object"
+        },
+        "forwardedData": {
+          "type": "array",
+          "items": {"$ref": "#/definitions/ResponseForwardedData"}
+        }
+      }
+    },
+    "ResponseMeta": {
+      "additionalProperties": true,
+      "type": "object",
+      "properties": {"tracingId": {"type": "string"}}
+    },
+    "PaymentChargeDetails": {
+      "additionalProperties": true,
+      "type": "object",
+      "properties": {
+        "chargeTo": {
+          "description": "Charge bearer",
+          "type": "string"
+        },
+        "chargeType": {
+          "description": "Type of charge",
+          "type": "string"
+        },
+        "chargeAmount": {"$ref": "#/definitions/Amount"}
+      }
+    },
+    "ScaMethod": {
+      "description": "__Conditional__. Used to update the authorisation with the sca method of the user's choice for the `Institution` that uses the embedded authorisation flow. If the user has multiple sca methods configured, the `Institution` will allow the user to select from each of these options. <br><br>When the user has multiple sca methods for the `Institution`, this is the second step required in the embedded authorisation flow to authorise the `Consent`.",
+      "additionalProperties": true,
+      "type": "object",
+      "required": ["id"],
+      "properties": {
+        "description": {
+          "description": "__Optional__. A description of the sca method if provided by the `Institution`",
+          "type": "string",
+          "example": "Testkarte Hr. Haubach_1, optisch"
+        },
+        "id": {
+          "description": "__Mandatory__. The id of the sca method provided by the `Institution`",
+          "type": "string",
+          "example": "258211#OPTICAL"
+        },
+        "type": {"$ref": "#/definitions/Type"}
+      },
+      "example": {
+        "description": "SecureSIGN",
+        "id": "944",
+        "type": "PUSH_OTP"
+      }
+    },
+    "PaymentEmbeddedAuthorisationRequestResponse": {
+      "additionalProperties": true,
+      "type": "object",
+      "properties": {
+        "institutionId": {"type": "string"},
+        "authorizedAt": {
+          "format": "date-time",
+          "type": "string"
+        },
+        "transactionFrom": {
+          "format": "date-time",
+          "type": "string"
+        },
+        "consentToken": {"type": "string"},
+        "authorisationUrl": {"type": "string"},
+        "explanation": {"type": "string"},
+        "referenceId": {"type": "string"},
+        "transactionTo": {
+          "format": "date-time",
+          "type": "string"
+        },
+        "expiresAt": {
+          "format": "date-time",
+          "type": "string"
+        },
+        "createdAt": {
+          "format": "date-time",
+          "type": "string"
+        },
+        "timeToExpire": {
+          "format": "iso8601",
+          "type": "string"
+        },
+        "charges": {
+          "type": "array",
+          "items": {"$ref": "#/definitions/PaymentChargeDetails"}
+        },
+        "scaMethods": {
+          "type": "array",
+          "items": {"$ref": "#/definitions/ScaMethod"}
+        },
+        "timeToExpireInMillis": {
+          "maximum": 9.223372036854776E+18,
+          "type": "integer",
+          "minimum": -9.223372036854776E+18
+        },
+        "qrCodeUrl": {"type": "string"},
+        "userUuid": {
+          "format": "uuid",
+          "type": "string"
+        },
+        "applicationUserId": {"type": "string"},
+        "exchangeRateInformation": {"$ref": "#/definitions/ExchangeRateInformationResponse"},
+        "selectedScaMethod": {"$ref": "#/definitions/ScaMethod"},
+        "id": {
+          "format": "uuid",
+          "type": "string"
+        },
+        "state": {"type": "string"},
+        "featureScope": {
+          "uniqueItems": true,
+          "type": "array",
+          "items": {"$ref": "#/definitions/FeatureEnum"}
+        },
+        "status": {"$ref": "#/definitions/AuthorisationStatus"},
+        "institutionConsentId": {"type": "string"}
+      }
+    },
+    "FeatureEnum": {
+      "description": "Used to describe what functions are supported by the associated `Institution`.        <br><br>For more information on each feature, see the following links:        <ul>          <li>[Financial Data Features](https://docs.yapily.com/guides/financial-data/features/)<\/li>          <li>[Payments Features](https://docs.yapily.com/guides/payments/features/)<\/li>        <\/ul>",
+      "type": "string",
+      "enum": [
+        "INITIATE_PRE_AUTHORISATION",
+        "INITIATE_PRE_AUTHORISATION_ACCOUNTS",
+        "INITIATE_PRE_AUTHORISATION_PAYMENTS",
+        "INITIATE_ACCOUNT_REQUEST",
+        "INITIATE_EMBEDDED_ACCOUNT_REQUEST",
+        "ACCOUNT_REQUEST_DETAILS",
+        "ACCOUNTS",
+        "ACCOUNT",
+        "ACCOUNT_TRANSACTIONS",
+        "ACCOUNT_STATEMENTS",
+        "ACCOUNT_STATEMENT",
+        "ACCOUNT_STATEMENT_FILE",
+        "ACCOUNT_SCHEDULED_PAYMENTS",
+        "ACCOUNT_DIRECT_DEBITS",
+        "ACCOUNT_PERIODIC_PAYMENTS",
+        "ACCOUNT_TRANSACTIONS_WITH_MERCHANT",
+        "IDENTITY",
+        "ACCOUNTS_WITHOUT_BALANCE",
+        "ACCOUNT_WITHOUT_BALANCE",
+        "ACCOUNT_BALANCES",
+        "INITIATE_SINGLE_PAYMENT_SORTCODE",
+        "EXISTING_PAYMENT_INITIATION_DETAILS",
+        "CREATE_SINGLE_PAYMENT_SORTCODE",
+        "EXISTING_PAYMENTS_DETAILS",
+        "INITIATE_DOMESTIC_SINGLE_PAYMENT",
+        "INITIATE_EMBEDDED_DOMESTIC_SINGLE_PAYMENT",
+        "CREATE_DOMESTIC_SINGLE_PAYMENT",
+        "INITIATE_EMBEDDED_BULK_PAYMENT",
+        "INITIATE_DOMESTIC_SINGLE_INSTANT_PAYMENT",
+        "CREATE_DOMESTIC_SINGLE_INSTANT_PAYMENT",
+        "INITIATE_DOMESTIC_VARIABLE_RECURRING_PAYMENT",
+        "CREATE_DOMESTIC_VARIABLE_RECURRING_PAYMENT",
+        "INITIATE_DOMESTIC_SCHEDULED_PAYMENT",
+        "CREATE_DOMESTIC_SCHEDULED_PAYMENT",
+        "INITIATE_DOMESTIC_PERIODIC_PAYMENT",
+        "CREATE_DOMESTIC_PERIODIC_PAYMENT",
+        "PERIODIC_PAYMENT_FREQUENCY_EXTENDED",
+        "INITIATE_INTERNATIONAL_VARIABLE_RECURRING_PAYMENT",
+        "CREATE_INTERNATIONAL_VARIABLE_RECURRING_PAYMENT",
+        "INITIATE_INTERNATIONAL_SCHEDULED_PAYMENT",
+        "CREATE_INTERNATIONAL_SCHEDULED_PAYMENT",
+        "INITIATE_INTERNATIONAL_PERIODIC_PAYMENT",
+        "CREATE_INTERNATIONAL_PERIODIC_PAYMENT",
+        "INITIATE_INTERNATIONAL_SINGLE_PAYMENT",
+        "CREATE_INTERNATIONAL_SINGLE_PAYMENT",
+        "INITIATE_BULK_PAYMENT",
+        "CREATE_BULK_PAYMENT",
+        "TRANSFER",
+        "OPEN_DATA_PERSONAL_CURRENT_ACCOUNTS",
+        "OPEN_DATA_ATMS",
+        "READ_DOMESTIC_SINGLE_REFUND",
+        "READ_DOMESTIC_SCHEDULED_REFUND",
+        "READ_DOMESTIC_PERIODIC_PAYMENT_REFUND",
+        "READ_INTERNATIONAL_SINGLE_REFUND",
+        "READ_INTERNATIONAL_SCHEDULED_REFUND",
+        "ACCOUNT_BENEFICIARIES",
+        "INITIATE_ONETIME_PRE_AUTHORISATION_PAYMENTS"
+      ]
+    },
+    "RawResponse": {
+      "additionalProperties": true,
+      "type": "object",
+      "properties": {
+        "duration": {
+          "format": "iso8601",
+          "type": "string"
+        },
+        "result": {
+          "additionalProperties": true,
+          "type": "object"
+        },
+        "request": {"$ref": "#/definitions/RawRequest"},
+        "headers": {
+          "additionalProperties": {"type": "string"},
+          "type": "object"
+        },
+        "resultCode": {
+          "maximum": 2147483647,
+          "type": "integer",
+          "minimum": -2147483648
+        }
+      }
+    },
+    "ExchangeRateInformationResponse": {
+      "additionalProperties": true,
+      "type": "object",
+      "required": [
+        "unitCurrency",
+        "rateType"
+      ],
+      "properties": {
+        "rateType": {"$ref": "#/definitions/RateTypeEnum"},
+        "foreignExchangeContractReference": {
+          "description": "__Optional__. The unique and unambiguous reference to the foreign exchange contract agreed between the initiating party/creditor and the debtor agent.",
+          "type": "string"
+        },
+        "exchangeRateExpiryDate": {
+          "format": "date-time",
+          "type": "string"
+        },
+        "rate": {
+          "description": "__Optional__. The factor used for conversion of an amount from one currency to another. This reflects the price at which one currency was bought with another currency.",
+          "type": "number"
+        },
+        "unitCurrency": {
+          "description": "__Mandatory__. The currency in which the rate of exchange is expressed in a currency exchange. In the example 1GBP = xxxCUR, the unit currency is `GBP`.",
+          "type": "string"
+        }
+      }
+    }
+  }
+}

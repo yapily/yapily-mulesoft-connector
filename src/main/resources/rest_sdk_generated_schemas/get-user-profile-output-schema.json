@@ -1,0 +1,250 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "$ref": "#/definitions/FinancialProfile",
+  "definitions": {
+    "ProfileConsent": {
+      "description": "Object returned when creating a User Profile.",
+      "additionalProperties": true,
+      "type": "object",
+      "properties": {
+        "referenceConsentId": {
+          "format": "uuid",
+          "description": "The referenceConsentId.",
+          "type": "string",
+          "example": "1e2e5167-8519-4c19-b016-8f2f0c6e38b6"
+        },
+        "institutionId": {
+          "description": "The id of the Institution.",
+          "type": "string",
+          "example": "mock-sandbox"
+        },
+        "id": {
+          "format": "uuid",
+          "description": "The id of the ProfileConsent",
+          "type": "string",
+          "example": "eb2ad083-a111-4143-8756-a3a3cef4031c"
+        },
+        "userId": {
+          "format": "uuid",
+          "description": "The userUuid.",
+          "type": "string",
+          "example": "3ddf5dd0-aa48-4d0f-baa7-fa057e9e911d"
+        },
+        "status": {
+          "description": "The status, can be PENDING, COMPLETED or ERROR.",
+          "type": "string",
+          "example": "PENDING"
+        }
+      }
+    },
+    "EnrichedTransaction": {
+      "description": "Part of a financial profile for a User.",
+      "additionalProperties": true,
+      "type": "object",
+      "properties": {
+        "institution": {
+          "description": "The id of the institution",
+          "type": "string",
+          "example": "starling"
+        },
+        "amount": {
+          "description": "The amount of the transaction",
+          "type": "number",
+          "example": 21.99
+        },
+        "bookingDateTime": {
+          "format": "date-time",
+          "description": "The datetime of the transaction",
+          "type": "string",
+          "example": "2020-04-24T00:30:19.951Z"
+        },
+        "transactionInformation": {
+          "description": "Information for the transaction",
+          "type": "string",
+          "example": "Amazon Marketplace"
+        },
+        "transactionId": {
+          "description": "The id of the transaction",
+          "type": "string",
+          "example": "c51e3bee-36fb-4c0a-8441-d6ba2056fe87"
+        }
+      }
+    },
+    "TerminatedTransactionStream": {
+      "description": "Terminated transaction stream generated as part of the financial profile for a User.",
+      "additionalProperties": true,
+      "type": "object",
+      "properties": {
+        "earliestTransactionDate": {
+          "format": "date",
+          "description": "When is the first recorded transaction date",
+          "type": "string",
+          "example": "2020-04-24"
+        },
+        "scheduleConsistencyScore": {
+          "description": "The consistency of the transaction.  This is a number between 0 and 1 with 1 being the most consistent schedule.",
+          "type": "number",
+          "example": 0.44
+        },
+        "missedTransactions": {
+          "description": "Missed transactions of transaction stream",
+          "maximum": 2147483647,
+          "type": "integer",
+          "minimum": -2147483648,
+          "example": 3
+        },
+        "averageAmount": {
+          "description": "The average amount of the transaction stream",
+          "type": "number",
+          "example": 19.708
+        },
+        "name": {
+          "description": "The name of the TransactionStream",
+          "type": "string",
+          "example": "Amazon Marketplace"
+        },
+        "transactions": {
+          "description": "A list of Transactions from the transaction stream.",
+          "type": "array",
+          "items": {"$ref": "#/definitions/EnrichedTransaction"}
+        },
+        "transactionSchedule": {"$ref": "#/definitions/TransactionSchedule"},
+        "nextExpectedTransactionDate": {
+          "format": "date",
+          "description": "When is the transaction expected to occur next.",
+          "type": "string",
+          "example": "2019-10-04"
+        },
+        "amountConsistencyScore": {
+          "description": "The consistency of the amount of the transaction.  This is a number between 0 and 1 with 1 being the most consistent amount.",
+          "type": "number",
+          "example": 0.74
+        },
+        "mostRecentTransactionDate": {
+          "format": "date",
+          "description": "When is the most recent transaction date",
+          "type": "string",
+          "example": "2019-10-03"
+        }
+      }
+    },
+    "EnrichedWrapper": {
+      "description": "A financial profile for a User.",
+      "additionalProperties": true,
+      "type": "object",
+      "properties": {
+        "recentlyTerminatedIncomeStreams": {
+          "description": "A list of terminated transaction income streams",
+          "type": "array",
+          "items": {"$ref": "#/definitions/TerminatedTransactionStream"}
+        },
+        "recentlyTerminatedExpenditureStreams": {
+          "description": "A list of terminated transaction expenditure streams",
+          "type": "array",
+          "items": {"$ref": "#/definitions/TerminatedTransactionStream"}
+        },
+        "expenditureStreams": {
+          "description": "A list of transaction streams",
+          "type": "array",
+          "items": {"$ref": "#/definitions/TransactionStream"}
+        },
+        "incomeStreams": {
+          "description": "A list of transaction streams",
+          "type": "array",
+          "items": {"$ref": "#/definitions/TransactionStream"}
+        }
+      }
+    },
+    "FinancialProfile": {
+      "description": "A financial profile for a User.",
+      "additionalProperties": true,
+      "type": "object",
+      "properties": {
+        "enrichment": {"$ref": "#/definitions/EnrichedWrapper"},
+        "profileConsents": {
+          "description": "A list of ProfileConsent used in the financial profile.",
+          "type": "array",
+          "items": {"$ref": "#/definitions/ProfileConsent"}
+        },
+        "status": {
+          "description": "The status, can be EMPTY, PARTIAL, PENDING, COMPLETED or ERROR.",
+          "type": "string",
+          "example": "COMPLETED"
+        }
+      }
+    },
+    "TransactionSchedule": {
+      "description": "Part of a financial profile for a User.",
+      "additionalProperties": true,
+      "type": "object",
+      "properties": {
+        "detailedFrequency": {
+          "description": "When in the cycle the transaction occurs.  Can be 'Daily', 'Twice daily', 'Twice every weekday', 'Every weekday', 'Weekly on day n', 'Every two weeks on day n', 'Monthly on working day before day n of month', 'Monthly on last working day of month', 'Twice a month on 15th and last working day of month', 'Every four weeks on day n'",
+          "type": "string",
+          "example": "Daily"
+        },
+        "detailedFrequencyParameter": {
+          "description": "The n in detailedFrequency where there is one - for week-based frequencies, an integer from 0 to 6 where 0 is Monday or for month-based frequencies, an integer from 0 to 27 where 0 is the first day of the month",
+          "type": "number",
+          "example": 1
+        },
+        "frequency": {
+          "description": "How often the transaction happens.  Can be 'Monthly', 'Twice monthly', 'Every two weeks', 'Every four weeks', 'Daily', 'Weekly', 'Every weekday', 'Twice daily', 'Twice every weekday'",
+          "type": "string",
+          "example": "Daily"
+        }
+      }
+    },
+    "TransactionStream": {
+      "description": "Part of a financial profile for a User.",
+      "additionalProperties": true,
+      "type": "object",
+      "properties": {
+        "earliestTransactionDate": {
+          "format": "date",
+          "description": "When is the first recorded transaction date",
+          "type": "string",
+          "example": "2020-04-24"
+        },
+        "scheduleConsistencyScore": {
+          "description": "The consistency of the transaction.  This is a number between 0 and 1 with 1 being the most consistent schedule.",
+          "type": "number",
+          "example": 0.44
+        },
+        "averageAmount": {
+          "description": "The average amount of the transaction stream",
+          "type": "number",
+          "example": 19.708
+        },
+        "name": {
+          "description": "The name of the TransactionStream",
+          "type": "string",
+          "example": "Amazon Marketplace"
+        },
+        "transactions": {
+          "description": "A list of Transactions from the transaction stream.",
+          "type": "array",
+          "items": {"$ref": "#/definitions/EnrichedTransaction"}
+        },
+        "transactionSchedule": {"$ref": "#/definitions/TransactionSchedule"},
+        "nextExpectedTransactionDate": {
+          "format": "date",
+          "description": "When is the transaction expected to occur next.",
+          "type": "string",
+          "example": "2019-10-04"
+        },
+        "amountConsistencyScore": {
+          "description": "The consistency of the amount of the transaction.  This is a number between 0 and 1 with 1 being the most consistent amount.",
+          "type": "number",
+          "example": 0.74
+        },
+        "mostRecentTransactionDate": {
+          "format": "date",
+          "description": "When is the most recent transaction date",
+          "type": "string",
+          "example": "2019-10-03"
+        }
+      }
+    }
+  }
+}

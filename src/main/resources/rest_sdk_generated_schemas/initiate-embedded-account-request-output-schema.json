@@ -1,0 +1,429 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "$ref": "#/definitions/ApiResponseOfAuthorisationEmbeddedRequestResponse",
+  "definitions": {
+    "RawRequest": {
+      "additionalProperties": true,
+      "type": "object",
+      "properties": {
+        "headers": {
+          "additionalProperties": {"type": "string"},
+          "type": "object"
+        },
+        "bodyParameters": {
+          "additionalProperties": {"type": "string"},
+          "type": "object"
+        },
+        "method": {"type": "string"},
+        "requestInstant": {
+          "format": "date-time",
+          "type": "string"
+        },
+        "startedAt": {
+          "format": "date-time",
+          "type": "string"
+        },
+        "startTime": {
+          "format": "date-time",
+          "type": "string"
+        },
+        "body": {
+          "additionalProperties": true,
+          "type": "object"
+        },
+        "url": {"type": "string"}
+      }
+    },
+    "Type": {
+      "description": "The type of sca method available for the user",
+      "type": "string",
+      "enum": [
+        "SMS_OTP",
+        "CHIP_OTP",
+        "PHOTO_OTP",
+        "PUSH_OTP"
+      ]
+    },
+    "ResponseForwardedData": {
+      "additionalProperties": true,
+      "type": "object",
+      "properties": {
+        "headers": {
+          "additionalProperties": {"type": "string"},
+          "type": "object"
+        },
+        "url": {"type": "string"}
+      }
+    },
+    "ApiResponseOfAuthorisationEmbeddedRequestResponse": {
+      "x-amf-examples": {
+        "Berlin Group (Multiple SCA Methods) Example Response": {
+          "description": "Berlin Group (Multiple SCA Methods) Example Response",
+          "value": {
+            "data": {
+              "createdAt": "2021-06-09T11:47:24.513Z",
+              "timeToExpire": "P89DT12H12M35.472S",
+              "scaMethods": [
+                {
+                  "description": "SmartTAN plus HHD 1.4",
+                  "id": "962",
+                  "type": "CHIP_OTP"
+                },
+                {
+                  "description": "SmartTAN optic",
+                  "id": "952",
+                  "type": "CHIP_OTP"
+                },
+                {
+                  "description": "SmartTAN optic/USB HHD 1.4",
+                  "id": "972",
+                  "type": "CHIP_OTP"
+                },
+                {
+                  "description": "Smart-TAN photo",
+                  "id": "982",
+                  "type": "PHOTO_OTP"
+                },
+                {
+                  "description": "SmartTAN plus",
+                  "id": "932",
+                  "type": "CHIP_OTP"
+                },
+                {
+                  "description": "SecureSIGN",
+                  "id": "944",
+                  "type": "PUSH_OTP"
+                },
+                {
+                  "description": "mobile TAN",
+                  "id": "942",
+                  "type": "SMS_OTP"
+                }
+              ],
+              "institutionId": "fiducia-sandbox",
+              "userUuid": "6b082877-b137-4743-bba3-07b6a8148b42",
+              "applicationUserId": "john.doe@company.com",
+              "id": "149da283-2958-4128-9d72-e3a02e8bb83d",
+              "state": "c99f35c118194737b83487a0e6a48ed9",
+              "featureScope": [
+                "ACCOUNT_TRANSACTIONS",
+                "ACCOUNTS",
+                "ACCOUNT",
+                "ACCOUNT_BALANCES"
+              ],
+              "expiresAt": "2021-09-07T00:00:00Z",
+              "status": "AWAITING_SCA_METHOD",
+              "institutionConsentId": "4514274319060120226PSDLT-BL-LB002045CO9545RW"
+            },
+            "meta": {"tracingId": "a9d8d8c5e6a84b00b8510d90c28cbbc6"}
+          }
+        },
+        "Berlin Group (Selected SCA Method) Example Response": {
+          "description": "Berlin Group (Selected SCA Method) Example Response",
+          "value": {
+            "data": {
+              "createdAt": "2021-06-09T11:47:24.513Z",
+              "timeToExpire": "P89DT12H6M39.998S",
+              "institutionId": "fiducia-sandbox",
+              "userUuid": "6b082877-b137-4743-bba3-07b6a8148b42",
+              "applicationUserId": "john.doe@company.com",
+              "selectedScaMethod": {
+                "description": "mobile TAN",
+                "id": "942",
+                "type": "SMS_OTP"
+              },
+              "id": "149da283-2958-4128-9d72-e3a02e8bb83d",
+              "state": "c99f35c118194737b83487a0e6a48ed9",
+              "featureScope": [
+                "ACCOUNT_TRANSACTIONS",
+                "ACCOUNTS",
+                "ACCOUNT",
+                "ACCOUNT_BALANCES"
+              ],
+              "expiresAt": "2021-09-07T00:00:00Z",
+              "status": "AWAITING_SCA_CODE",
+              "institutionConsentId": "4514274319060120226PSDLT-BL-LB002045CO9545RW"
+            },
+            "meta": {"tracingId": "eaa703f3869b46b18732fa0de60f6073"}
+          }
+        },
+        "Berlin Group (Single SCA Method) Example Response": {
+          "description": "Berlin Group (Single SCA Method) Example Response",
+          "value": {
+            "data": {
+              "institutionId": "fiducia-sandbox",
+              "expiresAt": "2021-09-07T00:00:00Z",
+              "createdAt": "2021-06-09T11:49:18.815Z",
+              "timeToExpire": "P89DT12H10M41.167S",
+              "scaMethods": [{
+                "description": "SecureSIGN",
+                "id": "944",
+                "type": "PUSH_OTP"
+              }],
+              "userUuid": "6b082877-b137-4743-bba3-07b6a8148b42",
+              "applicationUserId": "john.doe@company.com",
+              "selectedScaMethod": {
+                "description": "SecureSIGN",
+                "id": "944",
+                "type": "PUSH_OTP"
+              },
+              "id": "66c8c0f2-1678-4404-a68f-2236a1afcdad",
+              "state": "3fb4024282d0432cb710094c4c723ae5",
+              "featureScope": [
+                "ACCOUNT_TRANSACTIONS",
+                "ACCOUNTS",
+                "ACCOUNT",
+                "ACCOUNT_BALANCES"
+              ],
+              "status": "AWAITING_SCA_CODE",
+              "institutionConsentId": "1448194319060120228PSDLT-BL-LB002045CO9545RW"
+            },
+            "meta": {"tracingId": "1565f7e13a0b4bf6b312cf8cc5747c7c"}
+          }
+        },
+        "Berlin Group (SCA Code) Example Response": {
+          "description": "Berlin Group (SCA Code) Example Response",
+          "value": {
+            "data": {
+              "createdAt": "2021-06-09T11:49:18.815Z",
+              "institutionId": "fiducia-sandbox",
+              "userUuid": "6b082877-b137-4743-bba3-07b6a8148b42",
+              "applicationUserId": "john.doe@company.com",
+              "authorizedAt": "2021-06-09T11:51:14.140Z",
+              "id": "66c8c0f2-1678-4404-a68f-2236a1afcdad",
+              "state": "3fb4024282d0432cb710094c4c723ae5",
+              "featureScope": [
+                "ACCOUNT_TRANSACTIONS",
+                "ACCOUNTS",
+                "ACCOUNT",
+                "ACCOUNT_BALANCES"
+              ],
+              "status": "AUTHORIZED",
+              "institutionConsentId": "1448194319060120228PSDLT-BL-LB002045CO9545RW"
+            },
+            "meta": {"tracingId": "0ad7c46c4e4445bab3a0d4ccae25556b"}
+          }
+        }
+      },
+      "additionalProperties": true,
+      "type": "object",
+      "properties": {
+        "tracingId": {"type": "string"},
+        "data": {"$ref": "#/definitions/AuthorisationEmbeddedRequestResponse"},
+        "meta": {"$ref": "#/definitions/ResponseMeta"},
+        "raw": {
+          "type": "array",
+          "items": {"$ref": "#/definitions/RawResponse"}
+        },
+        "links": {
+          "additionalProperties": {"type": "string"},
+          "type": "object"
+        },
+        "forwardedData": {
+          "type": "array",
+          "items": {"$ref": "#/definitions/ResponseForwardedData"}
+        }
+      }
+    },
+    "ResponseMeta": {
+      "additionalProperties": true,
+      "type": "object",
+      "properties": {"tracingId": {"type": "string"}}
+    },
+    "ScaMethod": {
+      "description": "__Conditional__. Used to update the authorisation with the sca method of the user's choice for the `Institution` that uses the embedded authorisation flow. If the user has multiple sca methods configured, the `Institution` will allow the user to select from each of these options. <br><br>When the user has multiple sca methods for the `Institution`, this is the second step required in the embedded authorisation flow to authorise the `Consent`.",
+      "additionalProperties": true,
+      "type": "object",
+      "required": ["id"],
+      "properties": {
+        "description": {
+          "description": "__Optional__. A description of the sca method if provided by the `Institution`",
+          "type": "string",
+          "example": "Testkarte Hr. Haubach_1, optisch"
+        },
+        "id": {
+          "description": "__Mandatory__. The id of the sca method provided by the `Institution`",
+          "type": "string",
+          "example": "258211#OPTICAL"
+        },
+        "type": {"$ref": "#/definitions/Type"}
+      },
+      "example": {
+        "description": "SecureSIGN",
+        "id": "944",
+        "type": "PUSH_OTP"
+      }
+    },
+    "AuthorisationStatus": {
+      "type": "string",
+      "enum": [
+        "AWAITING_AUTHORIZATION",
+        "AWAITING_FURTHER_AUTHORIZATION",
+        "AWAITING_RE_AUTHORIZATION",
+        "AUTHORIZED",
+        "CONSUMED",
+        "REJECTED",
+        "REVOKED",
+        "FAILED",
+        "EXPIRED",
+        "UNKNOWN",
+        "INVALID",
+        "AWAITING_DECOUPLED_PRE_AUTHORIZATION",
+        "AWAITING_PRE_AUTHORIZATION",
+        "PRE_AUTHORIZED",
+        "AWAITING_DECOUPLED_AUTHORIZATION",
+        "AWAITING_SCA_METHOD",
+        "AWAITING_SCA_CODE"
+      ]
+    },
+    "AuthorisationEmbeddedRequestResponse": {
+      "additionalProperties": true,
+      "type": "object",
+      "properties": {
+        "institutionId": {"type": "string"},
+        "authorizedAt": {
+          "format": "date-time",
+          "type": "string"
+        },
+        "transactionFrom": {
+          "format": "date-time",
+          "type": "string"
+        },
+        "consentToken": {"type": "string"},
+        "authorisationUrl": {"type": "string"},
+        "referenceId": {"type": "string"},
+        "transactionTo": {
+          "format": "date-time",
+          "type": "string"
+        },
+        "expiresAt": {
+          "format": "date-time",
+          "type": "string"
+        },
+        "createdAt": {
+          "format": "date-time",
+          "type": "string"
+        },
+        "timeToExpire": {
+          "format": "iso8601",
+          "type": "string"
+        },
+        "scaMethods": {
+          "type": "array",
+          "items": {"$ref": "#/definitions/ScaMethod"}
+        },
+        "timeToExpireInMillis": {
+          "maximum": 9.223372036854776E+18,
+          "type": "integer",
+          "minimum": -9.223372036854776E+18
+        },
+        "qrCodeUrl": {"type": "string"},
+        "userUuid": {
+          "format": "uuid",
+          "type": "string"
+        },
+        "applicationUserId": {"type": "string"},
+        "selectedScaMethod": {"$ref": "#/definitions/ScaMethod"},
+        "id": {
+          "format": "uuid",
+          "type": "string"
+        },
+        "state": {"type": "string"},
+        "featureScope": {
+          "uniqueItems": true,
+          "type": "array",
+          "items": {"$ref": "#/definitions/FeatureEnum"}
+        },
+        "status": {"$ref": "#/definitions/AuthorisationStatus"},
+        "institutionConsentId": {"type": "string"}
+      }
+    },
+    "FeatureEnum": {
+      "description": "Used to describe what functions are supported by the associated `Institution`.        <br><br>For more information on each feature, see the following links:        <ul>          <li>[Financial Data Features](https://docs.yapily.com/guides/financial-data/features/)<\/li>          <li>[Payments Features](https://docs.yapily.com/guides/payments/features/)<\/li>        <\/ul>",
+      "type": "string",
+      "enum": [
+        "INITIATE_PRE_AUTHORISATION",
+        "INITIATE_PRE_AUTHORISATION_ACCOUNTS",
+        "INITIATE_PRE_AUTHORISATION_PAYMENTS",
+        "INITIATE_ACCOUNT_REQUEST",
+        "INITIATE_EMBEDDED_ACCOUNT_REQUEST",
+        "ACCOUNT_REQUEST_DETAILS",
+        "ACCOUNTS",
+        "ACCOUNT",
+        "ACCOUNT_TRANSACTIONS",
+        "ACCOUNT_STATEMENTS",
+        "ACCOUNT_STATEMENT",
+        "ACCOUNT_STATEMENT_FILE",
+        "ACCOUNT_SCHEDULED_PAYMENTS",
+        "ACCOUNT_DIRECT_DEBITS",
+        "ACCOUNT_PERIODIC_PAYMENTS",
+        "ACCOUNT_TRANSACTIONS_WITH_MERCHANT",
+        "IDENTITY",
+        "ACCOUNTS_WITHOUT_BALANCE",
+        "ACCOUNT_WITHOUT_BALANCE",
+        "ACCOUNT_BALANCES",
+        "INITIATE_SINGLE_PAYMENT_SORTCODE",
+        "EXISTING_PAYMENT_INITIATION_DETAILS",
+        "CREATE_SINGLE_PAYMENT_SORTCODE",
+        "EXISTING_PAYMENTS_DETAILS",
+        "INITIATE_DOMESTIC_SINGLE_PAYMENT",
+        "INITIATE_EMBEDDED_DOMESTIC_SINGLE_PAYMENT",
+        "CREATE_DOMESTIC_SINGLE_PAYMENT",
+        "INITIATE_EMBEDDED_BULK_PAYMENT",
+        "INITIATE_DOMESTIC_SINGLE_INSTANT_PAYMENT",
+        "CREATE_DOMESTIC_SINGLE_INSTANT_PAYMENT",
+        "INITIATE_DOMESTIC_VARIABLE_RECURRING_PAYMENT",
+        "CREATE_DOMESTIC_VARIABLE_RECURRING_PAYMENT",
+        "INITIATE_DOMESTIC_SCHEDULED_PAYMENT",
+        "CREATE_DOMESTIC_SCHEDULED_PAYMENT",
+        "INITIATE_DOMESTIC_PERIODIC_PAYMENT",
+        "CREATE_DOMESTIC_PERIODIC_PAYMENT",
+        "PERIODIC_PAYMENT_FREQUENCY_EXTENDED",
+        "INITIATE_INTERNATIONAL_VARIABLE_RECURRING_PAYMENT",
+        "CREATE_INTERNATIONAL_VARIABLE_RECURRING_PAYMENT",
+        "INITIATE_INTERNATIONAL_SCHEDULED_PAYMENT",
+        "CREATE_INTERNATIONAL_SCHEDULED_PAYMENT",
+        "INITIATE_INTERNATIONAL_PERIODIC_PAYMENT",
+        "CREATE_INTERNATIONAL_PERIODIC_PAYMENT",
+        "INITIATE_INTERNATIONAL_SINGLE_PAYMENT",
+        "CREATE_INTERNATIONAL_SINGLE_PAYMENT",
+        "INITIATE_BULK_PAYMENT",
+        "CREATE_BULK_PAYMENT",
+        "TRANSFER",
+        "OPEN_DATA_PERSONAL_CURRENT_ACCOUNTS",
+        "OPEN_DATA_ATMS",
+        "READ_DOMESTIC_SINGLE_REFUND",
+        "READ_DOMESTIC_SCHEDULED_REFUND",
+        "READ_DOMESTIC_PERIODIC_PAYMENT_REFUND",
+        "READ_INTERNATIONAL_SINGLE_REFUND",
+        "READ_INTERNATIONAL_SCHEDULED_REFUND",
+        "ACCOUNT_BENEFICIARIES",
+        "INITIATE_ONETIME_PRE_AUTHORISATION_PAYMENTS"
+      ]
+    },
+    "RawResponse": {
+      "additionalProperties": true,
+      "type": "object",
+      "properties": {
+        "duration": {
+          "format": "iso8601",
+          "type": "string"
+        },
+        "result": {
+          "additionalProperties": true,
+          "type": "object"
+        },
+        "request": {"$ref": "#/definitions/RawRequest"},
+        "headers": {
+          "additionalProperties": {"type": "string"},
+          "type": "object"
+        },
+        "resultCode": {
+          "maximum": 2147483647,
+          "type": "integer",
+          "minimum": -2147483648
+        }
+      }
+    }
+  }
+}

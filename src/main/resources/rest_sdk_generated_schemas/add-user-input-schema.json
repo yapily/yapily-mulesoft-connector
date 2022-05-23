@@ -1,0 +1,23 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "$ref": "#/definitions/NewApplicationUser",
+  "definitions": {"NewApplicationUser": {
+    "x-amf-examples": {"Create User Example Request": {
+      "description": "Create User Example Request",
+      "value": {"applicationUserId": "john.doe@company.com"}
+    }},
+    "additionalProperties": true,
+    "type": "object",
+    "properties": {
+      "applicationUserId": {
+        "description": "__Optional__. An additional unique identifier that you can specify when creating a new `User` to more easily reference it",
+        "type": "string",
+        "example": "user-234562290"
+      },
+      "referenceId": {
+        "description": "__Deprecated__. A non-unique reference Id for the `User`",
+        "type": "string"
+      }
+    }
+  }}
+}

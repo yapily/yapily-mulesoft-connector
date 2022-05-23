@@ -1,0 +1,15 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "$ref": "#/definitions/OneTimeTokenRequest",
+  "definitions": {"OneTimeTokenRequest": {
+    "description": "The request body containing the `OneTimeTokenRequest` json payload",
+    "additionalProperties": true,
+    "type": "object",
+    "required": ["oneTimeToken"],
+    "properties": {"oneTimeToken": {
+      "description": "__Mandatory__. The one time token to exchange for a consent token.",
+      "type": "string",
+      "example": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJJTlNUSVRVVElPTiI6ImJidmEtc2FuZGJveCIsIlVVSUQiOiJmMzNmNGU4ZC1jMDQ0LTQ2YTktOTlkMC0wYmRlMzIyYTJjOTIifQ.4Qv3NJI6av2nKi1U3aNmm71cIwJ3TvRsIlYDafQUVv_Khy_e-8oEpV_BoP4V1CII12oT-Yq4cPveHILz8BOwjg"
+    }}
+  }}
+}

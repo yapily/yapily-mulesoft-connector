@@ -1,0 +1,339 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "$ref": "#/definitions/ApiResponseOfAccount",
+  "definitions": {
+    "RawRequest": {
+      "additionalProperties": true,
+      "type": "object",
+      "properties": {
+        "headers": {
+          "additionalProperties": {"type": "string"},
+          "type": "object"
+        },
+        "bodyParameters": {
+          "additionalProperties": {"type": "string"},
+          "type": "object"
+        },
+        "method": {"type": "string"},
+        "requestInstant": {
+          "format": "date-time",
+          "type": "string"
+        },
+        "startedAt": {
+          "format": "date-time",
+          "type": "string"
+        },
+        "startTime": {
+          "format": "date-time",
+          "type": "string"
+        },
+        "body": {
+          "additionalProperties": true,
+          "type": "object"
+        },
+        "url": {"type": "string"}
+      }
+    },
+    "Account": {
+      "additionalProperties": true,
+      "type": "object",
+      "properties": {
+        "accountIdentifications": {
+          "uniqueItems": true,
+          "type": "array",
+          "items": {"$ref": "#/definitions/AccountIdentification"}
+        },
+        "balance": {"type": "number"},
+        "accountBalances": {
+          "type": "array",
+          "items": {"$ref": "#/definitions/AccountBalance"}
+        },
+        "accountType": {"$ref": "#/definitions/AccountType"},
+        "nickname": {
+          "description": "Name of the account as defined by the financial institution or the end user",
+          "type": "string"
+        },
+        "description": {
+          "description": "Product name as defined by the financial institution for this account",
+          "type": "string"
+        },
+        "currency": {
+          "description": "ISO 4217 currency code",
+          "type": "string"
+        },
+        "details": {
+          "description": "Specifications that might be provided by the institution\n - characteristics of the account\n- characteristics of the relevant card",
+          "type": "string"
+        },
+        "id": {
+          "description": "Account Id returned by the institution if present",
+          "type": "string"
+        },
+        "type": {"type": "string"},
+        "accountNames": {
+          "type": "array",
+          "items": {"$ref": "#/definitions/AccountName"}
+        },
+        "usageType": {"$ref": "#/definitions/UsageType"}
+      }
+    },
+    "AccountIdentificationType": {
+      "description": "__Mandatory__. Used to describe the format of the account.<br><br> See [Account Identification Combinations](https://docs.yapily.com/guides/payments/payment-execution/#account-identifications-combinations) for more information on when to specify each type.",
+      "type": "string",
+      "enum": [
+        "SORT_CODE",
+        "ACCOUNT_NUMBER",
+        "IBAN",
+        "BBAN",
+        "BIC",
+        "PAN",
+        "MASKED_PAN",
+        "MSISDN",
+        "BSB",
+        "NCC",
+        "ABA",
+        "ABA_WIRE",
+        "ABA_ACH",
+        "EMAIL",
+        "ROLL_NUMBER"
+      ],
+      "example": "SORT_CODE"
+    },
+    "CreditLineType": {
+      "type": "string",
+      "enum": [
+        "AVAILABLE",
+        "CREDIT",
+        "EMERGENCY",
+        "PRE_AGREED",
+        "TEMPORARY",
+        "OTHER",
+        "UNKNOWN"
+      ]
+    },
+    "ResponseForwardedData": {
+      "additionalProperties": true,
+      "type": "object",
+      "properties": {
+        "headers": {
+          "additionalProperties": {"type": "string"},
+          "type": "object"
+        },
+        "url": {"type": "string"}
+      }
+    },
+    "CreditLine": {
+      "additionalProperties": true,
+      "type": "object",
+      "properties": {
+        "creditLineAmount": {"$ref": "#/definitions/Amount"},
+        "type": {"$ref": "#/definitions/CreditLineType"}
+      }
+    },
+    "Amount": {
+      "description": "__Mandatory__. The `Amount` object that contains the amount and currency of the payment.",
+      "additionalProperties": true,
+      "type": "object",
+      "required": [
+        "amount",
+        "currency"
+      ],
+      "properties": {
+        "amount": {
+          "description": "__Mandatory__. The monetary value",
+          "type": "number",
+          "example": 10
+        },
+        "currency": {
+          "description": "__Mandatory__. The [ISO 4217](https://www.xe.com/iso4217.php) currency code",
+          "type": "string",
+          "example": "GBP"
+        }
+      }
+    },
+    "AccountIdentification": {
+      "description": "__Mandatory__. The `AccountIdentification` object for the user's account identifications for the account",
+      "additionalProperties": true,
+      "type": "object",
+      "required": [
+        "type",
+        "identification"
+      ],
+      "properties": {
+        "identification": {
+          "description": "__Mandatory__. The value associated with the account identification type.<br><br> See [Account Identification Combinations](https://docs.yapily.com/guides/payments/payment-execution/#account-identifications-combinations) for more information on the format of the values.",
+          "type": "string",
+          "example": "401016"
+        },
+        "type": {"$ref": "#/definitions/AccountIdentificationType"}
+      }
+    },
+    "UsageType": {
+      "type": "string",
+      "enum": [
+        "PERSONAL",
+        "BUSINESS",
+        "OTHER",
+        "UNKNOWN"
+      ]
+    },
+    "AccountType": {
+      "type": "string",
+      "enum": [
+        "CASH_TRADING",
+        "CASH_INCOME",
+        "CASH_PAYMENT",
+        "CHARGE_CARD",
+        "CHARGES",
+        "COMMISSION",
+        "CREDIT_CARD",
+        "CURRENT",
+        "E_MONEY",
+        "LIMITED_LIQUIDITY_SAVINGS_ACCOUNT",
+        "LOAN",
+        "MARGINAL_LENDING",
+        "MONEY_MARKET",
+        "MORTGAGE",
+        "NON_RESIDENT_EXTERNAL",
+        "OTHER",
+        "OVERDRAFT",
+        "OVERNIGHT_DEPOSIT",
+        "PREPAID_CARD",
+        "SALARY",
+        "SAVINGS",
+        "SETTLEMENT",
+        "TAX",
+        "UNKNOWN"
+      ]
+    },
+    "ResponseMeta": {
+      "additionalProperties": true,
+      "type": "object",
+      "properties": {"tracingId": {"type": "string"}}
+    },
+    "AccountBalance": {
+      "additionalProperties": true,
+      "type": "object",
+      "properties": {
+        "dateTime": {
+          "format": "date-time",
+          "type": "string"
+        },
+        "creditLineIncluded": {"type": "boolean"},
+        "type": {"$ref": "#/definitions/AccountBalanceType"},
+        "balanceAmount": {"$ref": "#/definitions/Amount"},
+        "creditLines": {
+          "type": "array",
+          "items": {"$ref": "#/definitions/CreditLine"}
+        }
+      }
+    },
+    "AccountBalanceType": {
+      "type": "string",
+      "enum": [
+        "CLOSING_AVAILABLE",
+        "CLOSING_BOOKED",
+        "CLOSING_CLEARED",
+        "EXPECTED",
+        "FORWARD_AVAILABLE",
+        "INFORMATION",
+        "INTERIM_AVAILABLE",
+        "INTERIM_BOOKED",
+        "INTERIM_CLEARED",
+        "OPENING_AVAILABLE",
+        "OPENING_BOOKED",
+        "OPENING_CLEARED",
+        "PREVIOUSLY_CLOSED_BOOKED",
+        "AUTHORISED",
+        "OTHER",
+        "UNKNOWN"
+      ]
+    },
+    "ApiResponseOfAccount": {
+      "x-amf-examples": {"OBIE Example Response": {
+        "description": "OBIE Example Response",
+        "value": {
+          "data": {
+            "accountIdentifications": [
+              {
+                "identification": "700001",
+                "type": "SORT_CODE"
+              },
+              {
+                "identification": "70000002",
+                "type": "ACCOUNT_NUMBER"
+              }
+            ],
+            "balance": -12.57,
+            "accountBalances": [{
+              "dateTime": "2021-06-09T08:51:02.463Z",
+              "creditLineIncluded": false,
+              "type": "EXPECTED",
+              "balanceAmount": {
+                "amount": -12.57,
+                "currency": "GBP"
+              },
+              "creditLines": []
+            }],
+            "accountType": "CURRENT",
+            "nickname": "xxxx0006",
+            "currency": "GBP",
+            "id": "700004000000000000000002",
+            "type": "Personal - Current",
+            "accountNames": [{"name": "Mr. Roberto Rastapopoulos & Ivan Sakharine"}],
+            "usageType": "PERSONAL"
+          },
+          "meta": {"tracingId": "01191f59dcd54be2854a7e686702dbd6"}
+        }
+      }},
+      "additionalProperties": true,
+      "type": "object",
+      "properties": {
+        "tracingId": {"type": "string"},
+        "data": {"$ref": "#/definitions/Account"},
+        "meta": {"$ref": "#/definitions/ResponseMeta"},
+        "raw": {
+          "type": "array",
+          "items": {"$ref": "#/definitions/RawResponse"}
+        },
+        "links": {
+          "additionalProperties": {"type": "string"},
+          "type": "object"
+        },
+        "forwardedData": {
+          "type": "array",
+          "items": {"$ref": "#/definitions/ResponseForwardedData"}
+        }
+      }
+    },
+    "RawResponse": {
+      "additionalProperties": true,
+      "type": "object",
+      "properties": {
+        "duration": {
+          "format": "iso8601",
+          "type": "string"
+        },
+        "result": {
+          "additionalProperties": true,
+          "type": "object"
+        },
+        "request": {"$ref": "#/definitions/RawRequest"},
+        "headers": {
+          "additionalProperties": {"type": "string"},
+          "type": "object"
+        },
+        "resultCode": {
+          "maximum": 2147483647,
+          "type": "integer",
+          "minimum": -2147483648
+        }
+      }
+    },
+    "AccountName": {
+      "additionalProperties": true,
+      "type": "object",
+      "properties": {"name": {"type": "string"}}
+    }
+  }
+}

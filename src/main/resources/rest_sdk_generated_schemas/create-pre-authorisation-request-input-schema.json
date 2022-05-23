@@ -1,0 +1,80 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "$ref": "#/definitions/PreAuthorisationRequest",
+  "definitions": {
+    "PreAuthorisationRequest": {
+      "x-amf-examples": {
+        "Berlin Group (PIS) Example Request": {
+          "description": "Berlin Group (PIS) Example Request",
+          "value": {
+            "institutionId": "n26",
+            "scope": "PIS",
+            "applicationUserId": "john.doe@company.com",
+            "callback": "https://display-parameters.com/"
+          }
+        },
+        "Berlin Group (AIS) Example Request": {
+          "description": "Berlin Group (AIS) Example Request",
+          "value": {
+            "institutionId": "n26",
+            "scope": "AIS",
+            "applicationUserId": "john.doe@company.com",
+            "callback": "https://display-parameters.com/"
+          }
+        }
+      },
+      "additionalProperties": true,
+      "type": "object",
+      "required": [
+        "institutionId",
+        "scope"
+      ],
+      "properties": {
+        "redirect": {"$ref": "#/definitions/RedirectRequest"},
+        "forwardParameters": {
+          "type": "array",
+          "items": {"type": "string"}
+        },
+        "institutionId": {
+          "description": "__Mandatory__. The reference to the `Institution` which identifies which institution the authorisation request is sent to.",
+          "type": "string",
+          "example": "yapily-mock"
+        },
+        "scope": {
+          "description": "__Mandatory__. Defines the scope of the pre-authorisation request.",
+          "type": "string",
+          "example": "AIS"
+        },
+        "userUuid": {
+          "format": "uuid",
+          "type": "string"
+        },
+        "applicationUserId": {
+          "description": "__Conditional__. The user-friendly reference to the `User` that will authorise the authorisation request. If a `User` with the specified `applicationUserId` exists, it will be used otherwise, a new `User` with the specified `applicationUserId` will be created and used. Either the `userUuid` or `applicationUserId` must be provided.",
+          "type": "string",
+          "example": "user-234562290"
+        },
+        "callback": {
+          "description": "__Optional__. The server to redirect the user to after the user complete the authorisation at the `Institution`. <br><br>See [Using a callback (Optional)](https://docs.yapily.com/knowledge/callback_url/#using-a-callback-optional) for more information.",
+          "type": "string",
+          "example": "https://display-parameters.com"
+        },
+        "oneTimeToken": {
+          "description": "__Conditional__. Used to receive a `oneTimeToken` rather than a `consentToken` at the `callback` for additional security. This can only be used when the `callback` is set. <br><br>See [Using a callback with an OTT (Optional)](https://docs.yapily.com/knowledge/callback_url/#using-a-callback-with-an-ott-optional) for more information.",
+          "type": "boolean",
+          "example": false
+        }
+      }
+    },
+    "RedirectRequest": {
+      "description": "__Optional__. The server to redirect the user to after the user complete the authorisation at the `Institution`.",
+      "additionalProperties": true,
+      "type": "object",
+      "required": ["url"],
+      "properties": {"url": {
+        "description": "__Mandatory__.Successful redirect after the user complete the authorisation at the `Institution`.",
+        "type": "string"
+      }}
+    }
+  }
+}

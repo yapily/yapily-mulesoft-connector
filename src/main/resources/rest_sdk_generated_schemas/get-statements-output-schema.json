@@ -1,0 +1,272 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "$ref": "#/definitions/ApiListResponseOfAccountStatement",
+  "definitions": {
+    "RawRequest": {
+      "additionalProperties": true,
+      "type": "object",
+      "properties": {
+        "headers": {
+          "additionalProperties": {"type": "string"},
+          "type": "object"
+        },
+        "bodyParameters": {
+          "additionalProperties": {"type": "string"},
+          "type": "object"
+        },
+        "method": {"type": "string"},
+        "requestInstant": {
+          "format": "date-time",
+          "type": "string"
+        },
+        "startedAt": {
+          "format": "date-time",
+          "type": "string"
+        },
+        "startTime": {
+          "format": "date-time",
+          "type": "string"
+        },
+        "body": {
+          "additionalProperties": true,
+          "type": "object"
+        },
+        "url": {"type": "string"}
+      }
+    },
+    "Pagination": {
+      "additionalProperties": true,
+      "type": "object",
+      "properties": {
+        "next": {"$ref": "#/definitions/Next"},
+        "self": {"$ref": "#/definitions/FilterAndSort"},
+        "totalCount": {
+          "maximum": 9.223372036854776E+18,
+          "type": "integer",
+          "minimum": -9.223372036854776E+18
+        }
+      }
+    },
+    "FilteredClientPayloadListAccountStatement": {
+      "additionalProperties": true,
+      "type": "object",
+      "properties": {
+        "data": {
+          "type": "array",
+          "items": {"$ref": "#/definitions/AccountStatement"}
+        },
+        "apiCall": {"$ref": "#/definitions/ApiCall"},
+        "totalCount": {
+          "maximum": 9.223372036854776E+18,
+          "type": "integer",
+          "minimum": -9.223372036854776E+18
+        },
+        "nextCursorHash": {"type": "string"},
+        "nextLink": {"type": "string"},
+        "pagingMap": {
+          "additionalProperties": {
+            "additionalProperties": true,
+            "type": "object",
+            "properties": {
+              "cursor": {"type": "string"},
+              "offset": {
+                "maximum": 2147483647,
+                "type": "integer",
+                "minimum": -2147483648
+              },
+              "before": {
+                "format": "date-time",
+                "type": "string"
+              },
+              "limit": {
+                "maximum": 2147483647,
+                "type": "integer",
+                "minimum": -2147483648
+              },
+              "from": {
+                "format": "date-time",
+                "type": "string"
+              },
+              "sort": {"$ref": "#/definitions/SortEnum"}
+            }
+          },
+          "type": "object"
+        }
+      }
+    },
+    "ResponseForwardedData": {
+      "additionalProperties": true,
+      "type": "object",
+      "properties": {
+        "headers": {
+          "additionalProperties": {"type": "string"},
+          "type": "object"
+        },
+        "url": {"type": "string"}
+      }
+    },
+    "ApiCall": {
+      "additionalProperties": true,
+      "type": "object"
+    },
+    "FilterAndSort": {
+      "additionalProperties": true,
+      "type": "object",
+      "properties": {
+        "cursor": {"type": "string"},
+        "offset": {
+          "maximum": 2147483647,
+          "type": "integer",
+          "minimum": -2147483648
+        },
+        "before": {
+          "format": "date-time",
+          "type": "string"
+        },
+        "limit": {
+          "maximum": 2147483647,
+          "type": "integer",
+          "minimum": -2147483648
+        },
+        "from": {
+          "format": "date-time",
+          "type": "string"
+        },
+        "sort": {"$ref": "#/definitions/SortEnum"}
+      }
+    },
+    "ResponseListMeta": {
+      "additionalProperties": true,
+      "type": "object",
+      "properties": {
+        "tracingId": {"type": "string"},
+        "pagination": {"$ref": "#/definitions/Pagination"},
+        "count": {
+          "maximum": 2147483647,
+          "type": "integer",
+          "minimum": -2147483648
+        }
+      }
+    },
+    "Next": {
+      "additionalProperties": true,
+      "type": "object",
+      "properties": {
+        "cursor": {"type": "string"},
+        "before": {
+          "format": "date-time",
+          "type": "string"
+        },
+        "limit": {
+          "maximum": 2147483647,
+          "type": "integer",
+          "minimum": -2147483648
+        },
+        "from": {
+          "format": "date-time",
+          "type": "string"
+        }
+      }
+    },
+    "ApiListResponseOfAccountStatement": {
+      "x-amf-examples": {"Example Response": {
+        "description": "Example Response",
+        "value": {
+          "data": [{
+            "startDateTime": "2017-08-01T00:00:00Z",
+            "id": "700014000000000000000002",
+            "endDateTime": "2017-08-31T23:59:59Z",
+            "creationDateTime": "2017-09-01T00:00:00Z"
+          }],
+          "meta": {
+            "tracingId": "fd5c215acd034401a8eaa8aeec1eafc7",
+            "pagination": {
+              "self": {
+                "offset": 0,
+                "limit": 1000,
+                "sort": "-date"
+              },
+              "totalCount": 1
+            },
+            "count": 1
+          },
+          "links": {"self": "https://api.yapily.com/accounts/700004000000000000000002/statements?from&before&limit=1000&sort=-date&offset=0"}
+        }
+      }},
+      "additionalProperties": true,
+      "type": "object",
+      "properties": {
+        "tracingId": {"type": "string"},
+        "data": {
+          "type": "array",
+          "items": {"$ref": "#/definitions/AccountStatement"}
+        },
+        "meta": {"$ref": "#/definitions/ResponseListMeta"},
+        "raw": {
+          "type": "array",
+          "items": {"$ref": "#/definitions/RawResponse"}
+        },
+        "links": {
+          "additionalProperties": {"type": "string"},
+          "type": "object"
+        },
+        "forwardedData": {
+          "type": "array",
+          "items": {"$ref": "#/definitions/ResponseForwardedData"}
+        },
+        "paging": {"$ref": "#/definitions/FilteredClientPayloadListAccountStatement"}
+      }
+    },
+    "AccountStatement": {
+      "additionalProperties": true,
+      "type": "object",
+      "properties": {
+        "startDateTime": {
+          "format": "date-time",
+          "type": "string"
+        },
+        "id": {"type": "string"},
+        "endDateTime": {
+          "format": "date-time",
+          "type": "string"
+        },
+        "creationDateTime": {
+          "format": "date-time",
+          "type": "string"
+        }
+      }
+    },
+    "SortEnum": {
+      "description": "Valid options for the sort parameter",
+      "type": "string",
+      "enum": [
+        "date",
+        "-date"
+      ]
+    },
+    "RawResponse": {
+      "additionalProperties": true,
+      "type": "object",
+      "properties": {
+        "duration": {
+          "format": "iso8601",
+          "type": "string"
+        },
+        "result": {
+          "additionalProperties": true,
+          "type": "object"
+        },
+        "request": {"$ref": "#/definitions/RawRequest"},
+        "headers": {
+          "additionalProperties": {"type": "string"},
+          "type": "object"
+        },
+        "resultCode": {
+          "maximum": 2147483647,
+          "type": "integer",
+          "minimum": -2147483648
+        }
+      }
+    }
+  }
+}

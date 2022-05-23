@@ -1,0 +1,39 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "$ref": "#/definitions/ProfileConsent",
+  "definitions": {"ProfileConsent": {
+    "description": "Object returned when creating a User Profile.",
+    "additionalProperties": true,
+    "type": "object",
+    "properties": {
+      "referenceConsentId": {
+        "format": "uuid",
+        "description": "The referenceConsentId.",
+        "type": "string",
+        "example": "1e2e5167-8519-4c19-b016-8f2f0c6e38b6"
+      },
+      "institutionId": {
+        "description": "The id of the Institution.",
+        "type": "string",
+        "example": "mock-sandbox"
+      },
+      "id": {
+        "format": "uuid",
+        "description": "The id of the ProfileConsent",
+        "type": "string",
+        "example": "eb2ad083-a111-4143-8756-a3a3cef4031c"
+      },
+      "userId": {
+        "format": "uuid",
+        "description": "The userUuid.",
+        "type": "string",
+        "example": "3ddf5dd0-aa48-4d0f-baa7-fa057e9e911d"
+      },
+      "status": {
+        "description": "The status, can be PENDING, COMPLETED or ERROR.",
+        "type": "string",
+        "example": "PENDING"
+      }
+    }
+  }}
+}

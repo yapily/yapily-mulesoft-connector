@@ -1,0 +1,175 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "$ref": "#/definitions/ApiResponseOfIdentity",
+  "definitions": {
+    "RawRequest": {
+      "additionalProperties": true,
+      "type": "object",
+      "properties": {
+        "headers": {
+          "additionalProperties": {"type": "string"},
+          "type": "object"
+        },
+        "bodyParameters": {
+          "additionalProperties": {"type": "string"},
+          "type": "object"
+        },
+        "method": {"type": "string"},
+        "requestInstant": {
+          "format": "date-time",
+          "type": "string"
+        },
+        "startedAt": {
+          "format": "date-time",
+          "type": "string"
+        },
+        "startTime": {
+          "format": "date-time",
+          "type": "string"
+        },
+        "body": {
+          "additionalProperties": true,
+          "type": "object"
+        },
+        "url": {"type": "string"}
+      }
+    },
+    "ResponseForwardedData": {
+      "additionalProperties": true,
+      "type": "object",
+      "properties": {
+        "headers": {
+          "additionalProperties": {"type": "string"},
+          "type": "object"
+        },
+        "url": {"type": "string"}
+      }
+    },
+    "AddressTypeEnum": {
+      "description": "__Optional__. The type of address",
+      "type": "string",
+      "enum": [
+        "BUSINESS",
+        "CORRESPONDENCE",
+        "DELIVERY_TO",
+        "MAIL_TO",
+        "PO_BOX",
+        "POSTAL",
+        "RESIDENTIAL",
+        "STATEMENT",
+        "UNKNOWN"
+      ]
+    },
+    "ResponseMeta": {
+      "additionalProperties": true,
+      "type": "object",
+      "properties": {"tracingId": {"type": "string"}}
+    },
+    "ApiResponseOfIdentity": {
+      "x-amf-examples": {"Example Response": {
+        "description": "Example Response",
+        "value": {
+          "data": {
+            "addresses": [
+              {
+                "country": "TA",
+                "city": "Hichikanzo",
+                "postalCode": "JP102",
+                "addressLines": []
+              },
+              {
+                "country": "GB",
+                "city": "St Albans",
+                "postalCode": "AL1 3SF",
+                "addressLines": []
+              }
+            ],
+            "phone": "+22-8937484901",
+            "fullName": "Mitsuhirato",
+            "id": "700001000000000000000002",
+            "email": "mits@suntori.com"
+          },
+          "meta": {"tracingId": "e4de605bd760459aa7f82aa81856ec1e"}
+        }
+      }},
+      "additionalProperties": true,
+      "type": "object",
+      "properties": {
+        "tracingId": {"type": "string"},
+        "data": {"$ref": "#/definitions/Identity"},
+        "meta": {"$ref": "#/definitions/ResponseMeta"},
+        "raw": {
+          "type": "array",
+          "items": {"$ref": "#/definitions/RawResponse"}
+        },
+        "links": {
+          "additionalProperties": {"type": "string"},
+          "type": "object"
+        },
+        "forwardedData": {
+          "type": "array",
+          "items": {"$ref": "#/definitions/ResponseForwardedData"}
+        }
+      }
+    },
+    "Identity": {
+      "additionalProperties": true,
+      "type": "object",
+      "properties": {
+        "firstName": {"type": "string"},
+        "lastName": {"type": "string"},
+        "addresses": {
+          "type": "array",
+          "items": {"$ref": "#/definitions/IdentityAddress"}
+        },
+        "birthdate": {"type": "string"},
+        "gender": {"type": "string"},
+        "phone": {"type": "string"},
+        "fullName": {"type": "string"},
+        "id": {"type": "string"},
+        "email": {"type": "string"}
+      }
+    },
+    "IdentityAddress": {
+      "additionalProperties": true,
+      "type": "object",
+      "properties": {
+        "country": {"type": "string"},
+        "streetName": {"type": "string"},
+        "city": {"type": "string"},
+        "postalCode": {"type": "string"},
+        "county": {"type": "string"},
+        "buildingNumber": {"type": "string"},
+        "addressLines": {
+          "type": "array",
+          "items": {"type": "string"}
+        },
+        "type": {"$ref": "#/definitions/AddressTypeEnum"}
+      }
+    },
+    "RawResponse": {
+      "additionalProperties": true,
+      "type": "object",
+      "properties": {
+        "duration": {
+          "format": "iso8601",
+          "type": "string"
+        },
+        "result": {
+          "additionalProperties": true,
+          "type": "object"
+        },
+        "request": {"$ref": "#/definitions/RawRequest"},
+        "headers": {
+          "additionalProperties": {"type": "string"},
+          "type": "object"
+        },
+        "resultCode": {
+          "maximum": 2147483647,
+          "type": "integer",
+          "minimum": -2147483648
+        }
+      }
+    }
+  }
+}

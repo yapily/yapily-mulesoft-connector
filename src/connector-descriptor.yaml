@@ -1,0 +1,15 @@
+#% Rest Connector Descriptor 1.0
+
+apiSpec:
+  url: /Users/mandeepsingh/Documents/mule/yapily-connector/openapi.json
+
+connectorName: Yapily
+connectorDescription: 'The Yapily API enables connections between your application and users'' banks. For more information check out our [documentation](https://docs.yapily.com/).<br><br>In particular, make sure to view our [Getting Started](https://docs.yapily.com/#getting-started) steps if this is your first time here.<br><br>While testing the API, our list of [sandbox credentials](https://docs.yapily.com/guides/applications/institutions/sandbox/) maybe useful.'
+
+connectorGav:
+  groupId: com.mulesoft.connectors
+  artifactId: yapily-api
+  version: 1.0.0-SNAPSHOT
+
+baseUri:
+  type: parameter

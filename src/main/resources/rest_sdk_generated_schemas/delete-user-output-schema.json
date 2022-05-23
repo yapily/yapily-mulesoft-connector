@@ -1,0 +1,152 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "$ref": "#/definitions/ApiResponseOfUserDeleteResponse",
+  "definitions": {
+    "ApiResponseOfUserDeleteResponse": {
+      "x-amf-examples": {"Example Response": {
+        "description": "Example Response",
+        "value": {
+          "data": {
+            "deleteStatus": "SUCCESS",
+            "id": "b8ebe390-f6fb-45b5-bf20-1b4436644390",
+            "creationDate": "2021-06-07T16:44:52.221Z",
+            "userConsents": [{"institutionId": "modelo-sandbox"}]
+          },
+          "meta": {"tracingId": "e6625041a9fb46e2a450b3f9f1528cb8"}
+        }
+      }},
+      "additionalProperties": true,
+      "type": "object",
+      "properties": {
+        "tracingId": {"type": "string"},
+        "data": {"$ref": "#/definitions/UserDeleteResponse"},
+        "meta": {"$ref": "#/definitions/ResponseMeta"},
+        "raw": {
+          "type": "array",
+          "items": {"$ref": "#/definitions/RawResponse"}
+        },
+        "links": {
+          "additionalProperties": {"type": "string"},
+          "type": "object"
+        },
+        "forwardedData": {
+          "type": "array",
+          "items": {"$ref": "#/definitions/ResponseForwardedData"}
+        }
+      }
+    },
+    "RawRequest": {
+      "additionalProperties": true,
+      "type": "object",
+      "properties": {
+        "headers": {
+          "additionalProperties": {"type": "string"},
+          "type": "object"
+        },
+        "bodyParameters": {
+          "additionalProperties": {"type": "string"},
+          "type": "object"
+        },
+        "method": {"type": "string"},
+        "requestInstant": {
+          "format": "date-time",
+          "type": "string"
+        },
+        "startedAt": {
+          "format": "date-time",
+          "type": "string"
+        },
+        "startTime": {
+          "format": "date-time",
+          "type": "string"
+        },
+        "body": {
+          "additionalProperties": true,
+          "type": "object"
+        },
+        "url": {"type": "string"}
+      }
+    },
+    "DeleteStatusEnum": {
+      "type": "string",
+      "enum": [
+        "SUCCESS",
+        "FAILED"
+      ]
+    },
+    "ResponseForwardedData": {
+      "additionalProperties": true,
+      "type": "object",
+      "properties": {
+        "headers": {
+          "additionalProperties": {"type": "string"},
+          "type": "object"
+        },
+        "url": {"type": "string"}
+      }
+    },
+    "ResponseMeta": {
+      "additionalProperties": true,
+      "type": "object",
+      "properties": {"tracingId": {"type": "string"}}
+    },
+    "ConsentDeleteResponse": {
+      "additionalProperties": true,
+      "type": "object",
+      "properties": {
+        "institutionId": {"type": "string"},
+        "deleteStatus": {"$ref": "#/definitions/DeleteStatusEnum"},
+        "id": {
+          "format": "uuid",
+          "type": "string"
+        },
+        "creationDate": {
+          "format": "date-time",
+          "type": "string"
+        },
+        "institutionConsentId": {"type": "string"}
+      }
+    },
+    "UserDeleteResponse": {
+      "additionalProperties": true,
+      "type": "object",
+      "properties": {
+        "deleteStatus": {"$ref": "#/definitions/DeleteStatusEnum"},
+        "id": {"type": "string"},
+        "creationDate": {
+          "format": "date-time",
+          "type": "string"
+        },
+        "userConsents": {
+          "uniqueItems": true,
+          "type": "array",
+          "items": {"$ref": "#/definitions/ConsentDeleteResponse"}
+        }
+      }
+    },
+    "RawResponse": {
+      "additionalProperties": true,
+      "type": "object",
+      "properties": {
+        "duration": {
+          "format": "iso8601",
+          "type": "string"
+        },
+        "result": {
+          "additionalProperties": true,
+          "type": "object"
+        },
+        "request": {"$ref": "#/definitions/RawRequest"},
+        "headers": {
+          "additionalProperties": {"type": "string"},
+          "type": "object"
+        },
+        "resultCode": {
+          "maximum": 2147483647,
+          "type": "integer",
+          "minimum": -2147483648
+        }
+      }
+    }
+  }
+}

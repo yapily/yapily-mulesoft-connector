@@ -1,0 +1,412 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "$ref": "#/definitions/ApiResponseOfPaymentAuthorisationRequestResponse",
+  "definitions": {
+    "RawRequest": {
+      "additionalProperties": true,
+      "type": "object",
+      "properties": {
+        "headers": {
+          "additionalProperties": {"type": "string"},
+          "type": "object"
+        },
+        "bodyParameters": {
+          "additionalProperties": {"type": "string"},
+          "type": "object"
+        },
+        "method": {"type": "string"},
+        "requestInstant": {
+          "format": "date-time",
+          "type": "string"
+        },
+        "startedAt": {
+          "format": "date-time",
+          "type": "string"
+        },
+        "startTime": {
+          "format": "date-time",
+          "type": "string"
+        },
+        "body": {
+          "additionalProperties": true,
+          "type": "object"
+        },
+        "url": {"type": "string"}
+      }
+    },
+    "RateTypeEnum": {
+      "description": "__Mandatory__. The type used to complete the currency exchange.",
+      "type": "string",
+      "enum": [
+        "ACTUAL",
+        "AGREED",
+        "INDICATIVE"
+      ]
+    },
+    "ResponseForwardedData": {
+      "additionalProperties": true,
+      "type": "object",
+      "properties": {
+        "headers": {
+          "additionalProperties": {"type": "string"},
+          "type": "object"
+        },
+        "url": {"type": "string"}
+      }
+    },
+    "ResponseMeta": {
+      "additionalProperties": true,
+      "type": "object",
+      "properties": {"tracingId": {"type": "string"}}
+    },
+    "PaymentChargeDetails": {
+      "additionalProperties": true,
+      "type": "object",
+      "properties": {
+        "chargeTo": {
+          "description": "Charge bearer",
+          "type": "string"
+        },
+        "chargeType": {
+          "description": "Type of charge",
+          "type": "string"
+        },
+        "chargeAmount": {"$ref": "#/definitions/Amount"}
+      }
+    },
+    "Amount": {
+      "description": "__Mandatory__. The `Amount` object that contains the amount and currency of the payment.",
+      "additionalProperties": true,
+      "type": "object",
+      "required": [
+        "amount",
+        "currency"
+      ],
+      "properties": {
+        "amount": {
+          "description": "__Mandatory__. The monetary value",
+          "type": "number",
+          "example": 10
+        },
+        "currency": {
+          "description": "__Mandatory__. The [ISO 4217](https://www.xe.com/iso4217.php) currency code",
+          "type": "string",
+          "example": "GBP"
+        }
+      }
+    },
+    "PaymentAuthorisationRequestResponse": {
+      "additionalProperties": true,
+      "type": "object",
+      "properties": {
+        "institutionId": {"type": "string"},
+        "authorizedAt": {
+          "format": "date-time",
+          "type": "string"
+        },
+        "transactionFrom": {
+          "format": "date-time",
+          "type": "string"
+        },
+        "consentToken": {"type": "string"},
+        "authorisationUrl": {"type": "string"},
+        "explanation": {"type": "string"},
+        "referenceId": {"type": "string"},
+        "transactionTo": {
+          "format": "date-time",
+          "type": "string"
+        },
+        "expiresAt": {
+          "format": "date-time",
+          "type": "string"
+        },
+        "createdAt": {
+          "format": "date-time",
+          "type": "string"
+        },
+        "timeToExpire": {
+          "format": "iso8601",
+          "type": "string"
+        },
+        "charges": {
+          "type": "array",
+          "items": {"$ref": "#/definitions/PaymentChargeDetails"}
+        },
+        "timeToExpireInMillis": {
+          "maximum": 9.223372036854776E+18,
+          "type": "integer",
+          "minimum": -9.223372036854776E+18
+        },
+        "qrCodeUrl": {"type": "string"},
+        "userUuid": {
+          "format": "uuid",
+          "type": "string"
+        },
+        "applicationUserId": {"type": "string"},
+        "exchangeRateInformation": {"$ref": "#/definitions/ExchangeRateInformationResponse"},
+        "id": {
+          "format": "uuid",
+          "type": "string"
+        },
+        "state": {"type": "string"},
+        "featureScope": {
+          "uniqueItems": true,
+          "type": "array",
+          "items": {"$ref": "#/definitions/FeatureEnum"}
+        },
+        "status": {"$ref": "#/definitions/AuthorisationStatus"},
+        "institutionConsentId": {"type": "string"}
+      }
+    },
+    "AuthorisationStatus": {
+      "type": "string",
+      "enum": [
+        "AWAITING_AUTHORIZATION",
+        "AWAITING_FURTHER_AUTHORIZATION",
+        "AWAITING_RE_AUTHORIZATION",
+        "AUTHORIZED",
+        "CONSUMED",
+        "REJECTED",
+        "REVOKED",
+        "FAILED",
+        "EXPIRED",
+        "UNKNOWN",
+        "INVALID",
+        "AWAITING_DECOUPLED_PRE_AUTHORIZATION",
+        "AWAITING_PRE_AUTHORIZATION",
+        "PRE_AUTHORIZED",
+        "AWAITING_DECOUPLED_AUTHORIZATION",
+        "AWAITING_SCA_METHOD",
+        "AWAITING_SCA_CODE"
+      ]
+    },
+    "FeatureEnum": {
+      "description": "Used to describe what functions are supported by the associated `Institution`.        <br><br>For more information on each feature, see the following links:        <ul>          <li>[Financial Data Features](https://docs.yapily.com/guides/financial-data/features/)<\/li>          <li>[Payments Features](https://docs.yapily.com/guides/payments/features/)<\/li>        <\/ul>",
+      "type": "string",
+      "enum": [
+        "INITIATE_PRE_AUTHORISATION",
+        "INITIATE_PRE_AUTHORISATION_ACCOUNTS",
+        "INITIATE_PRE_AUTHORISATION_PAYMENTS",
+        "INITIATE_ACCOUNT_REQUEST",
+        "INITIATE_EMBEDDED_ACCOUNT_REQUEST",
+        "ACCOUNT_REQUEST_DETAILS",
+        "ACCOUNTS",
+        "ACCOUNT",
+        "ACCOUNT_TRANSACTIONS",
+        "ACCOUNT_STATEMENTS",
+        "ACCOUNT_STATEMENT",
+        "ACCOUNT_STATEMENT_FILE",
+        "ACCOUNT_SCHEDULED_PAYMENTS",
+        "ACCOUNT_DIRECT_DEBITS",
+        "ACCOUNT_PERIODIC_PAYMENTS",
+        "ACCOUNT_TRANSACTIONS_WITH_MERCHANT",
+        "IDENTITY",
+        "ACCOUNTS_WITHOUT_BALANCE",
+        "ACCOUNT_WITHOUT_BALANCE",
+        "ACCOUNT_BALANCES",
+        "INITIATE_SINGLE_PAYMENT_SORTCODE",
+        "EXISTING_PAYMENT_INITIATION_DETAILS",
+        "CREATE_SINGLE_PAYMENT_SORTCODE",
+        "EXISTING_PAYMENTS_DETAILS",
+        "INITIATE_DOMESTIC_SINGLE_PAYMENT",
+        "INITIATE_EMBEDDED_DOMESTIC_SINGLE_PAYMENT",
+        "CREATE_DOMESTIC_SINGLE_PAYMENT",
+        "INITIATE_EMBEDDED_BULK_PAYMENT",
+        "INITIATE_DOMESTIC_SINGLE_INSTANT_PAYMENT",
+        "CREATE_DOMESTIC_SINGLE_INSTANT_PAYMENT",
+        "INITIATE_DOMESTIC_VARIABLE_RECURRING_PAYMENT",
+        "CREATE_DOMESTIC_VARIABLE_RECURRING_PAYMENT",
+        "INITIATE_DOMESTIC_SCHEDULED_PAYMENT",
+        "CREATE_DOMESTIC_SCHEDULED_PAYMENT",
+        "INITIATE_DOMESTIC_PERIODIC_PAYMENT",
+        "CREATE_DOMESTIC_PERIODIC_PAYMENT",
+        "PERIODIC_PAYMENT_FREQUENCY_EXTENDED",
+        "INITIATE_INTERNATIONAL_VARIABLE_RECURRING_PAYMENT",
+        "CREATE_INTERNATIONAL_VARIABLE_RECURRING_PAYMENT",
+        "INITIATE_INTERNATIONAL_SCHEDULED_PAYMENT",
+        "CREATE_INTERNATIONAL_SCHEDULED_PAYMENT",
+        "INITIATE_INTERNATIONAL_PERIODIC_PAYMENT",
+        "CREATE_INTERNATIONAL_PERIODIC_PAYMENT",
+        "INITIATE_INTERNATIONAL_SINGLE_PAYMENT",
+        "CREATE_INTERNATIONAL_SINGLE_PAYMENT",
+        "INITIATE_BULK_PAYMENT",
+        "CREATE_BULK_PAYMENT",
+        "TRANSFER",
+        "OPEN_DATA_PERSONAL_CURRENT_ACCOUNTS",
+        "OPEN_DATA_ATMS",
+        "READ_DOMESTIC_SINGLE_REFUND",
+        "READ_DOMESTIC_SCHEDULED_REFUND",
+        "READ_DOMESTIC_PERIODIC_PAYMENT_REFUND",
+        "READ_INTERNATIONAL_SINGLE_REFUND",
+        "READ_INTERNATIONAL_SCHEDULED_REFUND",
+        "ACCOUNT_BENEFICIARIES",
+        "INITIATE_ONETIME_PRE_AUTHORISATION_PAYMENTS"
+      ]
+    },
+    "ApiResponseOfPaymentAuthorisationRequestResponse": {
+      "x-amf-examples": {
+        "GBP Single Domestic Example Response": {
+          "description": "GBP Single Domestic Example Response",
+          "value": {
+            "data": {
+              "createdAt": "2021-06-08T09:45:42.145Z",
+              "institutionId": "modelo-sandbox",
+              "qrCodeUrl": "https://images.yapily.com/image/5121fd6a-5010-4f36-9c25-df691cf465c1/1623145542?size=0",
+              "userUuid": "3ddf5dd0-aa48-4d0f-baa7-fa057e9e911d",
+              "applicationUserId": "john.doe@company.com",
+              "id": "eb39f8ae-aeff-4ffa-a23d-d4a5b3eff406",
+              "state": "430b2756e9724c8eaad3862524817260",
+              "featureScope": [
+                "EXISTING_PAYMENTS_DETAILS",
+                "EXISTING_PAYMENT_INITIATION_DETAILS",
+                "CREATE_DOMESTIC_SINGLE_PAYMENT"
+              ],
+              "authorisationUrl": "https://ob19-auth1-ui.o3bank.co.uk/auth?client_id=e7f6b95b-5f35-419b-b301-8b08bcd946de&response_type=code+id_token&state=430b2756e9724c8eaad3862524817260&nonce=430b2756e9724c8eaad3862524817260&scope=openid+payments&redirect_uri=https%3A%2F%2Fauth.yapily.com%2F&request=eyJraWQiOiJnRTRvU3VaZDl4TVpUNXZDdTNWYy1mdktNak0iLCJhbGciOiJQUzI1NiJ9.eyJhdWQiOiJodHRwczovL29iMTktYXV0aDEtdWkubzNiYW5rLmNvLnVrIiwic2NvcGUiOiJvcGVuaWQgcGF5bWVudHMiLCJpc3MiOiJlN2Y2Yjk1Yi01ZjM1LTQxOWItYjMwMS04YjA4YmNkOTQ2ZGUiLCJjbGllbnRfaWQiOiJlN2Y2Yjk1Yi01ZjM1LTQxOWItYjMwMS04YjA4YmNkOTQ2ZGUiLCJyZXNwb25zZV90eXBlIjoiY29kZSBpZF90b2tlbiIsInJlZGlyZWN0X3VyaSI6Imh0dHBzOi8vYXV0aC55YXBpbHkuY29tLyIsInN0YXRlIjoiNDMwYjI3NTZlOTcyNGM4ZWFhZDM4NjI1MjQ4MTcyNjAiLCJjbGFpbXMiOnsiaWRfdG9rZW4iOnsiYWNyIjp7InZhbHVlIjoidXJuOm9wZW5iYW5raW5nOnBzZDI6c2NhIiwiZXNzZW50aWFsIjp0cnVlfSwib3BlbmJhbmtpbmdfaW50ZW50X2lkIjp7InZhbHVlIjoic2RwLTEtNmQ4ZDAzNWUtODY4ZS00MzU1LWJlNDEtYmRkYzI1YjdhYWM4IiwiZXNzZW50aWFsIjp0cnVlfX0sInVzZXJpbmZvIjp7Im9wZW5iYW5raW5nX2ludGVudF9pZCI6eyJ2YWx1ZSI6InNkcC0xLTZkOGQwMzVlLTg2OGUtNDM1NS1iZTQxLWJkZGMyNWI3YWFjOCIsImVzc2VudGlhbCI6dHJ1ZX19fSwibm9uY2UiOiI0MzBiMjc1NmU5NzI0YzhlYWFkMzg2MjUyNDgxNzI2MCIsImp0aSI6IjJjYzczMzRhLTJmMDYtNDNjNi04MDkzLTNiYWZjNjQzMWE0YyIsImlhdCI6MTYyMzE0NTU0MiwiZXhwIjoxNjIzMTQ3MzQyfQ.bh0sCVmwkwbx_rxxIwE6p7SjswaH007bdMJfWYo_njIHwoPOkcGjygi2yU7bpNd7bqeqxY1adtkMg_acg6A7awq1jX7nxv6mZC44Q2zGKNMc_nOQPSNO6LkktRcozBxyJ2sEfLheVmmVsyyCQw4FV0w_7Cgc4tFO11FjZ0LNxbp5kpMCK7SABa4RgvZ4IpG-Zl6jFKHfNK1zUP79yBaQcBvNseIirAmG3iJjdpwVc3tD8bl-0SPcPwStk1A3T8OvOgW8DKM4OSEPgKL73I9CExQiJzYykKYLr8tp9bQmI0OgajVM9BT2nbKszRnRe92gPq31goRHHWhfzgQHKFBCNg",
+              "status": "AWAITING_AUTHORIZATION",
+              "institutionConsentId": "sdp-1-6d8d035e-868e-4355-be41-bddc25b7aac8"
+            },
+            "meta": {"tracingId": "2dbfd85b4f2940c6a206e96dd90e52d0"}
+          }
+        },
+        "Berlin Group EUR Single Domestic Payment Example Response": {
+          "description": "Berlin Group EUR Single Domestic Payment Example Response",
+          "value": {
+            "data": {
+              "createdAt": "2021-06-10T09:54:46.669Z",
+              "institutionId": "n26",
+              "userUuid": "e2578545-27a4-4edf-983f-5d33c2d7b559",
+              "applicationUserId": "john.doe@company.com",
+              "authorizedAt": "2021-06-10T09:55:22.359Z",
+              "id": "53ff00d0-91dd-417d-880b-cdd7c50090ed",
+              "state": "4399535ee4de46238fce108a95669848",
+              "featureScope": [
+                "INITIATE_PRE_AUTHORISATION",
+                "CREATE_DOMESTIC_SINGLE_PAYMENT",
+                "EXISTING_PAYMENTS_DETAILS"
+              ],
+              "status": "AWAITING_DECOUPLED_AUTHORIZATION",
+              "institutionConsentId": "a9582f8e-08be-4cca-9f01-1ad3be96532d"
+            },
+            "meta": {"tracingId": "54ec0645a5b444c4a70c61357e9ad887"}
+          }
+        },
+        "UK Bulk Payment Example Response": {
+          "description": "UK Bulk Payment Example Response",
+          "value": {
+            "data": {
+              "createdAt": "2021-06-09T13:48:25.138Z",
+              "institutionId": "modelo-sandbox",
+              "qrCodeUrl": "https://images.yapily.com/image/2bbb79b8-2c4a-4c8e-9132-0636879437da/1623246505?size=0",
+              "userUuid": "5350782b-60f3-489e-aae5-a24d8d679a07",
+              "applicationUserId": "john.doe@company.com",
+              "id": "a2a9ec77-a479-4996-9896-4568e1968e7a",
+              "state": "80052c03007f41d589f64377eef4d620",
+              "featureScope": [
+                "EXISTING_PAYMENTS_DETAILS",
+                "EXISTING_PAYMENT_INITIATION_DETAILS",
+                "CREATE_BULK_PAYMENT"
+              ],
+              "authorisationUrl": "https://ob19-auth1-ui.o3bank.co.uk/auth?client_id=e7f6b95b-5f35-419b-b301-8b08bcd946de&response_type=code+id_token&state=80052c03007f41d589f64377eef4d620&nonce=80052c03007f41d589f64377eef4d620&scope=openid+payments&redirect_uri=https%3A%2F%2Fauth.yapily.com%2F&request=eyJraWQiOiJnRTRvU3VaZDl4TVpUNXZDdTNWYy1mdktNak0iLCJhbGciOiJQUzI1NiJ9.eyJhdWQiOiJodHRwczovL29iMTktYXV0aDEtdWkubzNiYW5rLmNvLnVrIiwic2NvcGUiOiJvcGVuaWQgcGF5bWVudHMiLCJpc3MiOiJlN2Y2Yjk1Yi01ZjM1LTQxOWItYjMwMS04YjA4YmNkOTQ2ZGUiLCJjbGllbnRfaWQiOiJlN2Y2Yjk1Yi01ZjM1LTQxOWItYjMwMS04YjA4YmNkOTQ2ZGUiLCJyZXNwb25zZV90eXBlIjoiY29kZSBpZF90b2tlbiIsInJlZGlyZWN0X3VyaSI6Imh0dHBzOi8vYXV0aC55YXBpbHkuY29tLyIsInN0YXRlIjoiODAwNTJjMDMwMDdmNDFkNTg5ZjY0Mzc3ZWVmNGQ2MjAiLCJjbGFpbXMiOnsiaWRfdG9rZW4iOnsiYWNyIjp7InZhbHVlIjoidXJuOm9wZW5iYW5raW5nOnBzZDI6c2NhIiwiZXNzZW50aWFsIjp0cnVlfSwib3BlbmJhbmtpbmdfaW50ZW50X2lkIjp7InZhbHVlIjoic2RwLTYtMjVmZjViZDgtZDAxYy00MjJkLWFhOWUtOGU2ODgwOGJjODk5IiwiZXNzZW50aWFsIjp0cnVlfX0sInVzZXJpbmZvIjp7Im9wZW5iYW5raW5nX2ludGVudF9pZCI6eyJ2YWx1ZSI6InNkcC02LTI1ZmY1YmQ4LWQwMWMtNDIyZC1hYTllLThlNjg4MDhiYzg5OSIsImVzc2VudGlhbCI6dHJ1ZX19fSwibm9uY2UiOiI4MDA1MmMwMzAwN2Y0MWQ1ODlmNjQzNzdlZWY0ZDYyMCIsImp0aSI6ImUxYjZmMWM4LTQ1ZTktNGM0NS05NGE0LWExMTY1Nzk2NjZiNiIsImlhdCI6MTYyMzI0NjUwNSwiZXhwIjoxNjIzMjQ4MzA1fQ.C5YkClHiDOWl1CKnmEY0gM_JizUuELp2-k7sDjsWV5T-mgTWviO-jM7iVfCf4MsU6batLSBmeUFLco1b3S8PTQkAzwM3laHIgbfDAb_6bYkSBTbPriyzKcC8xAwhX3VdvWtb9qqdrn9zXSmIIITBhJdMzk1cgIjyETD7WNPln839eGP1-w8iB8yDOJOkYGRHJ850mQY-lk61GegmKs5kaxtYPIhrG2gygIi3JsN-uQJ6YOl2-5pylTEcJbuwhFiyeePdqHZdabqW2BSA6lDKQbMV_Zow_zhSWoFFv6RZdXCQpt4TBRj1W7tzZQKin-MC-TpzaF1q07RpSy0NtlN85w",
+              "status": "AWAITING_AUTHORIZATION",
+              "institutionConsentId": "sdp-6-25ff5bd8-d01c-422d-aa9e-8e68808bc899"
+            },
+            "meta": {"tracingId": "96169af01d394ad39658f17d53b49a5d"}
+          }
+        },
+        "EUR Single Domestic Example Response": {
+          "description": "EUR Single Domestic Example Response",
+          "value": {
+            "data": {
+              "createdAt": "2021-06-10T11:47:12.887Z",
+              "institutionId": "bpm-sandbox",
+              "qrCodeUrl": "https://images.yapily.com/image/5955c0db-a5b7-4b12-a682-0f83317ba46d/1623325632?size=0",
+              "userUuid": "5350782b-60f3-489e-aae5-a24d8d679a07",
+              "applicationUserId": "john.doe@company.com",
+              "id": "cae22f3d-1033-4ba6-95ae-0d8ca193b090",
+              "state": "6a5f69be6a084b5c8c1becac88d45c95",
+              "featureScope": [
+                "EXISTING_PAYMENTS_DETAILS",
+                "CREATE_DOMESTIC_SINGLE_PAYMENT",
+                "EXISTING_PAYMENT_INITIATION_DETAILS"
+              ],
+              "authorisationUrl": "https://scasandbox.bancobpm.it/sca/login.html?paymentId=79cee256-077f-4e11-a307-43892646a4a6&tppAuthenticationRedirectUri=https%3A%2F%2Fauth.yapily.com%2F%3Ftwofold_redirect%3Dtrue%26state%3D6a5f69be6a084b5c8c1becac88d45c95&tppName=YAPILY+LTD&aspspCode=05034&aspspProductCode=IBP01&tppRegistrationNumber=PSDGB-FCA-927459&hash=GY5CmKG3MVeoxrboUQkjCoIb1X0nGR9ZTfoIG3T%2FLx1At1UJ92w0sjDeRXbNP9NhO203Y03UeI6Xn9ThebOjtQ%3D%3D",
+              "status": "AWAITING_AUTHORIZATION",
+              "institutionConsentId": "79cee256-077f-4e11-a307-43892646a4a6"
+            },
+            "meta": {"tracingId": "a3d09f97bea244e2bb8be0bffbe53f81"}
+          }
+        }
+      },
+      "additionalProperties": true,
+      "type": "object",
+      "properties": {
+        "tracingId": {"type": "string"},
+        "data": {"$ref": "#/definitions/PaymentAuthorisationRequestResponse"},
+        "meta": {"$ref": "#/definitions/ResponseMeta"},
+        "raw": {
+          "type": "array",
+          "items": {"$ref": "#/definitions/RawResponse"}
+        },
+        "links": {
+          "additionalProperties": {"type": "string"},
+          "type": "object"
+        },
+        "forwardedData": {
+          "type": "array",
+          "items": {"$ref": "#/definitions/ResponseForwardedData"}
+        }
+      }
+    },
+    "RawResponse": {
+      "additionalProperties": true,
+      "type": "object",
+      "properties": {
+        "duration": {
+          "format": "iso8601",
+          "type": "string"
+        },
+        "result": {
+          "additionalProperties": true,
+          "type": "object"
+        },
+        "request": {"$ref": "#/definitions/RawRequest"},
+        "headers": {
+          "additionalProperties": {"type": "string"},
+          "type": "object"
+        },
+        "resultCode": {
+          "maximum": 2147483647,
+          "type": "integer",
+          "minimum": -2147483648
+        }
+      }
+    },
+    "ExchangeRateInformationResponse": {
+      "additionalProperties": true,
+      "type": "object",
+      "required": [
+        "unitCurrency",
+        "rateType"
+      ],
+      "properties": {
+        "rateType": {"$ref": "#/definitions/RateTypeEnum"},
+        "foreignExchangeContractReference": {
+          "description": "__Optional__. The unique and unambiguous reference to the foreign exchange contract agreed between the initiating party/creditor and the debtor agent.",
+          "type": "string"
+        },
+        "exchangeRateExpiryDate": {
+          "format": "date-time",
+          "type": "string"
+        },
+        "rate": {
+          "description": "__Optional__. The factor used for conversion of an amount from one currency to another. This reflects the price at which one currency was bought with another currency.",
+          "type": "number"
+        },
+        "unitCurrency": {
+          "description": "__Mandatory__. The currency in which the rate of exchange is expressed in a currency exchange. In the example 1GBP = xxxCUR, the unit currency is `GBP`.",
+          "type": "string"
+        }
+      }
+    }
+  }
+}

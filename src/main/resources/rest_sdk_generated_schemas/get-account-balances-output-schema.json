@@ -1,0 +1,217 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "$ref": "#/definitions/ApiResponseOfBalances",
+  "definitions": {
+    "RawRequest": {
+      "additionalProperties": true,
+      "type": "object",
+      "properties": {
+        "headers": {
+          "additionalProperties": {"type": "string"},
+          "type": "object"
+        },
+        "bodyParameters": {
+          "additionalProperties": {"type": "string"},
+          "type": "object"
+        },
+        "method": {"type": "string"},
+        "requestInstant": {
+          "format": "date-time",
+          "type": "string"
+        },
+        "startedAt": {
+          "format": "date-time",
+          "type": "string"
+        },
+        "startTime": {
+          "format": "date-time",
+          "type": "string"
+        },
+        "body": {
+          "additionalProperties": true,
+          "type": "object"
+        },
+        "url": {"type": "string"}
+      }
+    },
+    "CreditLineType": {
+      "type": "string",
+      "enum": [
+        "AVAILABLE",
+        "CREDIT",
+        "EMERGENCY",
+        "PRE_AGREED",
+        "TEMPORARY",
+        "OTHER",
+        "UNKNOWN"
+      ]
+    },
+    "ResponseForwardedData": {
+      "additionalProperties": true,
+      "type": "object",
+      "properties": {
+        "headers": {
+          "additionalProperties": {"type": "string"},
+          "type": "object"
+        },
+        "url": {"type": "string"}
+      }
+    },
+    "ResponseMeta": {
+      "additionalProperties": true,
+      "type": "object",
+      "properties": {"tracingId": {"type": "string"}}
+    },
+    "AccountBalance": {
+      "additionalProperties": true,
+      "type": "object",
+      "properties": {
+        "dateTime": {
+          "format": "date-time",
+          "type": "string"
+        },
+        "creditLineIncluded": {"type": "boolean"},
+        "type": {"$ref": "#/definitions/AccountBalanceType"},
+        "balanceAmount": {"$ref": "#/definitions/Amount"},
+        "creditLines": {
+          "type": "array",
+          "items": {"$ref": "#/definitions/CreditLine"}
+        }
+      }
+    },
+    "AccountBalanceType": {
+      "type": "string",
+      "enum": [
+        "CLOSING_AVAILABLE",
+        "CLOSING_BOOKED",
+        "CLOSING_CLEARED",
+        "EXPECTED",
+        "FORWARD_AVAILABLE",
+        "INFORMATION",
+        "INTERIM_AVAILABLE",
+        "INTERIM_BOOKED",
+        "INTERIM_CLEARED",
+        "OPENING_AVAILABLE",
+        "OPENING_BOOKED",
+        "OPENING_CLEARED",
+        "PREVIOUSLY_CLOSED_BOOKED",
+        "AUTHORISED",
+        "OTHER",
+        "UNKNOWN"
+      ]
+    },
+    "CreditLine": {
+      "additionalProperties": true,
+      "type": "object",
+      "properties": {
+        "creditLineAmount": {"$ref": "#/definitions/Amount"},
+        "type": {"$ref": "#/definitions/CreditLineType"}
+      }
+    },
+    "Amount": {
+      "description": "__Mandatory__. The `Amount` object that contains the amount and currency of the payment.",
+      "additionalProperties": true,
+      "type": "object",
+      "required": [
+        "amount",
+        "currency"
+      ],
+      "properties": {
+        "amount": {
+          "description": "__Mandatory__. The monetary value",
+          "type": "number",
+          "example": 10
+        },
+        "currency": {
+          "description": "__Mandatory__. The [ISO 4217](https://www.xe.com/iso4217.php) currency code",
+          "type": "string",
+          "example": "GBP"
+        }
+      }
+    },
+    "Balances": {
+      "additionalProperties": true,
+      "type": "object",
+      "properties": {
+        "mainBalanceAmount": {"$ref": "#/definitions/Amount"},
+        "balances": {
+          "type": "array",
+          "items": {"$ref": "#/definitions/AccountBalance"}
+        }
+      }
+    },
+    "ApiResponseOfBalances": {
+      "x-amf-examples": {"CBI Globe Example Response": {
+        "description": "CBI Globe Example Response",
+        "value": {
+          "data": {
+            "mainBalanceAmount": {
+              "amount": -3079208604.11,
+              "currency": "EUR"
+            },
+            "balances": [
+              {
+                "type": "INTERIM_AVAILABLE",
+                "balanceAmount": {
+                  "amount": -3079208604.11,
+                  "currency": "EUR"
+                }
+              },
+              {
+                "type": "AUTHORISED",
+                "balanceAmount": {
+                  "amount": -3079208604.11,
+                  "currency": "EUR"
+                }
+              }
+            ]
+          },
+          "meta": {"tracingId": "82e86ae9547a4f04b3773c1207e4b84d"}
+        }
+      }},
+      "additionalProperties": true,
+      "type": "object",
+      "properties": {
+        "tracingId": {"type": "string"},
+        "data": {"$ref": "#/definitions/Balances"},
+        "meta": {"$ref": "#/definitions/ResponseMeta"},
+        "raw": {
+          "type": "array",
+          "items": {"$ref": "#/definitions/RawResponse"}
+        },
+        "links": {
+          "additionalProperties": {"type": "string"},
+          "type": "object"
+        },
+        "forwardedData": {
+          "type": "array",
+          "items": {"$ref": "#/definitions/ResponseForwardedData"}
+        }
+      }
+    },
+    "RawResponse": {
+      "additionalProperties": true,
+      "type": "object",
+      "properties": {
+        "duration": {
+          "format": "iso8601",
+          "type": "string"
+        },
+        "result": {
+          "additionalProperties": true,
+          "type": "object"
+        },
+        "request": {"$ref": "#/definitions/RawRequest"},
+        "headers": {
+          "additionalProperties": {"type": "string"},
+          "type": "object"
+        },
+        "resultCode": {
+          "maximum": 2147483647,
+          "type": "integer",
+          "minimum": -2147483648
+        }
+      }
+    }
+  }
+}

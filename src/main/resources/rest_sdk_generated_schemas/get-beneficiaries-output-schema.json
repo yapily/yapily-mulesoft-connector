@@ -1,0 +1,348 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "$ref": "#/definitions/ApiListResponseOfBeneficiary",
+  "definitions": {
+    "RawRequest": {
+      "additionalProperties": true,
+      "type": "object",
+      "properties": {
+        "headers": {
+          "additionalProperties": {"type": "string"},
+          "type": "object"
+        },
+        "bodyParameters": {
+          "additionalProperties": {"type": "string"},
+          "type": "object"
+        },
+        "method": {"type": "string"},
+        "requestInstant": {
+          "format": "date-time",
+          "type": "string"
+        },
+        "startedAt": {
+          "format": "date-time",
+          "type": "string"
+        },
+        "startTime": {
+          "format": "date-time",
+          "type": "string"
+        },
+        "body": {
+          "additionalProperties": true,
+          "type": "object"
+        },
+        "url": {"type": "string"}
+      }
+    },
+    "ApiListResponseOfBeneficiary": {
+      "x-amf-examples": {"OBIE Example Response": {
+        "description": "OBIE Example Response",
+        "value": {"data": [{
+          "reference": "Rent",
+          "payee": {
+            "accountIdentifications": [
+              {
+                "identification": "123456",
+                "type": "SORT_CODE"
+              },
+              {
+                "identification": "12345678",
+                "type": "ACCOUNT_NUMBER"
+              }
+            ],
+            "name": "John Doe"
+          },
+          "trusted": true,
+          "id": "112"
+        }]}
+      }},
+      "additionalProperties": true,
+      "type": "object",
+      "properties": {
+        "tracingId": {"type": "string"},
+        "data": {
+          "type": "array",
+          "items": {"$ref": "#/definitions/Beneficiary"}
+        },
+        "meta": {"$ref": "#/definitions/ResponseListMeta"},
+        "raw": {
+          "type": "array",
+          "items": {"$ref": "#/definitions/RawResponse"}
+        },
+        "links": {
+          "additionalProperties": {"type": "string"},
+          "type": "object"
+        },
+        "forwardedData": {
+          "type": "array",
+          "items": {"$ref": "#/definitions/ResponseForwardedData"}
+        }
+      }
+    },
+    "AccountIdentificationType": {
+      "description": "__Mandatory__. Used to describe the format of the account.<br><br> See [Account Identification Combinations](https://docs.yapily.com/guides/payments/payment-execution/#account-identifications-combinations) for more information on when to specify each type.",
+      "type": "string",
+      "enum": [
+        "SORT_CODE",
+        "ACCOUNT_NUMBER",
+        "IBAN",
+        "BBAN",
+        "BIC",
+        "PAN",
+        "MASKED_PAN",
+        "MSISDN",
+        "BSB",
+        "NCC",
+        "ABA",
+        "ABA_WIRE",
+        "ABA_ACH",
+        "EMAIL",
+        "ROLL_NUMBER"
+      ],
+      "example": "SORT_CODE"
+    },
+    "ResponseForwardedData": {
+      "additionalProperties": true,
+      "type": "object",
+      "properties": {
+        "headers": {
+          "additionalProperties": {"type": "string"},
+          "type": "object"
+        },
+        "url": {"type": "string"}
+      }
+    },
+    "Address": {
+      "description": "__Conditional__. The address of the `Payee` or `Payer`.<ul><li>`payee.address` is mandatory when the `paymentType` is an `INTERNATIONAL` payment<\/li><li>An `Institution` may require you to specify the `country` when used in the context ofthe `Payee` to be able to make a payment.<\/li><\/ul>",
+      "additionalProperties": true,
+      "type": "object",
+      "properties": {
+        "country": {
+          "description": "__Conditional__. The 2-letter country code for the address. <br><br>An `Institution` may require you to specify the `country` when used in the context of the `Payee` to be able to make a payment",
+          "type": "string",
+          "example": "GB"
+        },
+        "streetName": {
+          "description": "__Optional__. The street name of the address",
+          "type": "string",
+          "example": "Oxford Road"
+        },
+        "townName": {
+          "description": "__Optional__. The town name of the address",
+          "type": "string",
+          "example": "Aylesbury"
+        },
+        "addressType": {"$ref": "#/definitions/AddressTypeEnum"},
+        "county": {
+          "description": "__Optional__. The list of counties for the address",
+          "type": "array",
+          "items": {"type": "string"},
+          "example": "Buckinghamshire"
+        },
+        "buildingNumber": {
+          "description": "__Optional__. The building number of the address",
+          "type": "string",
+          "example": "45"
+        },
+        "postCode": {
+          "description": "__Optional__. The post code of the address",
+          "type": "string",
+          "example": "HP19 3EQ"
+        },
+        "addressLines": {
+          "description": "__Optional__. The address line of the address",
+          "type": "array",
+          "items": {"type": "string"},
+          "example": "Ardenham Court"
+        },
+        "subDepartment": {
+          "description": "__Optional__. The sub-department for the address",
+          "type": "string",
+          "example": "Floor 3"
+        },
+        "department": {
+          "description": "__Optional__. The department for the address",
+          "type": "string",
+          "example": "Unit 2"
+        }
+      },
+      "example": {"country": "GB"}
+    },
+    "AccountIdentification": {
+      "description": "__Mandatory__. The `AccountIdentification` object for the user's account identifications for the account",
+      "additionalProperties": true,
+      "type": "object",
+      "required": [
+        "type",
+        "identification"
+      ],
+      "properties": {
+        "identification": {
+          "description": "__Mandatory__. The value associated with the account identification type.<br><br> See [Account Identification Combinations](https://docs.yapily.com/guides/payments/payment-execution/#account-identifications-combinations) for more information on the format of the values.",
+          "type": "string",
+          "example": "401016"
+        },
+        "type": {"$ref": "#/definitions/AccountIdentificationType"}
+      }
+    },
+    "Pagination": {
+      "additionalProperties": true,
+      "type": "object",
+      "properties": {
+        "next": {"$ref": "#/definitions/Next"},
+        "self": {"$ref": "#/definitions/FilterAndSort"},
+        "totalCount": {
+          "maximum": 9.223372036854776E+18,
+          "type": "integer",
+          "minimum": -9.223372036854776E+18
+        }
+      }
+    },
+    "AddressTypeEnum": {
+      "description": "__Optional__. The type of address",
+      "type": "string",
+      "enum": [
+        "BUSINESS",
+        "CORRESPONDENCE",
+        "DELIVERY_TO",
+        "MAIL_TO",
+        "PO_BOX",
+        "POSTAL",
+        "RESIDENTIAL",
+        "STATEMENT",
+        "UNKNOWN"
+      ]
+    },
+    "FilterAndSort": {
+      "additionalProperties": true,
+      "type": "object",
+      "properties": {
+        "cursor": {"type": "string"},
+        "offset": {
+          "maximum": 2147483647,
+          "type": "integer",
+          "minimum": -2147483648
+        },
+        "before": {
+          "format": "date-time",
+          "type": "string"
+        },
+        "limit": {
+          "maximum": 2147483647,
+          "type": "integer",
+          "minimum": -2147483648
+        },
+        "from": {
+          "format": "date-time",
+          "type": "string"
+        },
+        "sort": {"$ref": "#/definitions/SortEnum"}
+      }
+    },
+    "ResponseListMeta": {
+      "additionalProperties": true,
+      "type": "object",
+      "properties": {
+        "tracingId": {"type": "string"},
+        "pagination": {"$ref": "#/definitions/Pagination"},
+        "count": {
+          "maximum": 2147483647,
+          "type": "integer",
+          "minimum": -2147483648
+        }
+      }
+    },
+    "Next": {
+      "additionalProperties": true,
+      "type": "object",
+      "properties": {
+        "cursor": {"type": "string"},
+        "before": {
+          "format": "date-time",
+          "type": "string"
+        },
+        "limit": {
+          "maximum": 2147483647,
+          "type": "integer",
+          "minimum": -2147483648
+        },
+        "from": {
+          "format": "date-time",
+          "type": "string"
+        }
+      }
+    },
+    "BeneficiaryPayee": {
+      "description": "__Mandatory__. The `BeneficiaryPayee` object contains details of the beneficiary [person or business]. You must define this in your payment request along with all of the nested mandatory properties.",
+      "additionalProperties": true,
+      "type": "object",
+      "required": ["accountIdentifications"],
+      "properties": {
+        "accountIdentifications": {
+          "uniqueItems": true,
+          "description": "__Mandatory__. The account identifications that identify the `BeneficiaryPayee` bank account.",
+          "type": "array",
+          "items": {"$ref": "#/definitions/AccountIdentification"},
+          "example": [
+            {
+              "identification": "401016",
+              "type": "SORT_CODE"
+            },
+            {
+              "identification": "71518920",
+              "type": "ACCOUNT_NUMBER"
+            }
+          ]
+        },
+        "address": {"$ref": "#/definitions/Address"},
+        "name": {
+          "description": "The account holder name of the beneficiary.",
+          "type": "string",
+          "example": "Jane Doe"
+        }
+      }
+    },
+    "SortEnum": {
+      "description": "Valid options for the sort parameter",
+      "type": "string",
+      "enum": [
+        "date",
+        "-date"
+      ]
+    },
+    "Beneficiary": {
+      "additionalProperties": true,
+      "type": "object",
+      "properties": {
+        "reference": {"type": "string"},
+        "payee": {"$ref": "#/definitions/BeneficiaryPayee"},
+        "trusted": {"type": "boolean"},
+        "id": {"type": "string"}
+      }
+    },
+    "RawResponse": {
+      "additionalProperties": true,
+      "type": "object",
+      "properties": {
+        "duration": {
+          "format": "iso8601",
+          "type": "string"
+        },
+        "result": {
+          "additionalProperties": true,
+          "type": "object"
+        },
+        "request": {"$ref": "#/definitions/RawRequest"},
+        "headers": {
+          "additionalProperties": {"type": "string"},
+          "type": "object"
+        },
+        "resultCode": {
+          "maximum": 2147483647,
+          "type": "integer",
+          "minimum": -2147483648
+        }
+      }
+    }
+  }
+}

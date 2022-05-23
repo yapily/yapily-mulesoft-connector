@@ -1,0 +1,203 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "$ref": "#/definitions/PaymentPreAuthorisationRequest",
+  "definitions": {
+    "AccountIdentificationType": {
+      "description": "__Mandatory__. Used to describe the format of the account.<br><br> See [Account Identification Combinations](https://docs.yapily.com/guides/payments/payment-execution/#account-identifications-combinations) for more information on when to specify each type.",
+      "type": "string",
+      "enum": [
+        "SORT_CODE",
+        "ACCOUNT_NUMBER",
+        "IBAN",
+        "BBAN",
+        "BIC",
+        "PAN",
+        "MASKED_PAN",
+        "MSISDN",
+        "BSB",
+        "NCC",
+        "ABA",
+        "ABA_WIRE",
+        "ABA_ACH",
+        "EMAIL",
+        "ROLL_NUMBER"
+      ],
+      "example": "SORT_CODE"
+    },
+    "PayeeDetails": {
+      "description": "__Mandatory__. The `PayeeDetails` object contains details of the beneficiary [person or business]. You must define this in your payment request alongwith all of the nested mandatory properties.",
+      "additionalProperties": true,
+      "type": "object",
+      "required": [
+        "name",
+        "accountIdentifications",
+        "country"
+      ],
+      "properties": {
+        "accountIdentifications": {
+          "uniqueItems": true,
+          "description": "__Mandatory__. The account identifications that identify the `Payee` bank account.",
+          "type": "array",
+          "items": {"$ref": "#/definitions/AccountIdentification"},
+          "example": [{
+            "identification": "IBUK123456789",
+            "type": "IBAN"
+          }]
+        },
+        "country": {
+          "description": "__Conditional__. The 2-letter country code for the address. <br><br>An `Institution` may require you to specify the `country` when used in the context of the `Payee` to be able to make a payment",
+          "type": "string",
+          "example": "GB"
+        },
+        "name": {
+          "description": "__Mandatory__. The account holder name of the beneficiary.",
+          "type": "string",
+          "example": "Jane Doe"
+        }
+      }
+    },
+    "PayerDetails": {
+      "description": "__Conditional__. The `Payer` object contains details of the benefactor [person or business]. If you define this in your payment request, you mustdefine this along with all of the nested mandatory properties.<ol>     <li>The `Payer` object is mandatory along with its mandatory properties when the account of the benefactor is from an `Institution` in Europe.          See [Berlin Group](https://docs.yapily.com/knowledge/berlin_group/) for more information.<\/li>     <li>The `Payer` should be specified if the `Payer` account is intended to be locked.<\/li><\/ol>",
+      "additionalProperties": true,
+      "type": "object",
+      "required": ["accountIdentifications"],
+      "properties": {"accountIdentifications": {
+        "uniqueItems": true,
+        "description": "__Mandatory__. The account identifications that identify the `Payer` bank account.",
+        "type": "array",
+        "items": {"$ref": "#/definitions/AccountIdentification"}
+      }}
+    },
+    "Amount": {
+      "description": "__Mandatory__. The `Amount` object that contains the amount and currency of the payment.",
+      "additionalProperties": true,
+      "type": "object",
+      "required": [
+        "amount",
+        "currency"
+      ],
+      "properties": {
+        "amount": {
+          "description": "__Mandatory__. The monetary value",
+          "type": "number",
+          "example": 10
+        },
+        "currency": {
+          "description": "__Mandatory__. The [ISO 4217](https://www.xe.com/iso4217.php) currency code",
+          "type": "string",
+          "example": "GBP"
+        }
+      }
+    },
+    "RedirectRequest": {
+      "description": "__Optional__. The server to redirect the user to after the user complete the authorisation at the `Institution`.",
+      "additionalProperties": true,
+      "type": "object",
+      "required": ["url"],
+      "properties": {"url": {
+        "description": "__Mandatory__.Successful redirect after the user complete the authorisation at the `Institution`.",
+        "type": "string"
+      }}
+    },
+    "PaymentPreAuthorisationRequest": {
+      "x-amf-examples": {"Cbi Globe (PIS) Example Request": {
+        "description": "Cbi Globe (PIS) Example Request",
+        "value": {
+          "reference": "Bill Payment",
+          "payee": {
+            "accountIdentifications": [{
+              "identification": "BE12345678901234",
+              "type": "IBAN"
+            }],
+            "country": "BE",
+            "name": "Jane Doe"
+          },
+          "amount": {
+            "amount": 1,
+            "currency": "EUR"
+          },
+          "institutionId": "n26",
+          "scope": "PIS",
+          "applicationUserId": "john.doe@company.com",
+          "callback": "https://display-parameters.com/",
+          "payer": {"accountIdentifications": [{
+            "identification": "DE12345678901234567890",
+            "type": "IBAN"
+          }]}
+        }
+      }},
+      "description": "__Mandatory__. The payment pre authorisation request object defining the details of the payment and pre auth.",
+      "additionalProperties": true,
+      "type": "object",
+      "required": [
+        "institutionId",
+        "scope",
+        "payee",
+        "payer",
+        "amount",
+        "reference"
+      ],
+      "properties": {
+        "redirect": {"$ref": "#/definitions/RedirectRequest"},
+        "payee": {"$ref": "#/definitions/PayeeDetails"},
+        "reference": {
+          "description": "__Mandatory__. The payment reference or description. Limited to a maximum of 18 characters long.",
+          "type": "string",
+          "example": "Bill payment"
+        },
+        "amount": {"$ref": "#/definitions/Amount"},
+        "forwardParameters": {
+          "type": "array",
+          "items": {"type": "string"}
+        },
+        "institutionId": {
+          "description": "__Mandatory__. The reference to the `Institution` which identifies which institution the authorisation request is sent to.",
+          "type": "string",
+          "example": "yapily-mock"
+        },
+        "scope": {
+          "description": "__Mandatory__. Defines the scope of the pre-authorisation request.",
+          "type": "string",
+          "example": "AIS"
+        },
+        "userUuid": {
+          "format": "uuid",
+          "type": "string"
+        },
+        "applicationUserId": {
+          "description": "__Conditional__. The user-friendly reference to the `User` that will authorise the authorisation request. If a `User` with the specified `applicationUserId` exists, it will be used otherwise, a new `User` with the specified `applicationUserId` will be created and used. Either the `userUuid` or `applicationUserId` must be provided.",
+          "type": "string",
+          "example": "user-234562290"
+        },
+        "callback": {
+          "description": "__Optional__. The server to redirect the user to after the user complete the authorisation at the `Institution`. <br><br>See [Using a callback (Optional)](https://docs.yapily.com/knowledge/callback_url/#using-a-callback-optional) for more information.",
+          "type": "string",
+          "example": "https://display-parameters.com"
+        },
+        "payer": {"$ref": "#/definitions/PayerDetails"},
+        "oneTimeToken": {
+          "description": "__Conditional__. Used to receive a `oneTimeToken` rather than a `consentToken` at the `callback` for additional security. This can only be used when the `callback` is set. <br><br>See [Using a callback with an OTT (Optional)](https://docs.yapily.com/knowledge/callback_url/#using-a-callback-with-an-ott-optional) for more information.",
+          "type": "boolean",
+          "example": false
+        }
+      }
+    },
+    "AccountIdentification": {
+      "description": "__Mandatory__. The `AccountIdentification` object for the user's account identifications for the account",
+      "additionalProperties": true,
+      "type": "object",
+      "required": [
+        "type",
+        "identification"
+      ],
+      "properties": {
+        "identification": {
+          "description": "__Mandatory__. The value associated with the account identification type.<br><br> See [Account Identification Combinations](https://docs.yapily.com/guides/payments/payment-execution/#account-identifications-combinations) for more information on the format of the values.",
+          "type": "string",
+          "example": "401016"
+        },
+        "type": {"$ref": "#/definitions/AccountIdentificationType"}
+      }
+    }
+  }
+}

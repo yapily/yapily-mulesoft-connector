@@ -1,0 +1,129 @@
+package com.mulesoft.connectors.yapily.internal.operation.base;
+
+import com.mulesoft.connectivity.rest.commons.api.binding.HttpRequestBinding;
+import com.mulesoft.connectivity.rest.commons.api.binding.HttpResponseBinding;
+import com.mulesoft.connectivity.rest.commons.api.configuration.RestConfiguration;
+import com.mulesoft.connectivity.rest.commons.api.connection.RestConnection;
+import com.mulesoft.connectivity.rest.commons.api.error.RestError;
+import com.mulesoft.connectivity.rest.commons.api.operation.BaseRestOperation;
+import com.mulesoft.connectivity.rest.commons.api.operation.ConfigurationOverrides;
+import com.mulesoft.connectivity.rest.commons.api.operation.RequestParameters;
+import com.mulesoft.connectivity.rest.commons.internal.util.RestRequestBuilder;
+import com.mulesoft.connectivity.rest.commons.internal.util.StreamUtils;
+import java.io.InputStream;
+import java.util.HashMap;
+import java.util.Map;
+import org.mule.runtime.api.el.ExpressionLanguage;
+import org.mule.runtime.extension.api.exception.ModuleException;
+import org.mule.runtime.extension.api.runtime.process.CompletionCallback;
+import org.mule.runtime.http.api.HttpConstants;
+
+/** Higher part of the Operation. It has the implementation of the operation. */
+public abstract class GetStatementFileOperationBase extends BaseRestOperation {
+  protected static final String OPERATION_PATH =
+      "/accounts/{accountId}/statements/{statementId}/file";
+
+  protected static final RestRequestBuilder.ParameterArrayFormat QUERY_PARAM_FORMAT =
+      RestRequestBuilder.ParameterArrayFormat.MULTIMAP;
+
+  public GetStatementFileOperationBase(ExpressionLanguage arg0) {
+    super(arg0);
+  }
+
+  public GetStatementFileOperationBase() {
+    super();
+  }
+
+  protected void getStatementFile(
+      RestConfiguration config,
+      RestConnection connection,
+      String accountIdUriParam,
+      String statementIdUriParam,
+      boolean rawQueryParam,
+      String consentHeader,
+      RequestParameters parameters,
+      ConfigurationOverrides overrides,
+      CompletionCallback<InputStream, Object> callback) {
+    try {
+      Map<String, Object> customParameterBindings = new HashMap<>();
+      getStatementFileMain(
+          config,
+          connection,
+          accountIdUriParam,
+          statementIdUriParam,
+          rawQueryParam,
+          consentHeader,
+          customParameterBindings,
+          parameters,
+          overrides,
+          callback);
+    } catch (ModuleException e) {
+      callback.error(e);
+    } catch (Throwable e) {
+      callback.error(new ModuleException("Unknown error", RestError.CONNECTIVITY, e));
+    }
+  }
+
+  protected void getStatementFileMain(
+      RestConfiguration config,
+      RestConnection connection,
+      String accountIdUriParam,
+      String statementIdUriParam,
+      boolean rawQueryParam,
+      String consentHeader,
+      Map<String, Object> customParameterBindings,
+      RequestParameters parameters,
+      ConfigurationOverrides overrides,
+      CompletionCallback<InputStream, Object> callback) {
+    Map<String, Object> parameterBindings = new HashMap<>();
+    parameterBindings = StreamUtils.resolveCursorProvider(parameterBindings);
+    customParameterBindings = StreamUtils.resolveCursorProvider(customParameterBindings);
+    RestRequestBuilder builder =
+        getRequestBuilderWithBindings(
+                connection.getBaseUri(),
+                OPERATION_PATH,
+                HttpConstants.Method.GET,
+                parameters,
+                overrides,
+                connection,
+                config,
+                parameterBindings,
+                customParameterBindings)
+            .setQueryParamFormat(QUERY_PARAM_FORMAT)
+            .addHeader("accept", "application/pdf")
+            .addUriParam("accountId", accountIdUriParam)
+            .addUriParam("statementId", statementIdUriParam)
+            .addQueryParam("raw", rawQueryParam)
+            .addHeader("consent", consentHeader);
+    doRequest(
+        config,
+        connection,
+        builder,
+        overrides.getResponseTimeoutAsMillis(),
+        parameterBindings,
+        customParameterBindings,
+        callbackObjectAttributesAdapter(callback));
+  }
+
+  @Override
+  protected String getRequestBodyMediaType() {
+    return "application/json";
+  }
+
+  @Override
+  protected String getResponseBodyMediaType() {
+    return "application/pdf";
+  }
+
+  @Override
+  protected HttpRequestBinding getRequestBindings() {
+    HttpRequestBinding bindings = new HttpRequestBinding();
+    return bindings;
+  }
+
+  @Override
+  protected HttpResponseBinding getResponseBindings() {
+    HttpResponseBinding bindings = new HttpResponseBinding();
+    return bindings;
+  }
+}

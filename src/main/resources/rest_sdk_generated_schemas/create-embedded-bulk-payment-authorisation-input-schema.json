@@ -1,0 +1,779 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "$ref": "#/definitions/BulkPaymentEmbeddedAuthorisationRequest",
+  "definitions": {
+    "Payer": {
+      "description": "__Conditional__. The `Payer` object contains details of the benefactor [person or business]. If you define this in your payment request, you mustdefine this along with all of the nested mandatory properties.<ol>     <li>The `Payer` object is mandatory along with its mandatory properties when the account of the benefactor is from an `Institution` in Europe.          See [Berlin Group](https://docs.yapily.com/knowledge/berlin_group/) for more information.<\/li>     <li>The `Payer` should be specified if the `Payer` account is intended to be locked.<\/li><\/ol>",
+      "additionalProperties": true,
+      "type": "object",
+      "required": ["accountIdentifications"],
+      "properties": {
+        "accountIdentifications": {
+          "uniqueItems": true,
+          "description": "__Mandatory__. The account identifications that identify the `Payer` bank account.",
+          "type": "array",
+          "items": {"$ref": "#/definitions/AccountIdentification"}
+        },
+        "address": {"$ref": "#/definitions/Address"},
+        "name": {
+          "description": "__Mandatory__. The account holder name of the Payer.",
+          "type": "string",
+          "example": "John Doe"
+        }
+      }
+    },
+    "PriorityCodeEnum": {
+      "type": "string",
+      "enum": [
+        "NORMAL",
+        "URGENT"
+      ]
+    },
+    "BulkPaymentRequest": {
+      "x-amf-examples": {"UK Bulk Payment Example Request": {
+        "description": "UK Bulk Payment Example Request",
+        "value": {"payments": [
+          {
+            "reference": "payment1",
+            "payee": {
+              "accountIdentifications": [
+                {
+                  "identification": "12345678",
+                  "type": "ACCOUNT_NUMBER"
+                },
+                {
+                  "identification": "123456",
+                  "type": "SORT_CODE"
+                }
+              ],
+              "name": "Jane Doe"
+            },
+            "amount": {
+              "amount": 2,
+              "currency": "GBP"
+            },
+            "paymentIdempotencyId": "d78fy48uh8f9odhde68dfi38di9",
+            "type": "DOMESTIC_PAYMENT"
+          },
+          {
+            "reference": "payment2",
+            "payee": {
+              "accountIdentifications": [
+                {
+                  "identification": "87654321",
+                  "type": "ACCOUNT_NUMBER"
+                },
+                {
+                  "identification": "654321",
+                  "type": "SORT_CODE"
+                }
+              ],
+              "name": "John Doe"
+            },
+            "amount": {
+              "amount": 5,
+              "currency": "GBP"
+            },
+            "paymentIdempotencyId": "4279gdy8t63dg73gd8gx87738dg",
+            "type": "DOMESTIC_PAYMENT"
+          }
+        ]}
+      }},
+      "description": "The payment request object defining the details of the bulk payment",
+      "additionalProperties": true,
+      "type": "object",
+      "required": ["payments"],
+      "properties": {
+        "payments": {
+          "description": "__Mandatory__. The array of `PaymentRequest` objects to initiate in the bulk payment.",
+          "type": "array",
+          "items": {"$ref": "#/definitions/PaymentRequest"}
+        },
+        "originatorIdentificationNumber": {
+          "description": "__Conditional__. The identification number of the originator.<ul><li>Mandatory for AIB bulk payments<\/li><\/ul>",
+          "type": "string"
+        },
+        "executionDateTime": {
+          "format": "date-time",
+          "description": "__Optional__. Used to schedule the bulk payment to be executed at a future date if supported by the `Institution`.",
+          "type": "string"
+        }
+      }
+    },
+    "AccountIdentificationType": {
+      "description": "__Mandatory__. Used to describe the format of the account.<br><br> See [Account Identification Combinations](https://docs.yapily.com/guides/payments/payment-execution/#account-identifications-combinations) for more information on when to specify each type.",
+      "type": "string",
+      "enum": [
+        "SORT_CODE",
+        "ACCOUNT_NUMBER",
+        "IBAN",
+        "BBAN",
+        "BIC",
+        "PAN",
+        "MASKED_PAN",
+        "MSISDN",
+        "BSB",
+        "NCC",
+        "ABA",
+        "ABA_WIRE",
+        "ABA_ACH",
+        "EMAIL",
+        "ROLL_NUMBER"
+      ],
+      "example": "SORT_CODE"
+    },
+    "FrequencyEnumExtended": {
+      "description": "__Mandatory__. See [payment frequency](/guides/payments/payment-execution/periodic-payments/#payment-frequency) for more information",
+      "type": "string",
+      "enum": [
+        "DAILY",
+        "EVERY_WORKING_DAY",
+        "CALENDAR_DAY",
+        "WEEKLY",
+        "EVERY_TWO_WEEKS",
+        "MONTHLY",
+        "EVERY_TWO_MONTHS",
+        "QUARTERLY",
+        "SEMIANNUAL",
+        "ANNUAL"
+      ]
+    },
+    "RateTypeEnum": {
+      "description": "__Mandatory__. The type used to complete the currency exchange.",
+      "type": "string",
+      "enum": [
+        "ACTUAL",
+        "AGREED",
+        "INDICATIVE"
+      ]
+    },
+    "Address": {
+      "description": "__Conditional__. The address of the `Payee` or `Payer`.<ul><li>`payee.address` is mandatory when the `paymentType` is an `INTERNATIONAL` payment<\/li><li>An `Institution` may require you to specify the `country` when used in the context ofthe `Payee` to be able to make a payment.<\/li><\/ul>",
+      "additionalProperties": true,
+      "type": "object",
+      "properties": {
+        "country": {
+          "description": "__Conditional__. The 2-letter country code for the address. <br><br>An `Institution` may require you to specify the `country` when used in the context of the `Payee` to be able to make a payment",
+          "type": "string",
+          "example": "GB"
+        },
+        "streetName": {
+          "description": "__Optional__. The street name of the address",
+          "type": "string",
+          "example": "Oxford Road"
+        },
+        "townName": {
+          "description": "__Optional__. The town name of the address",
+          "type": "string",
+          "example": "Aylesbury"
+        },
+        "addressType": {"$ref": "#/definitions/AddressTypeEnum"},
+        "county": {
+          "description": "__Optional__. The list of counties for the address",
+          "type": "array",
+          "items": {"type": "string"},
+          "example": "Buckinghamshire"
+        },
+        "buildingNumber": {
+          "description": "__Optional__. The building number of the address",
+          "type": "string",
+          "example": "45"
+        },
+        "postCode": {
+          "description": "__Optional__. The post code of the address",
+          "type": "string",
+          "example": "HP19 3EQ"
+        },
+        "addressLines": {
+          "description": "__Optional__. The address line of the address",
+          "type": "array",
+          "items": {"type": "string"},
+          "example": "Ardenham Court"
+        },
+        "subDepartment": {
+          "description": "__Optional__. The sub-department for the address",
+          "type": "string",
+          "example": "Floor 3"
+        },
+        "department": {
+          "description": "__Optional__. The department for the address",
+          "type": "string",
+          "example": "Unit 2"
+        }
+      },
+      "example": {"country": "GB"}
+    },
+    "PaymentContextType": {
+      "default": "OTHER",
+      "description": "__Optional__. The payment context code. This defaults to `OTHER` if not specified.",
+      "type": "string",
+      "enum": [
+        "BILL",
+        "GOODS",
+        "SERVICES",
+        "OTHER",
+        "PERSON_TO_PERSON"
+      ]
+    },
+    "Amount": {
+      "description": "__Mandatory__. The `Amount` object that contains the amount and currency of the payment.",
+      "additionalProperties": true,
+      "type": "object",
+      "required": [
+        "amount",
+        "currency"
+      ],
+      "properties": {
+        "amount": {
+          "description": "__Mandatory__. The monetary value",
+          "type": "number",
+          "example": 10
+        },
+        "currency": {
+          "description": "__Mandatory__. The [ISO 4217](https://www.xe.com/iso4217.php) currency code",
+          "type": "string",
+          "example": "GBP"
+        }
+      }
+    },
+    "FrequencyRequest": {
+      "description": "__Mandatory__. Defines the intervals at which payment should be made.",
+      "additionalProperties": true,
+      "type": "object",
+      "required": ["type"],
+      "properties": {
+        "intervalMonth": {
+          "description": "__Conditional__. See [payment frequency](/guides/payments/payment-execution/periodic-payments/#payment-frequency) for more information",
+          "maximum": 2147483647,
+          "type": "integer",
+          "minimum": -2147483648,
+          "example": 1
+        },
+        "intervalWeek": {
+          "description": "__Conditional__. See [payment frequency](/guides/payments/payment-execution/periodic-payments/#payment-frequency) for more information",
+          "maximum": 2147483647,
+          "type": "integer",
+          "minimum": -2147483648,
+          "example": 1
+        },
+        "executionDay": {
+          "description": "__Conditional__. See [payment frequency](/guides/payments/payment-execution/periodic-payments/#payment-frequency) for more information",
+          "maximum": 2147483647,
+          "type": "integer",
+          "minimum": -2147483648,
+          "example": 1
+        },
+        "type": {"$ref": "#/definitions/FrequencyEnumExtended"}
+      }
+    },
+    "AccountIdentification": {
+      "description": "__Mandatory__. The `AccountIdentification` object for the user's account identifications for the account",
+      "additionalProperties": true,
+      "type": "object",
+      "required": [
+        "type",
+        "identification"
+      ],
+      "properties": {
+        "identification": {
+          "description": "__Mandatory__. The value associated with the account identification type.<br><br> See [Account Identification Combinations](https://docs.yapily.com/guides/payments/payment-execution/#account-identifications-combinations) for more information on the format of the values.",
+          "type": "string",
+          "example": "401016"
+        },
+        "type": {"$ref": "#/definitions/AccountIdentificationType"}
+      }
+    },
+    "Type": {
+      "description": "The type of sca method available for the user",
+      "type": "string",
+      "enum": [
+        "SMS_OTP",
+        "CHIP_OTP",
+        "PHOTO_OTP",
+        "PUSH_OTP"
+      ]
+    },
+    "AddressTypeEnum": {
+      "description": "__Optional__. The type of address",
+      "type": "string",
+      "enum": [
+        "BUSINESS",
+        "CORRESPONDENCE",
+        "DELIVERY_TO",
+        "MAIL_TO",
+        "PO_BOX",
+        "POSTAL",
+        "RESIDENTIAL",
+        "STATEMENT",
+        "UNKNOWN"
+      ]
+    },
+    "BulkPaymentEmbeddedAuthorisationRequest": {
+      "x-amf-examples": {
+        "Berlin Group EUR Embedded Bulk Payment (SCA Code) Example Request": {
+          "description": "Berlin Group EUR Embedded Bulk Payment (SCA Code) Example Request",
+          "value": {
+            "institutionId": "fiducia-sandbox",
+            "applicationUserId": "john.doe@company.com",
+            "scaCode": "123456",
+            "paymentRequest": {
+              "payments": [
+                {
+                  "reference": "REFERENCE",
+                  "payee": {
+                    "accountIdentifications": [{
+                      "identification": "DE12345678901234567890",
+                      "type": "IBAN"
+                    }],
+                    "address": {"country": "DE"},
+                    "name": "Jane Doe"
+                  },
+                  "amount": {
+                    "amount": 1,
+                    "currency": "EUR"
+                  },
+                  "paymentIdempotencyId": "e4f913909a3d11eabb370242ac130002",
+                  "type": "DOMESTIC_PAYMENT",
+                  "payer": {
+                    "accountIdentifications": [{
+                      "identification": "DE39499999600000005111",
+                      "type": "IBAN"
+                    }],
+                    "name": "John Doe"
+                  }
+                },
+                {
+                  "reference": "REFERENCE",
+                  "payee": {
+                    "accountIdentifications": [{
+                      "identification": "DE12345678900000000000",
+                      "type": "IBAN"
+                    }],
+                    "address": {"country": "DE"},
+                    "name": "John Doe"
+                  },
+                  "amount": {
+                    "amount": 1,
+                    "currency": "EUR"
+                  },
+                  "paymentIdempotencyId": "e4f913909a3d11eabb370242ac130002",
+                  "type": "DOMESTIC_PAYMENT",
+                  "payer": {
+                    "accountIdentifications": [{
+                      "identification": "DE39499999600000005111",
+                      "type": "IBAN"
+                    }],
+                    "name": "Jane Doe"
+                  }
+                }
+              ],
+              "executionDateTime": "2021-10-29T00:00:00Z"
+            }
+          }
+        },
+        "Berlin Group EUR Embedded Bulk Payment Example Request": {
+          "description": "Berlin Group EUR Embedded Bulk Payment Example Request",
+          "value": {
+            "institutionId": "fiducia-sandbox",
+            "applicationUserId": "john.doe@company.com",
+            "userCredentials": {
+              "password": "password",
+              "id": "VRK1234567890PLUS"
+            },
+            "paymentRequest": {
+              "payments": [
+                {
+                  "reference": "REFERENCE",
+                  "payee": {
+                    "accountIdentifications": [{
+                      "identification": "DE12345678901234567890",
+                      "type": "IBAN"
+                    }],
+                    "address": {"country": "DE"},
+                    "name": "Jane Doe"
+                  },
+                  "amount": {
+                    "amount": 1,
+                    "currency": "EUR"
+                  },
+                  "paymentIdempotencyId": "e4f913909a3d11eabb370242ac130002",
+                  "type": "DOMESTIC_PAYMENT",
+                  "payer": {
+                    "accountIdentifications": [{
+                      "identification": "DE39499999600000005111",
+                      "type": "IBAN"
+                    }],
+                    "name": "John Doe"
+                  }
+                },
+                {
+                  "reference": "REFERENCE",
+                  "payee": {
+                    "accountIdentifications": [{
+                      "identification": "DE12345678900000000000",
+                      "type": "IBAN"
+                    }],
+                    "address": {"country": "DE"},
+                    "name": "John Doe"
+                  },
+                  "amount": {
+                    "amount": 1,
+                    "currency": "EUR"
+                  },
+                  "paymentIdempotencyId": "e4f913909a3d11eabb370242ac130002",
+                  "type": "DOMESTIC_PAYMENT",
+                  "payer": {
+                    "accountIdentifications": [{
+                      "identification": "DE39499999600000005111",
+                      "type": "IBAN"
+                    }],
+                    "name": "Jane Doe"
+                  }
+                }
+              ],
+              "executionDateTime": "2021-10-29T00:00:00Z"
+            }
+          }
+        }
+      },
+      "description": "The request body containing a `BulkPaymentEmbeddedAuthorisationRequest` json payload",
+      "additionalProperties": true,
+      "type": "object",
+      "required": ["institutionId"],
+      "properties": {
+        "redirect": {"$ref": "#/definitions/RedirectRequest"},
+        "institutionId": {
+          "description": "__Mandatory__. The reference to the `Institution` which identifies which institution the authorisation request is sent to.",
+          "type": "string",
+          "example": "yapily-mock"
+        },
+        "userUuid": {
+          "format": "uuid",
+          "description": "__Conditional__. The reference to the `User` that will authorise the authorisation request using the Yapily generated UUID. Either the `userUuid` or `applicationUserId` must be provided.",
+          "type": "string",
+          "example": "e006a012-c306-4355-a6a1-99bf69ae5171"
+        },
+        "applicationUserId": {
+          "description": "__Conditional__. The user-friendly reference to the `User` that will authorise the authorisation request. If a `User` with the specified `applicationUserId` exists, it will be used otherwise, a new `User` with the specified `applicationUserId` will be created and used. Either the `userUuid` or `applicationUserId` must be provided.",
+          "type": "string",
+          "example": "user-234562290"
+        },
+        "userCredentials": {"$ref": "#/definitions/UserCredentials"},
+        "callback": {
+          "description": "__Optional__. The server to redirect the user to after the user complete the authorisation at the `Institution`. <br><br>See [Using a callback (Optional)](https://docs.yapily.com/knowledge/callback_url/#using-a-callback-optional) for more information.",
+          "type": "string",
+          "example": "https://display-parameters.com"
+        },
+        "selectedScaMethod": {"$ref": "#/definitions/ScaMethod"},
+        "scaCode": {
+          "description": "__Conditional__. Used to update the authorisation with the sca code received by the user from the `Institution` using the embedded payment authorisation flow.<br><br>This is the penultimate step required in the embedded payment authorisation flow to authorise the `Consent`. After sending the sca code, to obtain an authorised consent, the last step is to poll [Get Consent](https://docs.yapily.com/api/#get-consent) until the `Institution` authorises the request and the `Consent` `status` transitions to `AUTHORIZED`.",
+          "type": "string",
+          "example": "325614"
+        },
+        "oneTimeToken": {
+          "description": "__Conditional__. Used to receive a `oneTimeToken` rather than a `consentToken` at the `callback` for additional security. This can only be used when the `callback` is set. <br><br>See [Using a callback with an OTT (Optional)](https://docs.yapily.com/knowledge/callback_url/#using-a-callback-with-an-ott-optional) for more information.",
+          "type": "boolean",
+          "example": false
+        },
+        "paymentRequest": {"$ref": "#/definitions/BulkPaymentRequest"}
+      }
+    },
+    "ExchangeRateInformation": {
+      "description": "__Optional__. Used to provide details on the currency exchange rate and contract.",
+      "additionalProperties": true,
+      "type": "object",
+      "required": [
+        "unitCurrency",
+        "rateType"
+      ],
+      "properties": {
+        "rateType": {"$ref": "#/definitions/RateTypeEnum"},
+        "foreignExchangeContractReference": {
+          "description": "__Optional__. The unique and unambiguous reference to the foreign exchange contract agreed between the initiating party/creditor and the debtor agent.",
+          "type": "string"
+        },
+        "rate": {
+          "description": "__Optional__. The factor used for conversion of an amount from one currency to another. This reflects the price at which one currency was bought with another currency.",
+          "type": "number"
+        },
+        "unitCurrency": {
+          "description": "__Mandatory__. The currency in which the rate of exchange is expressed in a currency exchange. In the example 1GBP = xxxCUR, the unit currency is `GBP`.",
+          "type": "string"
+        }
+      }
+    },
+    "PaymentRequest": {
+      "x-amf-examples": {
+        "EUR Domestic Single Payment Example Request": {
+          "description": "EUR Domestic Single Payment Example Request",
+          "value": {
+            "reference": "Bill Payment",
+            "payee": {
+              "accountIdentifications": [{
+                "identification": "BE12345678901234",
+                "type": "IBAN"
+              }],
+              "address": {"country": "BE"},
+              "name": "Jane Doe"
+            },
+            "amount": {
+              "amount": 1,
+              "currency": "EUR"
+            },
+            "paymentIdempotencyId": "234g87t58tgeuo848wudjew489",
+            "type": "DOMESTIC_PAYMENT",
+            "payer": {
+              "accountIdentifications": [{
+                "identification": "DE12345678901234567890",
+                "type": "IBAN"
+              }],
+              "name": "John Doe"
+            }
+          }
+        },
+        "GBP Domestic Single Payment Example Request": {
+          "description": "GBP Domestic Single Payment Example Request",
+          "value": {
+            "reference": "Bill Payment",
+            "payee": {
+              "accountIdentifications": [
+                {
+                  "identification": "123456",
+                  "type": "SORT_CODE"
+                },
+                {
+                  "identification": "12345678",
+                  "type": "ACCOUNT_NUMBER"
+                }
+              ],
+              "address": {"country": "GB"},
+              "name": "Jane Doe"
+            },
+            "amount": {
+              "amount": 1,
+              "currency": "GBP"
+            },
+            "paymentIdempotencyId": "4289457hd38djoa783jw9qag3",
+            "type": "DOMESTIC_PAYMENT"
+          }
+        }
+      },
+      "description": "__Mandatory__. The payment request object defining the details of the payment.",
+      "additionalProperties": true,
+      "type": "object",
+      "required": [
+        "paymentIdempotencyId",
+        "type",
+        "payee",
+        "amount"
+      ],
+      "properties": {
+        "reference": {
+          "description": "__Optional__. The payment reference or description. Limited to a maximum of 18 characters long.",
+          "type": "string",
+          "example": "Bill payment"
+        },
+        "payee": {"$ref": "#/definitions/Payee"},
+        "readRefundAccount": {
+          "description": "__Optional__. Used to request the payer details in the payment response when the `Institution` provides the feature `READ_DOMESTIC_SINGLE_REFUND`.<br><br>See [Reverse Payments](https://docs.yapily.com/knowledge/reverse_payments/) for more information.",
+          "type": "boolean",
+          "example": false
+        },
+        "periodicPayment": {"$ref": "#/definitions/PeriodicPaymentRequest"},
+        "amount": {"$ref": "#/definitions/Amount"},
+        "paymentIdempotencyId": {
+          "description": "__Mandatory__. A unique identifier that you must provide to identify the payment. This can be any alpha-numeric string but is limited to a maximum of 35 characters.",
+          "type": "string",
+          "example": "04ab4536gaerfc0e1f93c4f4"
+        },
+        "contextType": {"$ref": "#/definitions/PaymentContextType"},
+        "internationalPayment": {"$ref": "#/definitions/InternationalPaymentRequest"},
+        "paymentDateTime": {
+          "format": "date-time",
+          "description": "__Conditional__. Used to specify the date of the payment when the payment type is one of the following:<ul>    <li><code>DOMESTIC_SCHEDULED_PAYMENT<\/code><\/li>    <li><code>DOMESTIC_PERIODIC_PAYMENT<\/code><\/li>    <li><code>INTERNATIONAL_SCHEDULED_PAYMENT<\/code><\/li>    <li><code>INTERNATIONAL_PERIODIC_PAYMENT<\/code><\/li><\/ul>",
+          "type": "string",
+          "example": "2021-07-21T17:32:28Z"
+        },
+        "type": {"$ref": "#/definitions/PaymentType"},
+        "payer": {"$ref": "#/definitions/Payer"}
+      }
+    },
+    "RedirectRequest": {
+      "description": "__Optional__. The server to redirect the user to after the user complete the authorisation at the `Institution`.",
+      "additionalProperties": true,
+      "type": "object",
+      "required": ["url"],
+      "properties": {"url": {
+        "description": "__Mandatory__.Successful redirect after the user complete the authorisation at the `Institution`.",
+        "type": "string"
+      }}
+    },
+    "ScaMethod": {
+      "description": "__Conditional__. Used to update the authorisation with the sca method of the user's choice for the `Institution` that uses the embedded authorisation flow. If the user has multiple sca methods configured, the `Institution` will allow the user to select from each of these options. <br><br>When the user has multiple sca methods for the `Institution`, this is the second step required in the embedded authorisation flow to authorise the `Consent`.",
+      "additionalProperties": true,
+      "type": "object",
+      "required": ["id"],
+      "properties": {
+        "description": {
+          "description": "__Optional__. A description of the sca method if provided by the `Institution`",
+          "type": "string",
+          "example": "Testkarte Hr. Haubach_1, optisch"
+        },
+        "id": {
+          "description": "__Mandatory__. The id of the sca method provided by the `Institution`",
+          "type": "string",
+          "example": "258211#OPTICAL"
+        },
+        "type": {"$ref": "#/definitions/Type"}
+      },
+      "example": {
+        "description": "SecureSIGN",
+        "id": "944",
+        "type": "PUSH_OTP"
+      }
+    },
+    "PaymentType": {
+      "description": "__Mandatory__. Used to specify which of the [payment types](https://docs.yapily.com/guides/payments/payment-execution/#payment-types) to execute.<br><br>See [European Payments](https://docs.yapily.com/knowledge/european_payments/) to verify whether the `type` should be `DOMESTIC` or `INTERNATIONAL`.",
+      "type": "string",
+      "enum": [
+        "DOMESTIC_PAYMENT",
+        "DOMESTIC_INSTANT_PAYMENT",
+        "DOMESTIC_VARIABLE_RECURRING_PAYMENT",
+        "DOMESTIC_SCHEDULED_PAYMENT",
+        "DOMESTIC_PERIODIC_PAYMENT",
+        "INTERNATIONAL_PAYMENT",
+        "INTERNATIONAL_SCHEDULED_PAYMENT",
+        "INTERNATIONAL_PERIODIC_PAYMENT",
+        "BULK_PAYMENT"
+      ]
+    },
+    "PeriodicPaymentRequest": {
+      "description": "__Conditional__. Used to specify properties to define a periodic payment. <br><br>Must be specified when the payment `type` is one of the following:<ul>     <li><code>DOMESTIC_PERIODIC_PAYMENT<\/code><\/li>     <li><code>INTERNATIONAL_PERIODIC_PAYMENT<\/code><\/li><\/ul>",
+      "additionalProperties": true,
+      "type": "object",
+      "required": ["frequency"],
+      "properties": {
+        "numberOfPayments": {
+          "description": "__Conditional__. Defines the total number of payments to be made.<br><br>This is required if `finalPaymentDateTime` is not specified and it is intended for the periodic payment have a fixed amount of payments.",
+          "maximum": 2147483647,
+          "type": "integer",
+          "minimum": -2147483648,
+          "example": 5
+        },
+        "nextPaymentDateTime": {
+          "format": "date-time",
+          "description": "__Conditional__. Defines when to start the recurring payment date and time. Specify this if you want the first payment to start on a different day than what the frequency object defines.",
+          "type": "string",
+          "example": "2018-01-10T00:00:00Z"
+        },
+        "finalPaymentAmount": {"$ref": "#/definitions/Amount"},
+        "finalPaymentDateTime": {
+          "format": "date-time",
+          "description": "__Conditional__. Defines the final payment date and time. To create an open-ended periodic payment, do not specify this property.",
+          "type": "string",
+          "example": "2030-01-10T00:00:00Z"
+        },
+        "nextPaymentAmount": {"$ref": "#/definitions/Amount"},
+        "frequency": {"$ref": "#/definitions/FrequencyRequest"}
+      }
+    },
+    "UserCredentials": {
+      "description": "__Conditional__. Used to capture the user's credentials to allow them to login to an `Institution` that uses the embedded account authorisation flow. <br><br>This is the first step required in the embedded account authorisation flow to authorise the `Consent`.",
+      "additionalProperties": true,
+      "type": "object",
+      "required": [
+        "id",
+        "password"
+      ],
+      "properties": {
+        "password": {
+          "description": "__Mandatory__. The password of the user to login to a particular `Institution`.",
+          "type": "string",
+          "example": "PISPWD12"
+        },
+        "id": {
+          "description": "__Mandatory__. The login id for the user for a particular `Institution`.",
+          "type": "string",
+          "example": "6154057725"
+        },
+        "corporateId": {
+          "description": "__Conditional__. The corporate login for the user for a particular corporate `Institution`.",
+          "type": "string",
+          "example": "6345898763"
+        }
+      }
+    },
+    "ChargeBearerType": {
+      "description": "__Optional__. Specifies which party/parties will bear the charges associated with the processing of the payment transaction. Valid values are:<ul><li>`DEBT` - All transaction charges are to be borne by the debtor.<\/li><li>`CRED` - All transaction charges are to be borne by the creditor.<\/li><li>`SHAR` - In a credit transfer context, means that transaction charges on the sender side are to be borne by the debtor, transaction charges on the receiver side are to be borne by the creditor<\/li><li>`SLEV` - Charges are to be applied following the rules agreed in the service level and/or scheme.<\/li><\/ul>",
+      "type": "string",
+      "enum": [
+        "DEBT",
+        "CRED",
+        "SHAR",
+        "SLEV"
+      ]
+    },
+    "Payee": {
+      "description": "__Mandatory__. The `Payee` object contains details of the beneficiary [person or business]. You must define this in your payment request alongwith all of the nested mandatory properties.",
+      "additionalProperties": true,
+      "type": "object",
+      "required": [
+        "name",
+        "accountIdentifications"
+      ],
+      "properties": {
+        "accountIdentifications": {
+          "uniqueItems": true,
+          "description": "__Mandatory__. The account identifications that identify the `Payee` bank account.",
+          "type": "array",
+          "items": {"$ref": "#/definitions/AccountIdentification"},
+          "example": [
+            {
+              "identification": "401016",
+              "type": "SORT_CODE"
+            },
+            {
+              "identification": "71518920",
+              "type": "ACCOUNT_NUMBER"
+            }
+          ]
+        },
+        "address": {"$ref": "#/definitions/Address"},
+        "merchantId": {
+          "description": "__Optional__. The merchant ID is a unique code provided by the payment processor to the merchant.",
+          "type": "string",
+          "example": "24589303"
+        },
+        "merchantCategoryCode": {
+          "description": "__Optional__. The category code of the merchant in case the `Payee` is a business.",
+          "type": "string",
+          "example": "5551"
+        },
+        "name": {
+          "description": "__Mandatory__. The account holder name of the beneficiary.",
+          "type": "string",
+          "example": "Jane Doe"
+        }
+      }
+    },
+    "InternationalPaymentRequest": {
+      "description": "__Conditional__. Used to specify properties to define an international payment. <br><br>Must be specified when the payment `type` is one of the following:<ul>     <li><code>INTERNATIONAL_SINGLE_PAYMENT<\/code><\/li>     <li><code>INTERNATIONAL_SCHEDULED_PAYMENT<\/code><\/li>     <li><code>INTERNATIONAL_PERIODIC_PAYMENT<\/code><\/li><\/ul>",
+      "additionalProperties": true,
+      "type": "object",
+      "required": ["currencyOfTransfer"],
+      "properties": {
+        "chargeBearer": {"$ref": "#/definitions/ChargeBearerType"},
+        "currencyOfTransfer": {
+          "description": "__Mandatory__. The 3-letter currency code for the currency of the payment to be transferred which can differ from the currency of the payer's account.",
+          "type": "string"
+        },
+        "purpose": {
+          "description": "__Optional__. Used to indicate the external purpose as a [ISO20022 purpose code](https://www.rba.hr/documents/20182/183267/External+purpose+codes+list/8a28f888-1f83-5e29-d6ed-fce05f428689?version=1.1) value.",
+          "type": "string"
+        },
+        "exchangeRateInformation": {"$ref": "#/definitions/ExchangeRateInformation"},
+        "priority": {"$ref": "#/definitions/PriorityCodeEnum"}
+      }
+    }
+  }
+}

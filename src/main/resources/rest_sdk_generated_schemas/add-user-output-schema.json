@@ -1,0 +1,51 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "$ref": "#/definitions/ApplicationUser",
+  "definitions": {
+    "ApplicationUser": {
+      "x-amf-examples": {
+        "amf_example_1": {
+          "description": "Example Response",
+          "value": {
+            "institutionConsents": [{"institutionId": "modelo-sandbox"}],
+            "applicationUuid": "3020bf54-e254-40ba-ba7b-fc959774486a",
+            "applicationUserId": "bojack@9tees.com",
+            "uuid": "3b908179-6faa-42e1-8129-8fd0ff1fc68f"
+          }
+        },
+        "Example Response": {
+          "description": "Example Response",
+          "value": {
+            "institutionConsents": [],
+            "applicationUuid": "50935110-c7df-4003-a06a-1cc5fd4643c9",
+            "applicationUserId": "john.doe@company.com",
+            "uuid": "1ec8e814-085e-46ad-a303-3fe11808f67e"
+          }
+        }
+      },
+      "additionalProperties": true,
+      "type": "object",
+      "properties": {
+        "institutionConsents": {
+          "type": "array",
+          "items": {"$ref": "#/definitions/InstitutionConsent"}
+        },
+        "applicationUuid": {
+          "format": "uuid",
+          "type": "string"
+        },
+        "applicationUserId": {"type": "string"},
+        "uuid": {
+          "format": "uuid",
+          "type": "string"
+        },
+        "referenceId": {"type": "string"}
+      }
+    },
+    "InstitutionConsent": {
+      "additionalProperties": true,
+      "type": "object",
+      "properties": {"institutionId": {"type": "string"}}
+    }
+  }
+}

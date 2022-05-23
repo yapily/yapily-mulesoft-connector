@@ -1,0 +1,257 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "$ref": "#/definitions/AccountAuthorisationRequest",
+  "definitions": {
+    "AccountIdentificationType": {
+      "description": "__Mandatory__. Used to describe the format of the account.<br><br> See [Account Identification Combinations](https://docs.yapily.com/guides/payments/payment-execution/#account-identifications-combinations) for more information on when to specify each type.",
+      "type": "string",
+      "enum": [
+        "SORT_CODE",
+        "ACCOUNT_NUMBER",
+        "IBAN",
+        "BBAN",
+        "BIC",
+        "PAN",
+        "MASKED_PAN",
+        "MSISDN",
+        "BSB",
+        "NCC",
+        "ABA",
+        "ABA_WIRE",
+        "ABA_ACH",
+        "EMAIL",
+        "ROLL_NUMBER"
+      ],
+      "example": "SORT_CODE"
+    },
+    "AccountRequest": {
+      "description": "__Conditional__. Used to further specify details of the `Consent` to request <br><br>Conditions:<ol><li>Mandatory to access balance/transaction data for an `Institution` within the [CBI Globe](https://docs.yapily.com/knowledge/cbi_globe)<\/li><li>Mandatory to specify the individual scopes to request from the user at the `Institution` for an account authorisation<\/li><li>Mandatory to specify an expiry time on the created `Consent` at which time will render it unusable<\/li><li>Mandatory to specify the date range that the created `Consent` will be able to access transactions for (given the range is support for the `Institution`)<\/li><\/ol>",
+      "additionalProperties": true,
+      "type": "object",
+      "properties": {
+        "accountIdentifiersForTransaction": {
+          "description": "__Conditional__. Used to create a request for the transactions of the account specified. Once the user authorises the request, only the transactions can be obtained by executing [GET Account Transactions](./#get-account-transactions). <br><br>This can be specified in conjunction with `accountIdentifiersForBalance` to generate a `Consent` that can both access the accounts balance and transactions.",
+          "type": "array",
+          "items": {"$ref": "#/definitions/AccountInfo"}
+        },
+        "accountIdentifiersForBalance": {
+          "description": "__Conditional__. Used to create a request for the balance of the account specified. Once the user authorises the request, only the balance can be obtained by executing [GET Account Balances](./#get-account-balances).<br><br> This can be specified in conjunction with `accountIdentifiersForTransaction` to generate a `Consent` that can both access the accounts balance and transactions.",
+          "type": "array",
+          "items": {"$ref": "#/definitions/AccountInfo"}
+        },
+        "transactionFrom": {
+          "format": "date-time",
+          "description": "__Optional__. Used to specify the lower bound on when to pull transaction. This should be declared when accessing transaction older than 90 days for banks in the [CBI Globe](https://docs.yapily.com/knowledge/cbi_globe).",
+          "type": "string",
+          "example": "2020-01-01T00:00:00Z"
+        },
+        "featureScope": {
+          "uniqueItems": true,
+          "description": "__Optional__. Used to granularly specify the set of features that the user will give their consent for when requesting access to their account information. Depending on the `Institution`, this may also populate a consent screen which list these scopes before the user authorises.<br><br>This endpoint accepts allow all [Financial Data Features](/guides/financial-data/features/#feature-list) that the `Institution` supports.To find out which scopes an `Institution` supports, check [GET Institution](./#get-institution).",
+          "type": "array",
+          "items": {"$ref": "#/definitions/FeatureEnum"}
+        },
+        "transactionTo": {
+          "format": "date-time",
+          "description": "__Optional__. Used to specify the upper bound on when to pull transaction",
+          "type": "string",
+          "example": "2021-01-01T00:00:00Z"
+        },
+        "expiresAt": {
+          "format": "date-time",
+          "description": "__Optional__. Used to set a hard date for when the user's associated `Consent` will expire.<br><br>**Note**: If this supported by the bank, specifying this is property is opting out of having a long-lived consent that can be perpetually re-authorised by the user. This will add an `expiresAt` field on the `Consent` object which will render it unusable after this date.<br><br>**Note**: This is not supported by every `Institution`. In such case, the request will not fail but the property will be ignored and the created `Consent` will not have an expiry date.",
+          "type": "string",
+          "example": "2025-01-01T00:00:00Z"
+        },
+        "accountIdentifiers": {"$ref": "#/definitions/AccountInfo"}
+      }
+    },
+    "AccountAuthorisationRequest": {
+      "x-amf-examples": {
+        "Berlin Group Example Request": {
+          "description": "Berlin Group Example Request",
+          "value": {
+            "institutionId": "n26",
+            "applicationUserId": "john.doe@company.com"
+          }
+        },
+        "CBI Globe Example Request": {
+          "description": "CBI Globe Example Request",
+          "value": {
+            "institutionId": "bpm-sandbox",
+            "applicationUserId": "john.doe@company.com",
+            "callback": "https://display-parameters.com/",
+            "accountRequest": {
+              "accountIdentifiersForTransaction": [{
+                "accountId": "account1234567",
+                "accountIdentification": {
+                  "identification": "IT77O0848283352871412938123",
+                  "type": "IBAN"
+                }
+              }],
+              "accountIdentifiersForBalance": [{
+                "accountId": "account1234567",
+                "accountIdentification": {
+                  "identification": "IT77O0848283352871412938123",
+                  "type": "IBAN"
+                }
+              }]
+            }
+          }
+        },
+        "OBIE Example Request": {
+          "description": "OBIE Example Request",
+          "value": {
+            "institutionId": "modelo-sandbox",
+            "applicationUserId": "john.doe@company.com",
+            "callback": "https://display-parameters.com/"
+          }
+        }
+      },
+      "description": "The request body containing an `AccountAuthorisationRequest` json payload",
+      "additionalProperties": true,
+      "type": "object",
+      "required": ["institutionId"],
+      "properties": {
+        "redirect": {"$ref": "#/definitions/RedirectRequest"},
+        "forwardParameters": {
+          "description": "Extra parameters the TPP may want to get forwarded in the callback request after the PSU redirect.",
+          "type": "array",
+          "items": {"type": "string"}
+        },
+        "institutionId": {
+          "description": "__Mandatory__. The reference to the `Institution` which identifies which institution the authorisation request is sent to.",
+          "type": "string",
+          "example": "yapily-mock"
+        },
+        "userUuid": {
+          "format": "uuid",
+          "type": "string"
+        },
+        "applicationUserId": {
+          "description": "__Conditional__. The user-friendly reference to the `User` that will authorise the authorisation request. If a `User` with the specified `applicationUserId` exists, it will be used otherwise, a new `User` with the specified `applicationUserId` will be created and used. Either the `userUuid` or `applicationUserId` must be provided.",
+          "type": "string",
+          "example": "user-234562290"
+        },
+        "callback": {
+          "description": "__Optional__. The server to redirect the user to after the user complete the authorisation at the `Institution`. <br><br>See [Using a callback (Optional)](https://docs.yapily.com/knowledge/callback_url/#using-a-callback-optional) for more information.",
+          "type": "string",
+          "example": "https://display-parameters.com"
+        },
+        "accountRequest": {"$ref": "#/definitions/AccountRequest"},
+        "oneTimeToken": {
+          "description": "__Conditional__. Used to receive a `oneTimeToken` rather than a `consentToken` at the `callback` for additional security. This can only be used when the `callback` is set. <br><br>See [Using a callback with an OTT (Optional)](https://docs.yapily.com/knowledge/callback_url/#using-a-callback-with-an-ott-optional) for more information.",
+          "type": "boolean",
+          "example": false
+        }
+      }
+    },
+    "RedirectRequest": {
+      "description": "__Optional__. The server to redirect the user to after the user complete the authorisation at the `Institution`.",
+      "additionalProperties": true,
+      "type": "object",
+      "required": ["url"],
+      "properties": {"url": {
+        "description": "__Mandatory__.Successful redirect after the user complete the authorisation at the `Institution`.",
+        "type": "string"
+      }}
+    },
+    "AccountIdentification": {
+      "description": "__Mandatory__. The `AccountIdentification` object for the user's account identifications for the account",
+      "additionalProperties": true,
+      "type": "object",
+      "required": [
+        "type",
+        "identification"
+      ],
+      "properties": {
+        "identification": {
+          "description": "__Mandatory__. The value associated with the account identification type.<br><br> See [Account Identification Combinations](https://docs.yapily.com/guides/payments/payment-execution/#account-identifications-combinations) for more information on the format of the values.",
+          "type": "string",
+          "example": "401016"
+        },
+        "type": {"$ref": "#/definitions/AccountIdentificationType"}
+      }
+    },
+    "FeatureEnum": {
+      "description": "Used to describe what functions are supported by the associated `Institution`.        <br><br>For more information on each feature, see the following links:        <ul>          <li>[Financial Data Features](https://docs.yapily.com/guides/financial-data/features/)<\/li>          <li>[Payments Features](https://docs.yapily.com/guides/payments/features/)<\/li>        <\/ul>",
+      "type": "string",
+      "enum": [
+        "INITIATE_PRE_AUTHORISATION",
+        "INITIATE_PRE_AUTHORISATION_ACCOUNTS",
+        "INITIATE_PRE_AUTHORISATION_PAYMENTS",
+        "INITIATE_ACCOUNT_REQUEST",
+        "INITIATE_EMBEDDED_ACCOUNT_REQUEST",
+        "ACCOUNT_REQUEST_DETAILS",
+        "ACCOUNTS",
+        "ACCOUNT",
+        "ACCOUNT_TRANSACTIONS",
+        "ACCOUNT_STATEMENTS",
+        "ACCOUNT_STATEMENT",
+        "ACCOUNT_STATEMENT_FILE",
+        "ACCOUNT_SCHEDULED_PAYMENTS",
+        "ACCOUNT_DIRECT_DEBITS",
+        "ACCOUNT_PERIODIC_PAYMENTS",
+        "ACCOUNT_TRANSACTIONS_WITH_MERCHANT",
+        "IDENTITY",
+        "ACCOUNTS_WITHOUT_BALANCE",
+        "ACCOUNT_WITHOUT_BALANCE",
+        "ACCOUNT_BALANCES",
+        "INITIATE_SINGLE_PAYMENT_SORTCODE",
+        "EXISTING_PAYMENT_INITIATION_DETAILS",
+        "CREATE_SINGLE_PAYMENT_SORTCODE",
+        "EXISTING_PAYMENTS_DETAILS",
+        "INITIATE_DOMESTIC_SINGLE_PAYMENT",
+        "INITIATE_EMBEDDED_DOMESTIC_SINGLE_PAYMENT",
+        "CREATE_DOMESTIC_SINGLE_PAYMENT",
+        "INITIATE_EMBEDDED_BULK_PAYMENT",
+        "INITIATE_DOMESTIC_SINGLE_INSTANT_PAYMENT",
+        "CREATE_DOMESTIC_SINGLE_INSTANT_PAYMENT",
+        "INITIATE_DOMESTIC_VARIABLE_RECURRING_PAYMENT",
+        "CREATE_DOMESTIC_VARIABLE_RECURRING_PAYMENT",
+        "INITIATE_DOMESTIC_SCHEDULED_PAYMENT",
+        "CREATE_DOMESTIC_SCHEDULED_PAYMENT",
+        "INITIATE_DOMESTIC_PERIODIC_PAYMENT",
+        "CREATE_DOMESTIC_PERIODIC_PAYMENT",
+        "PERIODIC_PAYMENT_FREQUENCY_EXTENDED",
+        "INITIATE_INTERNATIONAL_VARIABLE_RECURRING_PAYMENT",
+        "CREATE_INTERNATIONAL_VARIABLE_RECURRING_PAYMENT",
+        "INITIATE_INTERNATIONAL_SCHEDULED_PAYMENT",
+        "CREATE_INTERNATIONAL_SCHEDULED_PAYMENT",
+        "INITIATE_INTERNATIONAL_PERIODIC_PAYMENT",
+        "CREATE_INTERNATIONAL_PERIODIC_PAYMENT",
+        "INITIATE_INTERNATIONAL_SINGLE_PAYMENT",
+        "CREATE_INTERNATIONAL_SINGLE_PAYMENT",
+        "INITIATE_BULK_PAYMENT",
+        "CREATE_BULK_PAYMENT",
+        "TRANSFER",
+        "OPEN_DATA_PERSONAL_CURRENT_ACCOUNTS",
+        "OPEN_DATA_ATMS",
+        "READ_DOMESTIC_SINGLE_REFUND",
+        "READ_DOMESTIC_SCHEDULED_REFUND",
+        "READ_DOMESTIC_PERIODIC_PAYMENT_REFUND",
+        "READ_INTERNATIONAL_SINGLE_REFUND",
+        "READ_INTERNATIONAL_SCHEDULED_REFUND",
+        "ACCOUNT_BENEFICIARIES",
+        "INITIATE_ONETIME_PRE_AUTHORISATION_PAYMENTS"
+      ]
+    },
+    "AccountInfo": {
+      "description": "__Conditional__. Used to create a request for the balance of the account specified. Once the user authorises the request, only the balance can be obtained by executing [GET Account Balances](./#get-account-balances).<br><br> This can be specified in conjunction with `accountIdentifiersForTransaction` to generate a `Consent` that can both access the accounts balance and transactions.",
+      "additionalProperties": true,
+      "type": "object",
+      "required": [
+        "accountId",
+        "accountIdentification"
+      ],
+      "properties": {
+        "accountId": {
+          "description": "__Mandatory__. The `Institution` account identifier for the account",
+          "type": "string",
+          "example": "500000000000000000000001"
+        },
+        "accountIdentification": {"$ref": "#/definitions/AccountIdentification"}
+      }
+    }
+  }
+}
