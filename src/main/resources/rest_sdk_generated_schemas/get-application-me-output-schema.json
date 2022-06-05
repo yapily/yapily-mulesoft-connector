@@ -3,7 +3,7 @@
   "$ref": "#/definitions/Application",
   "definitions": {
     "EnvironmentType": {
-      "description": "The environment type. <br><br>See [Institution Configuration](https://docs.yapily.com/guides/applications/institutions/#configuration) for more information",
+      "description": "The environment type. <br><br>See [Institution Configuration](https://docs.yapily.com/pages/key-concepts/institutions/#configuration) for more information",
       "type": "string",
       "enum": [
         "SANDBOX",
@@ -61,7 +61,7 @@
       ]
     },
     "Institution": {
-      "x-amf-examples": {"Example Response": {
+      "x-amf-examples": {"institution-example-response": {
         "description": "Example Response",
         "value": {
           "features": [
@@ -172,7 +172,7 @@
       }
     },
     "Application": {
-      "x-amf-examples": {"Example Response": {
+      "x-amf-examples": {"me-example-response": {
         "description": "Example Response",
         "value": {
           "institutions": [{
@@ -271,7 +271,7 @@
       }
     },
     "FeatureEnum": {
-      "description": "Used to describe what functions are supported by the associated `Institution`.        <br><br>For more information on each feature, see the following links:        <ul>          <li>[Financial Data Features](https://docs.yapily.com/guides/financial-data/features/)<\/li>          <li>[Payments Features](https://docs.yapily.com/guides/payments/features/)<\/li>        <\/ul>",
+      "description": "Used to describe what functions are supported by the associated `Institution`.        <br><br>For more information on each feature, see the following links:        <ul>          <li>[Financial Data Features](https://docs.yapily.com/pages/key-concepts/account-data/account-features/)<\/li>          <li>[Payments Features](https://docs.yapily.com/pages/key-concepts/payments/payment-features/)<\/li>        <\/ul>",
       "type": "string",
       "enum": [
         "INITIATE_PRE_AUTHORISATION",
@@ -306,13 +306,15 @@
         "CREATE_DOMESTIC_SINGLE_INSTANT_PAYMENT",
         "INITIATE_DOMESTIC_VARIABLE_RECURRING_PAYMENT",
         "CREATE_DOMESTIC_VARIABLE_RECURRING_PAYMENT",
+        "INITIATE_DOMESTIC_VARIABLE_RECURRING_PAYMENT_SWEEPING",
+        "INITIATE_DOMESTIC_VARIABLE_RECURRING_PAYMENT_NONSWEEPING",
+        "CREATE_DOMESTIC_VARIABLE_RECURRING_PAYMENT_SWEEPING",
+        "CREATE_DOMESTIC_VARIABLE_RECURRING_PAYMENT_NONSWEEPING",
         "INITIATE_DOMESTIC_SCHEDULED_PAYMENT",
         "CREATE_DOMESTIC_SCHEDULED_PAYMENT",
         "INITIATE_DOMESTIC_PERIODIC_PAYMENT",
         "CREATE_DOMESTIC_PERIODIC_PAYMENT",
         "PERIODIC_PAYMENT_FREQUENCY_EXTENDED",
-        "INITIATE_INTERNATIONAL_VARIABLE_RECURRING_PAYMENT",
-        "CREATE_INTERNATIONAL_VARIABLE_RECURRING_PAYMENT",
         "INITIATE_INTERNATIONAL_SCHEDULED_PAYMENT",
         "CREATE_INTERNATIONAL_SCHEDULED_PAYMENT",
         "INITIATE_INTERNATIONAL_PERIODIC_PAYMENT",
@@ -330,7 +332,10 @@
         "READ_INTERNATIONAL_SINGLE_REFUND",
         "READ_INTERNATIONAL_SCHEDULED_REFUND",
         "ACCOUNT_BENEFICIARIES",
-        "INITIATE_ONETIME_PRE_AUTHORISATION_PAYMENTS"
+        "INITIATE_ONETIME_PRE_AUTHORISATION_PAYMENTS",
+        "INITIATE_ONETIME_PRE_AUTHORISATION_ACCOUNTS",
+        "INITIATE_ONETIME_PRE_AUTHORISATION",
+        "VARIABLE_RECURRING_PAYMENT_FUNDS_CONFIRMATION"
       ]
     }
   }

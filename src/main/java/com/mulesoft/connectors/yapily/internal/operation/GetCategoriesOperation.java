@@ -37,8 +37,9 @@ public class GetCategoriesOperation extends GetCategoriesOperationRefinement {
    * Used to retrieve the list of categories returned by the Yapily Categorisation engine for a
    * given locale. <br>
    * <br>
-   * See [Data Enrichment](https://docs.yapily.com/guides/financial-data/data-enrichment) for more
-   * information.
+   * See [Data
+   * Enrichment](https://docs.yapily.com/pages/key-concepts/account-data/data-enrichment/intro-to-data-enrichment/)
+   * for more information.
    *
    * <p>This operation makes an HTTP GET request to the /categories/{country} endpoint
    *
@@ -52,7 +53,7 @@ public class GetCategoriesOperation extends GetCategoriesOperationRefinement {
   @Throws(RequestErrorTypeProvider.class)
   @DisplayName("Get Categories")
   @Summary(
-      "Used to retrieve the list of categories returned by the Yapily Categorisation engine for a given locale. <br><br>See [Data Enrichment](https://docs.yapily.com/guides/financial-data/data-enrichment) for more information.")
+      "Used to retrieve the list of categories returned by the Yapily Categorisation engine for a given locale. <br><br>See [Data Enrichment](https://docs.yapily.com/pages/key-concepts/account-data/data-enrichment/intro-to-data-enrichment/) for more information.")
   @MediaType("application/json;charset=UTF-8")
   @OutputResolver(
       output = GetCategoriesOutputMetadataResolver.class,

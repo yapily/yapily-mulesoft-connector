@@ -1,9 +1,9 @@
 {
   "$schema": "http://json-schema.org/draft-04/schema#",
-  "$ref": "#/definitions/AccountEmbeddedAuthorisationRequest",
+  "$ref": "#/definitions/EmbeddedAccountAuthorisationRequest",
   "definitions": {
     "AccountIdentificationType": {
-      "description": "__Mandatory__. Used to describe the format of the account.<br><br> See [Account Identification Combinations](https://docs.yapily.com/guides/payments/payment-execution/#account-identifications-combinations) for more information on when to specify each type.",
+      "description": "__Mandatory__. Used to describe the format of the account.<br><br> See [Account Identification Combinations](https://docs.yapily.com/pages/key-concepts/payments/payment-execution/intro-to-payment-execution/#account-identifications-combinations) for more information on when to specify each type.",
       "type": "string",
       "enum": [
         "SORT_CODE",
@@ -25,7 +25,7 @@
       "example": "SORT_CODE"
     },
     "AccountRequest": {
-      "description": "__Conditional__. Used to further specify details of the `Consent` to request <br><br>Conditions:<ol><li>Mandatory to access balance/transaction data for an `Institution` within the [CBI Globe](https://docs.yapily.com/knowledge/cbi_globe)<\/li><li>Mandatory to specify the individual scopes to request from the user at the `Institution` for an account authorisation<\/li><li>Mandatory to specify an expiry time on the created `Consent` at which time will render it unusable<\/li><li>Mandatory to specify the date range that the created `Consent` will be able to access transactions for (given the range is support for the `Institution`)<\/li><\/ol>",
+      "description": "__Conditional__. Used to further specify details of the `Consent` to request <br><br>Conditions:<ol><li>Mandatory to access balance/transaction data for an `Institution` within the [CBI Globe](https://docs.yapily.com/pages/knowledge/open-banking/cbi_globe/)<\/li><li>Mandatory to specify the individual scopes to request from the user at the `Institution` for an account authorisation<\/li><li>Mandatory to specify an expiry time on the created `Consent` at which time will render it unusable<\/li><li>Mandatory to specify the date range that the created `Consent` will be able to access transactions for (given the range is support for the `Institution`)<\/li><\/ol>",
       "additionalProperties": true,
       "type": "object",
       "properties": {
@@ -41,7 +41,7 @@
         },
         "transactionFrom": {
           "format": "date-time",
-          "description": "__Optional__. Used to specify the lower bound on when to pull transaction. This should be declared when accessing transaction older than 90 days for banks in the [CBI Globe](https://docs.yapily.com/knowledge/cbi_globe).",
+          "description": "__Optional__. Used to specify the lower bound on when to pull transaction. This should be declared when accessing transaction older than 90 days for banks in the [CBI Globe](https://docs.yapily.com/pages/knowledge/open-banking/cbi_globe/).",
           "type": "string",
           "example": "2020-01-01T00:00:00Z"
         },
@@ -53,7 +53,7 @@
         },
         "transactionTo": {
           "format": "date-time",
-          "description": "__Optional__. Used to specify the upper bound on when to pull transaction",
+          "description": "__Optional__. When performing a request using the consent, this is the latest date of transaction records that can be retrieved.",
           "type": "string",
           "example": "2021-01-01T00:00:00Z"
         },
@@ -75,6 +75,85 @@
         "PHOTO_OTP",
         "PUSH_OTP"
       ]
+    },
+    "EmbeddedAccountAuthorisationRequest": {
+      "x-amf-examples": {
+        "berlin-group-selected-sca-method-example-request": {
+          "description": "Berlin Group (Selected SCA Method) Example Request",
+          "value": {
+            "institutionId": "fiducia-sandbox",
+            "applicationUserId": "john.doe@company.com",
+            "selectedScaMethod": {
+              "description": "SecureSIGN",
+              "id": "944",
+              "type": "PUSH_OTP"
+            }
+          }
+        },
+        "berlin-group-example-embedded-acc-auth-request": {
+          "description": "Berlin Group Example Request",
+          "value": {
+            "institutionId": "fiducia-sandbox",
+            "applicationUserId": "john.doe@company.com",
+            "userCredentials": {
+              "password": "PISPWD12",
+              "id": "6154057725"
+            }
+          }
+        },
+        "berlin-group-sca-code-example-request": {
+          "description": "Berlin Group (SCA Code) Example Request",
+          "value": {
+            "institutionId": "fiducia-sandbox",
+            "applicationUserId": "john.doe@company.com",
+            "scaCode": "6154057725"
+          }
+        }
+      },
+      "additionalProperties": true,
+      "type": "object",
+      "required": ["institutionId"],
+      "properties": {
+        "redirect": {"$ref": "#/definitions/RedirectRequest"},
+        "forwardParameters": {
+          "description": "Extra parameters the TPP may want to get forwarded in the callback request after the PSU redirect.",
+          "type": "array",
+          "items": {"type": "string"}
+        },
+        "institutionId": {
+          "description": "__Mandatory__. The reference to the `Institution` which identifies which institution the authorisation request is sent to.",
+          "type": "string",
+          "example": "yapily-mock"
+        },
+        "userUuid": {
+          "format": "uuid",
+          "description": "`User` for which the authorisation request was created.",
+          "type": "string"
+        },
+        "applicationUserId": {
+          "description": "__Conditional__. The user-friendly reference to the `User` that will authorise the authorisation request. If a `User` with the specified `applicationUserId` exists, it will be used otherwise, a new `User` with the specified `applicationUserId` will be created and used. Either the `userUuid` or `applicationUserId` must be provided.",
+          "type": "string",
+          "example": "user-234562290"
+        },
+        "userCredentials": {"$ref": "#/definitions/UserCredentials"},
+        "callback": {
+          "description": "__Optional__. The server to redirect the user to after the user complete the authorisation at the `Institution`. <br><br>See [Using a callback (Optional)](https://docs.yapily.com/) for more information.",
+          "type": "string",
+          "example": "https://display-parameters.com"
+        },
+        "selectedScaMethod": {"$ref": "#/definitions/ScaMethod"},
+        "accountRequest": {"$ref": "#/definitions/AccountRequest"},
+        "scaCode": {
+          "description": "__Conditional__. Used to update the authorisation with the sca code received by the user from the `Institution` using the embedded account authorisation flow.<br><br>This is the penultimate step required in the embedded account authorisation flow to authorise the `Consent`. After sending the sca code, to obtain an authorised consent, the last step is to poll [Get Consent](https://docs.yapily.com/api/reference/#operation/getConsentById) until the `Institution` authorises the request and the `Consent` `status` transitions to `AUTHORIZED`.",
+          "type": "string",
+          "example": "325614"
+        },
+        "oneTimeToken": {
+          "description": "__Conditional__. Used to receive a `oneTimeToken` rather than a `consentToken` at the `callback` for additional security. This can only be used when the `callback` is set. <br><br>See [Using a callback with an OTT (Optional)](https://docs.yapily.com/pages/knowledge/yapily-concepts/callback_url/#using-a-callback-with-an-ott-optional) for more information.",
+          "type": "boolean",
+          "example": false
+        }
+      }
     },
     "RedirectRequest": {
       "description": "__Optional__. The server to redirect the user to after the user complete the authorisation at the `Institution`.",
@@ -137,7 +216,6 @@
       }
     },
     "AccountIdentification": {
-      "description": "__Mandatory__. The `AccountIdentification` object for the user's account identifications for the account",
       "additionalProperties": true,
       "type": "object",
       "required": [
@@ -146,94 +224,15 @@
       ],
       "properties": {
         "identification": {
-          "description": "__Mandatory__. The value associated with the account identification type.<br><br> See [Account Identification Combinations](https://docs.yapily.com/guides/payments/payment-execution/#account-identifications-combinations) for more information on the format of the values.",
+          "description": "__Mandatory__. The value associated with the account identification type.<br><br> See [Account Identification Combinations](https://docs.yapily.com/pages/key-concepts/payments/payment-execution/intro-to-payment-execution/#account-identifications-combinations) for more information on the format of the values.",
           "type": "string",
           "example": "401016"
         },
         "type": {"$ref": "#/definitions/AccountIdentificationType"}
       }
     },
-    "AccountEmbeddedAuthorisationRequest": {
-      "x-amf-examples": {
-        "Berlin Group Example Request": {
-          "description": "Berlin Group Example Request",
-          "value": {
-            "institutionId": "fiducia-sandbox",
-            "applicationUserId": "john.doe@company.com",
-            "userCredentials": {
-              "password": "PISPWD12",
-              "id": "6154057725"
-            }
-          }
-        },
-        "Berlin Group (SCA Code) Example Request": {
-          "description": "Berlin Group (SCA Code) Example Request",
-          "value": {
-            "institutionId": "fiducia-sandbox",
-            "applicationUserId": "john.doe@company.com",
-            "scaCode": "6154057725"
-          }
-        },
-        "Berlin Group (Selected SCA Method) Example Request": {
-          "description": "Berlin Group (Selected SCA Method) Example Request",
-          "value": {
-            "institutionId": "fiducia-sandbox",
-            "applicationUserId": "john.doe@company.com",
-            "selectedScaMethod": {
-              "description": "SecureSIGN",
-              "id": "944",
-              "type": "PUSH_OTP"
-            }
-          }
-        }
-      },
-      "description": "The request body containing an `AccountEmbeddedAuthorisationRequest` json payload",
-      "additionalProperties": true,
-      "type": "object",
-      "required": ["institutionId"],
-      "properties": {
-        "redirect": {"$ref": "#/definitions/RedirectRequest"},
-        "forwardParameters": {
-          "description": "Extra parameters the TPP may want to get forwarded in the callback request after the PSU redirect.",
-          "type": "array",
-          "items": {"type": "string"}
-        },
-        "institutionId": {
-          "description": "__Mandatory__. The reference to the `Institution` which identifies which institution the authorisation request is sent to.",
-          "type": "string",
-          "example": "yapily-mock"
-        },
-        "userUuid": {
-          "format": "uuid",
-          "type": "string"
-        },
-        "applicationUserId": {
-          "description": "__Conditional__. The user-friendly reference to the `User` that will authorise the authorisation request. If a `User` with the specified `applicationUserId` exists, it will be used otherwise, a new `User` with the specified `applicationUserId` will be created and used. Either the `userUuid` or `applicationUserId` must be provided.",
-          "type": "string",
-          "example": "user-234562290"
-        },
-        "userCredentials": {"$ref": "#/definitions/UserCredentials"},
-        "callback": {
-          "description": "__Optional__. The server to redirect the user to after the user complete the authorisation at the `Institution`. <br><br>See [Using a callback (Optional)](https://docs.yapily.com/knowledge/callback_url/#using-a-callback-optional) for more information.",
-          "type": "string",
-          "example": "https://display-parameters.com"
-        },
-        "selectedScaMethod": {"$ref": "#/definitions/ScaMethod"},
-        "accountRequest": {"$ref": "#/definitions/AccountRequest"},
-        "scaCode": {
-          "description": "__Conditional__. Used to update the authorisation with the sca code received by the user from the `Institution` using the embedded account authorisation flow.<br><br>This is the penultimate step required in the embedded account authorisation flow to authorise the `Consent`. After sending the sca code, to obtain an authorised consent, the last step is to poll [Get Consent](https://docs.yapily.com/api/#get-consent) until the `Institution` authorises the request and the `Consent` `status` transitions to `AUTHORIZED`.",
-          "type": "string",
-          "example": "325614"
-        },
-        "oneTimeToken": {
-          "description": "__Conditional__. Used to receive a `oneTimeToken` rather than a `consentToken` at the `callback` for additional security. This can only be used when the `callback` is set. <br><br>See [Using a callback with an OTT (Optional)](https://docs.yapily.com/knowledge/callback_url/#using-a-callback-with-an-ott-optional) for more information.",
-          "type": "boolean",
-          "example": false
-        }
-      }
-    },
     "FeatureEnum": {
-      "description": "Used to describe what functions are supported by the associated `Institution`.        <br><br>For more information on each feature, see the following links:        <ul>          <li>[Financial Data Features](https://docs.yapily.com/guides/financial-data/features/)<\/li>          <li>[Payments Features](https://docs.yapily.com/guides/payments/features/)<\/li>        <\/ul>",
+      "description": "Used to describe what functions are supported by the associated `Institution`.        <br><br>For more information on each feature, see the following links:        <ul>          <li>[Financial Data Features](https://docs.yapily.com/pages/key-concepts/account-data/account-features/)<\/li>          <li>[Payments Features](https://docs.yapily.com/pages/key-concepts/payments/payment-features/)<\/li>        <\/ul>",
       "type": "string",
       "enum": [
         "INITIATE_PRE_AUTHORISATION",
@@ -268,13 +267,15 @@
         "CREATE_DOMESTIC_SINGLE_INSTANT_PAYMENT",
         "INITIATE_DOMESTIC_VARIABLE_RECURRING_PAYMENT",
         "CREATE_DOMESTIC_VARIABLE_RECURRING_PAYMENT",
+        "INITIATE_DOMESTIC_VARIABLE_RECURRING_PAYMENT_SWEEPING",
+        "INITIATE_DOMESTIC_VARIABLE_RECURRING_PAYMENT_NONSWEEPING",
+        "CREATE_DOMESTIC_VARIABLE_RECURRING_PAYMENT_SWEEPING",
+        "CREATE_DOMESTIC_VARIABLE_RECURRING_PAYMENT_NONSWEEPING",
         "INITIATE_DOMESTIC_SCHEDULED_PAYMENT",
         "CREATE_DOMESTIC_SCHEDULED_PAYMENT",
         "INITIATE_DOMESTIC_PERIODIC_PAYMENT",
         "CREATE_DOMESTIC_PERIODIC_PAYMENT",
         "PERIODIC_PAYMENT_FREQUENCY_EXTENDED",
-        "INITIATE_INTERNATIONAL_VARIABLE_RECURRING_PAYMENT",
-        "CREATE_INTERNATIONAL_VARIABLE_RECURRING_PAYMENT",
         "INITIATE_INTERNATIONAL_SCHEDULED_PAYMENT",
         "CREATE_INTERNATIONAL_SCHEDULED_PAYMENT",
         "INITIATE_INTERNATIONAL_PERIODIC_PAYMENT",
@@ -292,7 +293,10 @@
         "READ_INTERNATIONAL_SINGLE_REFUND",
         "READ_INTERNATIONAL_SCHEDULED_REFUND",
         "ACCOUNT_BENEFICIARIES",
-        "INITIATE_ONETIME_PRE_AUTHORISATION_PAYMENTS"
+        "INITIATE_ONETIME_PRE_AUTHORISATION_PAYMENTS",
+        "INITIATE_ONETIME_PRE_AUTHORISATION_ACCOUNTS",
+        "INITIATE_ONETIME_PRE_AUTHORISATION",
+        "VARIABLE_RECURRING_PAYMENT_FUNDS_CONFIRMATION"
       ]
     },
     "AccountInfo": {
@@ -305,7 +309,7 @@
       ],
       "properties": {
         "accountId": {
-          "description": "__Mandatory__. The `Institution` account identifier for the account",
+          "description": "__Mandatory__. Unique identifier of the account.",
           "type": "string",
           "example": "500000000000000000000001"
         },

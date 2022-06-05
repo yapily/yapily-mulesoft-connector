@@ -3,7 +3,7 @@
   "$ref": "#/definitions/schema",
   "definitions": {
     "schema": {
-      "x-amf-examples": {"Example Response": {
+      "x-amf-examples": {"users_example-response": {
         "description": "Example Response",
         "value": [
           {
@@ -31,7 +31,7 @@
     },
     "ApplicationUser": {
       "x-amf-examples": {
-        "amf_example_1": {
+        "user_example-response": {
           "description": "Example Response",
           "value": {
             "institutionConsents": [{"institutionId": "modelo-sandbox"}],
@@ -40,7 +40,7 @@
             "uuid": "3b908179-6faa-42e1-8129-8fd0ff1fc68f"
           }
         },
-        "Example Response": {
+        "create-user_example-response": {
           "description": "Example Response",
           "value": {
             "institutionConsents": [],

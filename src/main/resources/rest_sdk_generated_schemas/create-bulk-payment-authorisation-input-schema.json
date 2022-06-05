@@ -3,7 +3,7 @@
   "$ref": "#/definitions/BulkPaymentAuthorisationRequest",
   "definitions": {
     "BulkPaymentAuthorisationRequest": {
-      "x-amf-examples": {"UK Bulk Payment Example Request": {
+      "x-amf-examples": {"uk-bulk-payment-auth-example-request": {
         "description": "UK Bulk Payment Example Request",
         "value": {
           "institutionId": "modelo-sandbox",
@@ -84,12 +84,12 @@
           "example": "user-234562290"
         },
         "callback": {
-          "description": "__Optional__. The server to redirect the user to after the user complete the authorisation at the `Institution`. <br><br>See [Using a callback (Optional)](https://docs.yapily.com/knowledge/callback_url/#using-a-callback-optional) for more information.",
+          "description": "__Optional__. The server to redirect the user to after the user complete the authorisation at the `Institution`. <br><br>See [Using a callback (Optional)](https://docs.yapily.com/pages/knowledge/yapily-concepts/callback_url/#using-a-callback-optional) for more information.",
           "type": "string",
           "example": "https://display-parameters.com"
         },
         "oneTimeToken": {
-          "description": "__Conditional__. Used to receive a `oneTimeToken` rather than a `consentToken` at the `callback` for additional security. This can only be used when the `callback` is set. <br><br>See [Using a callback with an OTT (Optional)](https://docs.yapily.com/knowledge/callback_url/#using-a-callback-with-an-ott-optional) for more information.",
+          "description": "__Conditional__. Used to receive a `oneTimeToken` rather than a `consentToken` at the `callback` for additional security. This can only be used when the `callback` is set. <br><br>See [Using a callback with an OTT (Optional)](https://docs.yapily.com/pages/knowledge/yapily-concepts/callback_url/#using-a-callback-with-an-ott-optional) for more information.",
           "type": "boolean",
           "example": false
         },
@@ -97,7 +97,7 @@
       }
     },
     "Payer": {
-      "description": "__Conditional__. The `Payer` object contains details of the benefactor [person or business]. If you define this in your payment request, you mustdefine this along with all of the nested mandatory properties.<ol>     <li>The `Payer` object is mandatory along with its mandatory properties when the account of the benefactor is from an `Institution` in Europe.          See [Berlin Group](https://docs.yapily.com/knowledge/berlin_group/) for more information.<\/li>     <li>The `Payer` should be specified if the `Payer` account is intended to be locked.<\/li><\/ol>",
+      "description": "__Conditional__. The `Payer` object contains details of the benefactor [person or business]. If you define this in your payment request, you mustdefine this along with all of the nested mandatory properties.<ol>     <li>The `Payer` object is mandatory along with its mandatory properties when the account of the benefactor is from an `Institution` in Europe.          See [Berlin Group](https://docs.yapily.com/pages/knowledge/open-banking/berlin_group/) for more information.<\/li>     <li>The `Payer` should be specified if the `Payer` account is intended to be locked.<\/li><\/ol>",
       "additionalProperties": true,
       "type": "object",
       "required": ["accountIdentifications"],
@@ -124,7 +124,7 @@
       ]
     },
     "BulkPaymentRequest": {
-      "x-amf-examples": {"UK Bulk Payment Example Request": {
+      "x-amf-examples": {"uk-bulk-payment-example-request": {
         "description": "UK Bulk Payment Example Request",
         "value": {"payments": [
           {
@@ -195,7 +195,7 @@
       }
     },
     "AccountIdentificationType": {
-      "description": "__Mandatory__. Used to describe the format of the account.<br><br> See [Account Identification Combinations](https://docs.yapily.com/guides/payments/payment-execution/#account-identifications-combinations) for more information on when to specify each type.",
+      "description": "__Mandatory__. Used to describe the format of the account.<br><br> See [Account Identification Combinations](https://docs.yapily.com/pages/key-concepts/payments/payment-execution/intro-to-payment-execution/#account-identifications-combinations) for more information on when to specify each type.",
       "type": "string",
       "enum": [
         "SORT_CODE",
@@ -361,7 +361,6 @@
       }
     },
     "AccountIdentification": {
-      "description": "__Mandatory__. The `AccountIdentification` object for the user's account identifications for the account",
       "additionalProperties": true,
       "type": "object",
       "required": [
@@ -370,7 +369,7 @@
       ],
       "properties": {
         "identification": {
-          "description": "__Mandatory__. The value associated with the account identification type.<br><br> See [Account Identification Combinations](https://docs.yapily.com/guides/payments/payment-execution/#account-identifications-combinations) for more information on the format of the values.",
+          "description": "__Mandatory__. The value associated with the account identification type.<br><br> See [Account Identification Combinations](https://docs.yapily.com/pages/key-concepts/payments/payment-execution/intro-to-payment-execution/#account-identifications-combinations) for more information on the format of the values.",
           "type": "string",
           "example": "401016"
         },
@@ -418,7 +417,7 @@
     },
     "PaymentRequest": {
       "x-amf-examples": {
-        "EUR Domestic Single Payment Example Request": {
+        "eur-domestic-single-payment-example-request": {
           "description": "EUR Domestic Single Payment Example Request",
           "value": {
             "reference": "Bill Payment",
@@ -445,7 +444,7 @@
             }
           }
         },
-        "GBP Domestic Single Payment Example Request": {
+        "gbp-domestic-single-payment-example-request": {
           "description": "GBP Domestic Single Payment Example Request",
           "value": {
             "reference": "Bill Payment",
@@ -489,7 +488,7 @@
         },
         "payee": {"$ref": "#/definitions/Payee"},
         "readRefundAccount": {
-          "description": "__Optional__. Used to request the payer details in the payment response when the `Institution` provides the feature `READ_DOMESTIC_SINGLE_REFUND`.<br><br>See [Reverse Payments](https://docs.yapily.com/knowledge/reverse_payments/) for more information.",
+          "description": "__Optional__. Used to request the payer details in the payment response when the `Institution` provides the feature `READ_DOMESTIC_SINGLE_REFUND`.<br><br>See [Reverse Payments](https://docs.yapily.com/pages/knowledge/open-banking/reverse_payments/) for more information.",
           "type": "boolean",
           "example": false
         },
@@ -523,7 +522,7 @@
       }}
     },
     "PaymentType": {
-      "description": "__Mandatory__. Used to specify which of the [payment types](https://docs.yapily.com/guides/payments/payment-execution/#payment-types) to execute.<br><br>See [European Payments](https://docs.yapily.com/knowledge/european_payments/) to verify whether the `type` should be `DOMESTIC` or `INTERNATIONAL`.",
+      "description": "__Mandatory__. Used to specify which of the [payment types](https://docs.yapily.com/pages/key-concepts/payments/payment-execution/intro-to-payment-execution/#payment-types) to execute.<br><br>See [European Payments](https://docs.yapily.com/pages/knowledge/open-banking/european_payments/) to verify whether the `type` should be `DOMESTIC` or `INTERNATIONAL`.",
       "type": "string",
       "enum": [
         "DOMESTIC_PAYMENT",

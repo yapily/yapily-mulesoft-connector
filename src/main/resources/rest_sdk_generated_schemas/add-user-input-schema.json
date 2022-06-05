@@ -2,7 +2,7 @@
   "$schema": "http://json-schema.org/draft-04/schema#",
   "$ref": "#/definitions/NewApplicationUser",
   "definitions": {"NewApplicationUser": {
-    "x-amf-examples": {"Create User Example Request": {
+    "x-amf-examples": {"create-user-example-request": {
       "description": "Create User Example Request",
       "value": {"applicationUserId": "john.doe@company.com"}
     }},

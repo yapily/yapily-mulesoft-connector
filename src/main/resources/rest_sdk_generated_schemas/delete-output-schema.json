@@ -75,7 +75,7 @@
       }
     },
     "ApiResponseOfConsentDeleteResponse": {
-      "x-amf-examples": {"Example Response": {
+      "x-amf-examples": {"consent-delete-example-response": {
         "description": "Example Response",
         "value": {
           "data": {

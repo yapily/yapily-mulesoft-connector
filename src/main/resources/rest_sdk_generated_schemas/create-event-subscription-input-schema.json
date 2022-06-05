@@ -1,0 +1,44 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "$ref": "#/definitions/EventSubscriptionRequest",
+  "definitions": {
+    "EventSubscriptionRequest": {
+      "additionalProperties": true,
+      "title": "EventSubscriptionRequest",
+      "type": "object",
+      "required": [
+        "eventTypeId",
+        "notification"
+      ],
+      "properties": {
+        "notification": {"$ref": "#/definitions/Notification"},
+        "eventTypeId": {
+          "description": "Used to identify event subscription",
+          "type": "string",
+          "example": "payment.status"
+        }
+      }
+    },
+    "Notification": {
+      "additionalProperties": true,
+      "title": "Notification",
+      "type": "object",
+      "required": [
+        "type",
+        "url"
+      ],
+      "properties": {
+        "type": {
+          "description": "Notification type.",
+          "type": "string",
+          "example": "WEBHOOK"
+        },
+        "url": {
+          "description": "Url related to the notification.",
+          "type": "string",
+          "example": "https://httpbin.com/new_endpoint"
+        }
+      }
+    }
+  }
+}

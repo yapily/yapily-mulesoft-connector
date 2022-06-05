@@ -169,7 +169,7 @@
       }
     },
     "ApiListResponseOfAccountStatement": {
-      "x-amf-examples": {"Example Response": {
+      "x-amf-examples": {"account-statements-example-esponse": {
         "description": "Example Response",
         "value": {
           "data": [{
@@ -218,20 +218,27 @@
       }
     },
     "AccountStatement": {
+      "description": "Statement information belonging to the account.",
       "additionalProperties": true,
       "type": "object",
       "properties": {
         "startDateTime": {
           "format": "date-time",
+          "description": "Date and time of when the statement period starts.",
           "type": "string"
         },
-        "id": {"type": "string"},
+        "id": {
+          "description": "Unique identifier for the statement.",
+          "type": "string"
+        },
         "endDateTime": {
           "format": "date-time",
+          "description": "Date and time of when the statement period ends.",
           "type": "string"
         },
         "creationDateTime": {
           "format": "date-time",
+          "description": "Date and time of when the statement was created.",
           "type": "string"
         }
       }

@@ -66,7 +66,7 @@
       "properties": {"tracingId": {"type": "string"}}
     },
     "ApiResponseOfIdentity": {
-      "x-amf-examples": {"Example Response": {
+      "x-amf-examples": {"identity-example-response": {
         "description": "Example Response",
         "value": {
           "data": {

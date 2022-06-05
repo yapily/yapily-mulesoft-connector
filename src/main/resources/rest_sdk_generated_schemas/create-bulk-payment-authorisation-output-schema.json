@@ -181,7 +181,7 @@
       ]
     },
     "FeatureEnum": {
-      "description": "Used to describe what functions are supported by the associated `Institution`.        <br><br>For more information on each feature, see the following links:        <ul>          <li>[Financial Data Features](https://docs.yapily.com/guides/financial-data/features/)<\/li>          <li>[Payments Features](https://docs.yapily.com/guides/payments/features/)<\/li>        <\/ul>",
+      "description": "Used to describe what functions are supported by the associated `Institution`.        <br><br>For more information on each feature, see the following links:        <ul>          <li>[Financial Data Features](https://docs.yapily.com/pages/key-concepts/account-data/account-features/)<\/li>          <li>[Payments Features](https://docs.yapily.com/pages/key-concepts/payments/payment-features/)<\/li>        <\/ul>",
       "type": "string",
       "enum": [
         "INITIATE_PRE_AUTHORISATION",
@@ -216,13 +216,15 @@
         "CREATE_DOMESTIC_SINGLE_INSTANT_PAYMENT",
         "INITIATE_DOMESTIC_VARIABLE_RECURRING_PAYMENT",
         "CREATE_DOMESTIC_VARIABLE_RECURRING_PAYMENT",
+        "INITIATE_DOMESTIC_VARIABLE_RECURRING_PAYMENT_SWEEPING",
+        "INITIATE_DOMESTIC_VARIABLE_RECURRING_PAYMENT_NONSWEEPING",
+        "CREATE_DOMESTIC_VARIABLE_RECURRING_PAYMENT_SWEEPING",
+        "CREATE_DOMESTIC_VARIABLE_RECURRING_PAYMENT_NONSWEEPING",
         "INITIATE_DOMESTIC_SCHEDULED_PAYMENT",
         "CREATE_DOMESTIC_SCHEDULED_PAYMENT",
         "INITIATE_DOMESTIC_PERIODIC_PAYMENT",
         "CREATE_DOMESTIC_PERIODIC_PAYMENT",
         "PERIODIC_PAYMENT_FREQUENCY_EXTENDED",
-        "INITIATE_INTERNATIONAL_VARIABLE_RECURRING_PAYMENT",
-        "CREATE_INTERNATIONAL_VARIABLE_RECURRING_PAYMENT",
         "INITIATE_INTERNATIONAL_SCHEDULED_PAYMENT",
         "CREATE_INTERNATIONAL_SCHEDULED_PAYMENT",
         "INITIATE_INTERNATIONAL_PERIODIC_PAYMENT",
@@ -240,35 +242,15 @@
         "READ_INTERNATIONAL_SINGLE_REFUND",
         "READ_INTERNATIONAL_SCHEDULED_REFUND",
         "ACCOUNT_BENEFICIARIES",
-        "INITIATE_ONETIME_PRE_AUTHORISATION_PAYMENTS"
+        "INITIATE_ONETIME_PRE_AUTHORISATION_PAYMENTS",
+        "INITIATE_ONETIME_PRE_AUTHORISATION_ACCOUNTS",
+        "INITIATE_ONETIME_PRE_AUTHORISATION",
+        "VARIABLE_RECURRING_PAYMENT_FUNDS_CONFIRMATION"
       ]
     },
     "ApiResponseOfPaymentAuthorisationRequestResponse": {
       "x-amf-examples": {
-        "GBP Single Domestic Example Response": {
-          "description": "GBP Single Domestic Example Response",
-          "value": {
-            "data": {
-              "createdAt": "2021-06-08T09:45:42.145Z",
-              "institutionId": "modelo-sandbox",
-              "qrCodeUrl": "https://images.yapily.com/image/5121fd6a-5010-4f36-9c25-df691cf465c1/1623145542?size=0",
-              "userUuid": "3ddf5dd0-aa48-4d0f-baa7-fa057e9e911d",
-              "applicationUserId": "john.doe@company.com",
-              "id": "eb39f8ae-aeff-4ffa-a23d-d4a5b3eff406",
-              "state": "430b2756e9724c8eaad3862524817260",
-              "featureScope": [
-                "EXISTING_PAYMENTS_DETAILS",
-                "EXISTING_PAYMENT_INITIATION_DETAILS",
-                "CREATE_DOMESTIC_SINGLE_PAYMENT"
-              ],
-              "authorisationUrl": "https://ob19-auth1-ui.o3bank.co.uk/auth?client_id=e7f6b95b-5f35-419b-b301-8b08bcd946de&response_type=code+id_token&state=430b2756e9724c8eaad3862524817260&nonce=430b2756e9724c8eaad3862524817260&scope=openid+payments&redirect_uri=https%3A%2F%2Fauth.yapily.com%2F&request=eyJraWQiOiJnRTRvU3VaZDl4TVpUNXZDdTNWYy1mdktNak0iLCJhbGciOiJQUzI1NiJ9.eyJhdWQiOiJodHRwczovL29iMTktYXV0aDEtdWkubzNiYW5rLmNvLnVrIiwic2NvcGUiOiJvcGVuaWQgcGF5bWVudHMiLCJpc3MiOiJlN2Y2Yjk1Yi01ZjM1LTQxOWItYjMwMS04YjA4YmNkOTQ2ZGUiLCJjbGllbnRfaWQiOiJlN2Y2Yjk1Yi01ZjM1LTQxOWItYjMwMS04YjA4YmNkOTQ2ZGUiLCJyZXNwb25zZV90eXBlIjoiY29kZSBpZF90b2tlbiIsInJlZGlyZWN0X3VyaSI6Imh0dHBzOi8vYXV0aC55YXBpbHkuY29tLyIsInN0YXRlIjoiNDMwYjI3NTZlOTcyNGM4ZWFhZDM4NjI1MjQ4MTcyNjAiLCJjbGFpbXMiOnsiaWRfdG9rZW4iOnsiYWNyIjp7InZhbHVlIjoidXJuOm9wZW5iYW5raW5nOnBzZDI6c2NhIiwiZXNzZW50aWFsIjp0cnVlfSwib3BlbmJhbmtpbmdfaW50ZW50X2lkIjp7InZhbHVlIjoic2RwLTEtNmQ4ZDAzNWUtODY4ZS00MzU1LWJlNDEtYmRkYzI1YjdhYWM4IiwiZXNzZW50aWFsIjp0cnVlfX0sInVzZXJpbmZvIjp7Im9wZW5iYW5raW5nX2ludGVudF9pZCI6eyJ2YWx1ZSI6InNkcC0xLTZkOGQwMzVlLTg2OGUtNDM1NS1iZTQxLWJkZGMyNWI3YWFjOCIsImVzc2VudGlhbCI6dHJ1ZX19fSwibm9uY2UiOiI0MzBiMjc1NmU5NzI0YzhlYWFkMzg2MjUyNDgxNzI2MCIsImp0aSI6IjJjYzczMzRhLTJmMDYtNDNjNi04MDkzLTNiYWZjNjQzMWE0YyIsImlhdCI6MTYyMzE0NTU0MiwiZXhwIjoxNjIzMTQ3MzQyfQ.bh0sCVmwkwbx_rxxIwE6p7SjswaH007bdMJfWYo_njIHwoPOkcGjygi2yU7bpNd7bqeqxY1adtkMg_acg6A7awq1jX7nxv6mZC44Q2zGKNMc_nOQPSNO6LkktRcozBxyJ2sEfLheVmmVsyyCQw4FV0w_7Cgc4tFO11FjZ0LNxbp5kpMCK7SABa4RgvZ4IpG-Zl6jFKHfNK1zUP79yBaQcBvNseIirAmG3iJjdpwVc3tD8bl-0SPcPwStk1A3T8OvOgW8DKM4OSEPgKL73I9CExQiJzYykKYLr8tp9bQmI0OgajVM9BT2nbKszRnRe92gPq31goRHHWhfzgQHKFBCNg",
-              "status": "AWAITING_AUTHORIZATION",
-              "institutionConsentId": "sdp-1-6d8d035e-868e-4355-be41-bddc25b7aac8"
-            },
-            "meta": {"tracingId": "2dbfd85b4f2940c6a206e96dd90e52d0"}
-          }
-        },
-        "Berlin Group EUR Single Domestic Payment Example Response": {
+        "berlin-group-eur-single-domestic-payment-example-response": {
           "description": "Berlin Group EUR Single Domestic Payment Example Response",
           "value": {
             "data": {
@@ -290,7 +272,7 @@
             "meta": {"tracingId": "54ec0645a5b444c4a70c61357e9ad887"}
           }
         },
-        "UK Bulk Payment Example Response": {
+        "uk-bulk-payment-auth-example-response": {
           "description": "UK Bulk Payment Example Response",
           "value": {
             "data": {
@@ -313,7 +295,7 @@
             "meta": {"tracingId": "96169af01d394ad39658f17d53b49a5d"}
           }
         },
-        "EUR Single Domestic Example Response": {
+        "eur-single-domestic-payment-auth-example-response": {
           "description": "EUR Single Domestic Example Response",
           "value": {
             "data": {
@@ -334,6 +316,29 @@
               "institutionConsentId": "79cee256-077f-4e11-a307-43892646a4a6"
             },
             "meta": {"tracingId": "a3d09f97bea244e2bb8be0bffbe53f81"}
+          }
+        },
+        "gbp-single-domestic-payment-auth-example-response": {
+          "description": "GBP Single Domestic Example Response",
+          "value": {
+            "data": {
+              "createdAt": "2021-06-08T09:45:42.145Z",
+              "institutionId": "modelo-sandbox",
+              "qrCodeUrl": "https://images.yapily.com/image/5121fd6a-5010-4f36-9c25-df691cf465c1/1623145542?size=0",
+              "userUuid": "3ddf5dd0-aa48-4d0f-baa7-fa057e9e911d",
+              "applicationUserId": "john.doe@company.com",
+              "id": "eb39f8ae-aeff-4ffa-a23d-d4a5b3eff406",
+              "state": "430b2756e9724c8eaad3862524817260",
+              "featureScope": [
+                "EXISTING_PAYMENTS_DETAILS",
+                "EXISTING_PAYMENT_INITIATION_DETAILS",
+                "CREATE_DOMESTIC_SINGLE_PAYMENT"
+              ],
+              "authorisationUrl": "https://ob19-auth1-ui.o3bank.co.uk/auth?client_id=e7f6b95b-5f35-419b-b301-8b08bcd946de&response_type=code+id_token&state=430b2756e9724c8eaad3862524817260&nonce=430b2756e9724c8eaad3862524817260&scope=openid+payments&redirect_uri=https%3A%2F%2Fauth.yapily.com%2F&request=eyJraWQiOiJnRTRvU3VaZDl4TVpUNXZDdTNWYy1mdktNak0iLCJhbGciOiJQUzI1NiJ9.eyJhdWQiOiJodHRwczovL29iMTktYXV0aDEtdWkubzNiYW5rLmNvLnVrIiwic2NvcGUiOiJvcGVuaWQgcGF5bWVudHMiLCJpc3MiOiJlN2Y2Yjk1Yi01ZjM1LTQxOWItYjMwMS04YjA4YmNkOTQ2ZGUiLCJjbGllbnRfaWQiOiJlN2Y2Yjk1Yi01ZjM1LTQxOWItYjMwMS04YjA4YmNkOTQ2ZGUiLCJyZXNwb25zZV90eXBlIjoiY29kZSBpZF90b2tlbiIsInJlZGlyZWN0X3VyaSI6Imh0dHBzOi8vYXV0aC55YXBpbHkuY29tLyIsInN0YXRlIjoiNDMwYjI3NTZlOTcyNGM4ZWFhZDM4NjI1MjQ4MTcyNjAiLCJjbGFpbXMiOnsiaWRfdG9rZW4iOnsiYWNyIjp7InZhbHVlIjoidXJuOm9wZW5iYW5raW5nOnBzZDI6c2NhIiwiZXNzZW50aWFsIjp0cnVlfSwib3BlbmJhbmtpbmdfaW50ZW50X2lkIjp7InZhbHVlIjoic2RwLTEtNmQ4ZDAzNWUtODY4ZS00MzU1LWJlNDEtYmRkYzI1YjdhYWM4IiwiZXNzZW50aWFsIjp0cnVlfX0sInVzZXJpbmZvIjp7Im9wZW5iYW5raW5nX2ludGVudF9pZCI6eyJ2YWx1ZSI6InNkcC0xLTZkOGQwMzVlLTg2OGUtNDM1NS1iZTQxLWJkZGMyNWI3YWFjOCIsImVzc2VudGlhbCI6dHJ1ZX19fSwibm9uY2UiOiI0MzBiMjc1NmU5NzI0YzhlYWFkMzg2MjUyNDgxNzI2MCIsImp0aSI6IjJjYzczMzRhLTJmMDYtNDNjNi04MDkzLTNiYWZjNjQzMWE0YyIsImlhdCI6MTYyMzE0NTU0MiwiZXhwIjoxNjIzMTQ3MzQyfQ.bh0sCVmwkwbx_rxxIwE6p7SjswaH007bdMJfWYo_njIHwoPOkcGjygi2yU7bpNd7bqeqxY1adtkMg_acg6A7awq1jX7nxv6mZC44Q2zGKNMc_nOQPSNO6LkktRcozBxyJ2sEfLheVmmVsyyCQw4FV0w_7Cgc4tFO11FjZ0LNxbp5kpMCK7SABa4RgvZ4IpG-Zl6jFKHfNK1zUP79yBaQcBvNseIirAmG3iJjdpwVc3tD8bl-0SPcPwStk1A3T8OvOgW8DKM4OSEPgKL73I9CExQiJzYykKYLr8tp9bQmI0OgajVM9BT2nbKszRnRe92gPq31goRHHWhfzgQHKFBCNg",
+              "status": "AWAITING_AUTHORIZATION",
+              "institutionConsentId": "sdp-1-6d8d035e-868e-4355-be41-bddc25b7aac8"
+            },
+            "meta": {"tracingId": "2dbfd85b4f2940c6a206e96dd90e52d0"}
           }
         }
       },

@@ -132,6 +132,12 @@
       "description": "A financial profile for a User.",
       "additionalProperties": true,
       "type": "object",
+      "required": [
+        "incomeStreams",
+        "expenditureStreams",
+        "recentlyTerminatedIncomeStreams",
+        "recentlyTerminatedExpenditureStreams"
+      ],
       "properties": {
         "recentlyTerminatedIncomeStreams": {
           "description": "A list of terminated transaction income streams",

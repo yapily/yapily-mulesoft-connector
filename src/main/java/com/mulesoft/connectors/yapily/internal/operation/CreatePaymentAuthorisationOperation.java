@@ -44,13 +44,14 @@ public class CreatePaymentAuthorisationOperation
    * financial Institution in order to give their consent for a payment. This endpoint is used to
    * initiate all the different payment listed below. Based on the type of payment you wish to make,
    * you may be required to provide specific properties in
-   * [PaymentRequest](https://docs.yapily.com/api/#tocS_PaymentRequest). First make sure that the
-   * payment feature you wish to execute is supported by the bank by checking the features array in
-   * [GET Institution](https://docs.yapily.com/api/#get-institution). <br>
+   * [PaymentRequest](https://docs.yapily.com/api/reference/#operation/createPaymentAuthorisation!path=paymentRequest&t=request).
+   * First make sure that the payment feature you wish to execute is supported by the bank by
+   * checking the features array in [GET
+   * Institution](https://docs.yapily.com/api/reference/#operation/getInstitution). <br>
    * <br>
    * See [Redirect Payment
-   * Flows](https://docs.yapily.com/guides/payments/payment-authorisation-flows/redirect/) for more
-   * information about this flow.<br>
+   * Flows](https://docs.yapily.com/pages/key-concepts/payments/payment-authorisation/redirect-payment-flows/)
+   * for more information about this flow.<br>
    * <br>
    * Features:
    *
@@ -73,17 +74,20 @@ public class CreatePaymentAuthorisationOperation
    * @param psuIdHeader __Conditional__. Represents the user's login ID for the `Institution` to a
    *     personal account. <br>
    *     <br>
-   *     See [PSU identifiers](https://docs.yapily.com/knowledge/psu_identifiers/) to see if this
-   *     header is required.
+   *     See [PSU
+   *     identifiers](https://docs.yapily.com/pages/knowledge/open-banking/psu_identifiers/) to see
+   *     if this header is required.
    * @param psuCorporateIdHeader __Conditional__. Represents the user's login ID for the
    *     `Institution` to a business account. <br>
    *     <br>
-   *     See [PSU identifiers](https://docs.yapily.com/knowledge/psu_identifiers/) to see if this
-   *     header is required.
+   *     See [PSU
+   *     identifiers](https://docs.yapily.com/pages/knowledge/open-banking/psu_identifiers/) to see
+   *     if this header is required.
    * @param psuIpAddressHeader __Conditional__. The IP address of the PSU. <br>
    *     <br>
-   *     See [PSU identifiers](https://docs.yapily.com/knowledge/psu_identifiers/) to see if this
-   *     header is required.
+   *     See [PSU
+   *     identifiers](https://docs.yapily.com/pages/knowledge/open-banking/psu_identifiers/) to see
+   *     if this header is required.
    * @param createPaymentAuthorisationBody the content to use
    * @param parameters the {@link RequestParameters}
    * @param overrides the {@link ConfigurationOverrides}
@@ -108,17 +112,17 @@ public class CreatePaymentAuthorisationOperation
       @Optional
           @DisplayName("Psu id")
           @Summary(
-              "__Conditional__. Represents the user's login ID for the `Institution` to a personal account. <br><br>See [PSU identifiers](https://docs.yapily.com/knowledge/psu_identifiers/) to see if this header is required.")
+              "__Conditional__. Represents the user's login ID for the `Institution` to a personal account. <br><br>See [PSU identifiers](https://docs.yapily.com/pages/knowledge/open-banking/psu_identifiers/) to see if this header is required.")
           String psuIdHeader,
       @Optional
           @DisplayName("Psu corporate id")
           @Summary(
-              "__Conditional__. Represents the user's login ID for the `Institution` to a business account. <br><br>See [PSU identifiers](https://docs.yapily.com/knowledge/psu_identifiers/) to see if this header is required.")
+              "__Conditional__. Represents the user's login ID for the `Institution` to a business account. <br><br>See [PSU identifiers](https://docs.yapily.com/pages/knowledge/open-banking/psu_identifiers/) to see if this header is required.")
           String psuCorporateIdHeader,
       @Optional
           @DisplayName("Psu ip address")
           @Summary(
-              "__Conditional__. The IP address of the PSU. <br><br>See [PSU identifiers](https://docs.yapily.com/knowledge/psu_identifiers/) to see if this header is required.")
+              "__Conditional__. The IP address of the PSU. <br><br>See [PSU identifiers](https://docs.yapily.com/pages/knowledge/open-banking/psu_identifiers/) to see if this header is required.")
           String psuIpAddressHeader,
       @Content(primary = true)
           @DisplayName("Body")

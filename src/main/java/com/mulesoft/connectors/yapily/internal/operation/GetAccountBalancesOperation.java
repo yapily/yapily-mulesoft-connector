@@ -39,10 +39,11 @@ public class GetAccountBalancesOperation extends GetAccountBalancesOperationRefi
    * <br>
    * __Note__: This endpoint is only for obtaining the balance information of an account belonging
    * to an `Institution` that exposes their APIs through the [CBI Globe
-   * Gateway](https://docs.yapily.com/knowledge/cbi_globe/). If the `Institution` you wish to obtain
-   * balance data is not in the CBI Globe, use [Get
-   * Account](https://docs.yapily.com/api/#get-account) or [Get
-   * Accounts](https://docs.yapily.com/api/#get-accounts) to get balance data. <br>
+   * Gateway](https://docs.yapily.com/pages/knowledge/open-banking/cbi_globe//). If the
+   * `Institution` you wish to obtain balance data is not in the CBI Globe, use [Get
+   * Account](https://docs.yapily.com/api/reference/#operation/getAccount) or [Get
+   * Accounts](https://docs.yapily.com/api/reference/#operation/getAccounts) to get balance data.
+   * <br>
    * <br>
    * Feature: `ACCOUNT_BALANCES`
    *
@@ -58,17 +59,20 @@ public class GetAccountBalancesOperation extends GetAccountBalancesOperationRefi
    * @param psuIdHeader __Conditional__. Represents the user's login ID for the `Institution` to a
    *     personal account. <br>
    *     <br>
-   *     See [PSU identifiers](https://docs.yapily.com/knowledge/psu_identifiers/) to see if this
-   *     header is required.
+   *     See [PSU
+   *     identifiers](https://docs.yapily.com/pages/knowledge/open-banking/psu_identifiers/) to see
+   *     if this header is required.
    * @param psuCorporateIdHeader __Conditional__. Represents the user's login ID for the
    *     `Institution` to a business account. <br>
    *     <br>
-   *     See [PSU identifiers](https://docs.yapily.com/knowledge/psu_identifiers/) to see if this
-   *     header is required.
+   *     See [PSU
+   *     identifiers](https://docs.yapily.com/pages/knowledge/open-banking/psu_identifiers/) to see
+   *     if this header is required.
    * @param psuIpAddressHeader __Conditional__. The IP address of the PSU. <br>
    *     <br>
-   *     See [PSU identifiers](https://docs.yapily.com/knowledge/psu_identifiers/) to see if this
-   *     header is required.
+   *     See [PSU
+   *     identifiers](https://docs.yapily.com/pages/knowledge/open-banking/psu_identifiers/) to see
+   *     if this header is required.
    * @param parameters the {@link RequestParameters}
    * @param overrides the {@link ConfigurationOverrides}
    * @param callback the operation's {@link CompletionCallback}
@@ -100,17 +104,17 @@ public class GetAccountBalancesOperation extends GetAccountBalancesOperationRefi
       @Optional
           @DisplayName("Psu id")
           @Summary(
-              "__Conditional__. Represents the user's login ID for the `Institution` to a personal account. <br><br>See [PSU identifiers](https://docs.yapily.com/knowledge/psu_identifiers/) to see if this header is required.")
+              "__Conditional__. Represents the user's login ID for the `Institution` to a personal account. <br><br>See [PSU identifiers](https://docs.yapily.com/pages/knowledge/open-banking/psu_identifiers/) to see if this header is required.")
           String psuIdHeader,
       @Optional
           @DisplayName("Psu corporate id")
           @Summary(
-              "__Conditional__. Represents the user's login ID for the `Institution` to a business account. <br><br>See [PSU identifiers](https://docs.yapily.com/knowledge/psu_identifiers/) to see if this header is required.")
+              "__Conditional__. Represents the user's login ID for the `Institution` to a business account. <br><br>See [PSU identifiers](https://docs.yapily.com/pages/knowledge/open-banking/psu_identifiers/) to see if this header is required.")
           String psuCorporateIdHeader,
       @Optional
           @DisplayName("Psu ip address")
           @Summary(
-              "__Conditional__. The IP address of the PSU. <br><br>See [PSU identifiers](https://docs.yapily.com/knowledge/psu_identifiers/) to see if this header is required.")
+              "__Conditional__. The IP address of the PSU. <br><br>See [PSU identifiers](https://docs.yapily.com/pages/knowledge/open-banking/psu_identifiers/) to see if this header is required.")
           String psuIpAddressHeader,
       @ParameterGroup(name = REQUEST_PARAMETERS_GROUP_NAME) RequestParameters parameters,
       @ParameterGroup(name = CONNECTOR_OVERRIDES) ConfigurationOverrides overrides,

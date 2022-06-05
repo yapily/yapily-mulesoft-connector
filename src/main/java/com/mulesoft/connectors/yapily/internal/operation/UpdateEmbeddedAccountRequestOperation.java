@@ -45,8 +45,8 @@ public class UpdateEmbeddedAccountRequestOperation
    * embedded authorisation to access the user's financial data. <br>
    * <br>
    * See [Embedded Account
-   * Flows](https://docs.yapily.com/guides/financial-data/account-authorisation-flows/embedded/) for
-   * more information about this flow.<br>
+   * Flows](https://docs.yapily.com/pages/key-concepts/account-data/account-authorisation/embedded-account-flows/)
+   * for more information about this flow.<br>
    * <br>
    * Feature: `INITIATE_EMBEDDED_ACCOUNT_REQUEST`
    *
@@ -61,17 +61,20 @@ public class UpdateEmbeddedAccountRequestOperation
    * @param psuIdHeader __Conditional__. Represents the user's login ID for the `Institution` to a
    *     personal account. <br>
    *     <br>
-   *     See [PSU identifiers](https://docs.yapily.com/knowledge/psu_identifiers/) to see if this
-   *     header is required.
+   *     See [PSU
+   *     identifiers](https://docs.yapily.com/pages/knowledge/open-banking/psu_identifiers/) to see
+   *     if this header is required.
    * @param psuCorporateIdHeader __Conditional__. Represents the user's login ID for the
    *     `Institution` to a business account. <br>
    *     <br>
-   *     See [PSU identifiers](https://docs.yapily.com/knowledge/psu_identifiers/) to see if this
-   *     header is required.
+   *     See [PSU
+   *     identifiers](https://docs.yapily.com/pages/knowledge/open-banking/psu_identifiers/) to see
+   *     if this header is required.
    * @param psuIpAddressHeader __Conditional__. The IP address of the PSU. <br>
    *     <br>
-   *     See [PSU identifiers](https://docs.yapily.com/knowledge/psu_identifiers/) to see if this
-   *     header is required.
+   *     See [PSU
+   *     identifiers](https://docs.yapily.com/pages/knowledge/open-banking/psu_identifiers/) to see
+   *     if this header is required.
    * @param updateEmbeddedAccountRequestBody the content to use
    * @param parameters the {@link RequestParameters}
    * @param overrides the {@link ConfigurationOverrides}
@@ -99,22 +102,20 @@ public class UpdateEmbeddedAccountRequestOperation
       @Optional
           @DisplayName("Psu id")
           @Summary(
-              "__Conditional__. Represents the user's login ID for the `Institution` to a personal account. <br><br>See [PSU identifiers](https://docs.yapily.com/knowledge/psu_identifiers/) to see if this header is required.")
+              "__Conditional__. Represents the user's login ID for the `Institution` to a personal account. <br><br>See [PSU identifiers](https://docs.yapily.com/pages/knowledge/open-banking/psu_identifiers/) to see if this header is required.")
           String psuIdHeader,
       @Optional
           @DisplayName("Psu corporate id")
           @Summary(
-              "__Conditional__. Represents the user's login ID for the `Institution` to a business account. <br><br>See [PSU identifiers](https://docs.yapily.com/knowledge/psu_identifiers/) to see if this header is required.")
+              "__Conditional__. Represents the user's login ID for the `Institution` to a business account. <br><br>See [PSU identifiers](https://docs.yapily.com/pages/knowledge/open-banking/psu_identifiers/) to see if this header is required.")
           String psuCorporateIdHeader,
       @Optional
           @DisplayName("Psu ip address")
           @Summary(
-              "__Conditional__. The IP address of the PSU. <br><br>See [PSU identifiers](https://docs.yapily.com/knowledge/psu_identifiers/) to see if this header is required.")
+              "__Conditional__. The IP address of the PSU. <br><br>See [PSU identifiers](https://docs.yapily.com/pages/knowledge/open-banking/psu_identifiers/) to see if this header is required.")
           String psuIpAddressHeader,
       @Content(primary = true)
           @DisplayName("Body")
-          @Summary(
-              "The request body containing an `AccountEmbeddedAuthorisationRequest` json payload")
           @TypeResolver(UpdateEmbeddedAccountRequestInputMetadataResolver.class)
           TypedValue<InputStream> updateEmbeddedAccountRequestBody,
       @ParameterGroup(name = REQUEST_PARAMETERS_GROUP_NAME) RequestParameters parameters,

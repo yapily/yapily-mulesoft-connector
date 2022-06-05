@@ -63,7 +63,7 @@
       "example": "ACCC"
     },
     "AccountIdentificationType": {
-      "description": "__Mandatory__. Used to describe the format of the account.<br><br> See [Account Identification Combinations](https://docs.yapily.com/guides/payments/payment-execution/#account-identifications-combinations) for more information on when to specify each type.",
+      "description": "__Mandatory__. Used to describe the format of the account.<br><br> See [Account Identification Combinations](https://docs.yapily.com/pages/key-concepts/payments/payment-execution/intro-to-payment-execution/#account-identifications-combinations) for more information on when to specify each type.",
       "type": "string",
       "enum": [
         "SORT_CODE",
@@ -156,7 +156,6 @@
       "example": {"country": "GB"}
     },
     "AccountIdentification": {
-      "description": "__Mandatory__. The `AccountIdentification` object for the user's account identifications for the account",
       "additionalProperties": true,
       "type": "object",
       "required": [
@@ -165,7 +164,7 @@
       ],
       "properties": {
         "identification": {
-          "description": "__Mandatory__. The value associated with the account identification type.<br><br> See [Account Identification Combinations](https://docs.yapily.com/guides/payments/payment-execution/#account-identifications-combinations) for more information on the format of the values.",
+          "description": "__Mandatory__. The value associated with the account identification type.<br><br> See [Account Identification Combinations](https://docs.yapily.com/pages/key-concepts/payments/payment-execution/intro-to-payment-execution/#account-identifications-combinations) for more information on the format of the values.",
           "type": "string",
           "example": "401016"
         },
@@ -371,7 +370,44 @@
     },
     "ApiListResponseOfPaymentResponse": {
       "x-amf-examples": {
-        "OBIE Example Response": {
+        "obie-example-acc-scheduled-payments-response": {
+          "description": "OBIE Example Response",
+          "value": {
+            "data": [{
+              "reference": "f62ee3bad94d432d9786ba038131b5d7",
+              "scheduledPaymentType": "EXECUTION",
+              "payeeDetails": {
+                "accountIdentifications": [
+                  {
+                    "identification": "70000002",
+                    "type": "ACCOUNT_NUMBER"
+                  },
+                  {
+                    "identification": "700001",
+                    "type": "SORT_CODE"
+                  }
+                ],
+                "name": "Mr. Roberto Rastapopoulos & Ivan Sakharine & mits"
+              },
+              "scheduledPaymentDateTime": "2021-12-01T00:00:00+01:00",
+              "id": "6f62b428-c3a0-42eb-a838-ae41e52916e9",
+              "amountDetails": {
+                "amount": 1,
+                "currency": "GBP"
+              }
+            }],
+            "meta": {
+              "tracingId": "0de4ed83caf542f6bcaa30c62275191c",
+              "pagination": {
+                "self": {"limit": 1000},
+                "totalCount": 1
+              },
+              "count": 1
+            },
+            "links": {"self": "https://api.yapily.com/accounts/700004000000000000000002/scheduled-payments?limit=1000"}
+          }
+        },
+        "obie-example-acc-periodic-payments-response": {
           "description": "OBIE Example Response",
           "value": {
             "data": [{
@@ -415,43 +451,6 @@
               "count": 1
             },
             "links": {"self": "https://api.yapily.com/accounts/700004000000000000000002/periodic-payments?limit=1000"}
-          }
-        },
-        "amf_example_1": {
-          "description": "OBIE Example Response",
-          "value": {
-            "data": [{
-              "reference": "f62ee3bad94d432d9786ba038131b5d7",
-              "scheduledPaymentType": "EXECUTION",
-              "payeeDetails": {
-                "accountIdentifications": [
-                  {
-                    "identification": "70000002",
-                    "type": "ACCOUNT_NUMBER"
-                  },
-                  {
-                    "identification": "700001",
-                    "type": "SORT_CODE"
-                  }
-                ],
-                "name": "Mr. Roberto Rastapopoulos & Ivan Sakharine & mits"
-              },
-              "scheduledPaymentDateTime": "2021-12-01T00:00:00+01:00",
-              "id": "6f62b428-c3a0-42eb-a838-ae41e52916e9",
-              "amountDetails": {
-                "amount": 1,
-                "currency": "GBP"
-              }
-            }],
-            "meta": {
-              "tracingId": "0de4ed83caf542f6bcaa30c62275191c",
-              "pagination": {
-                "self": {"limit": 1000},
-                "totalCount": 1
-              },
-              "count": 1
-            },
-            "links": {"self": "https://api.yapily.com/accounts/700004000000000000000002/scheduled-payments?limit=1000"}
           }
         }
       },
@@ -566,7 +565,7 @@
       }
     },
     "Payer": {
-      "description": "__Conditional__. The `Payer` object contains details of the benefactor [person or business]. If you define this in your payment request, you mustdefine this along with all of the nested mandatory properties.<ol>     <li>The `Payer` object is mandatory along with its mandatory properties when the account of the benefactor is from an `Institution` in Europe.          See [Berlin Group](https://docs.yapily.com/knowledge/berlin_group/) for more information.<\/li>     <li>The `Payer` should be specified if the `Payer` account is intended to be locked.<\/li><\/ol>",
+      "description": "__Conditional__. The `Payer` object contains details of the benefactor [person or business]. If you define this in your payment request, you mustdefine this along with all of the nested mandatory properties.<ol>     <li>The `Payer` object is mandatory along with its mandatory properties when the account of the benefactor is from an `Institution` in Europe.          See [Berlin Group](https://docs.yapily.com/pages/knowledge/open-banking/berlin_group/) for more information.<\/li>     <li>The `Payer` should be specified if the `Payer` account is intended to be locked.<\/li><\/ol>",
       "additionalProperties": true,
       "type": "object",
       "required": ["accountIdentifications"],

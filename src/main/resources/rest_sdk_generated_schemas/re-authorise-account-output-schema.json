@@ -1,190 +1,7 @@
 {
   "$schema": "http://json-schema.org/draft-04/schema#",
-  "$ref": "#/definitions/ApiResponseOfAuthorisationRequestResponse",
+  "$ref": "#/definitions/ApiResponseOfAccountAuthorisationResponse",
   "definitions": {
-    "ApiResponseOfAuthorisationRequestResponse": {
-      "x-amf-examples": {
-        "Berlin Group Example (AIS) Response": {
-          "description": "Berlin Group Example (AIS) Response",
-          "value": {
-            "data": {
-              "createdAt": "2021-05-11T13:03:43.619Z",
-              "institutionId": "n26",
-              "qrCodeUrl": "https://images.yapily.com/image/f86d382b-c00a-4650-8d0d-9ee6ba1093cd/1620738225?size=0",
-              "userUuid": "e2578545-27a4-4edf-983f-5d33c2d7b559",
-              "applicationUserId": "john.doe@company.com",
-              "id": "73064bb9-c84d-4242-897c-4150aacfa658",
-              "state": "1575102ed5664761bce34927f0caa50f",
-              "featureScope": ["INITIATE_PRE_AUTHORISATION"],
-              "authorisationUrl": "https://app.n26.com/open-banking?requestId=9ae856ce-6b10-4956-8da8-c66ee0c9d86f&state=1575102ed5664761bce34927f0caa50f&authType=XS2A&scope=DEDICATED_AISP",
-              "status": "AWAITING_PRE_AUTHORIZATION"
-            },
-            "meta": {"tracingId": "8acb66e6a9e142e79acc3ccf6cc03e04"}
-          }
-        },
-        "CBI Globe Example Response": {
-          "description": "CBI Globe Example Response",
-          "value": {
-            "data": {
-              "institutionId": "bpm-sandbox",
-              "authorisationUrl": "https://scasandbox.bancobpm.it/sca/login.html?idRichiestaSCA=20210609110654029&tipoRisorsa=C&codiceASPSP=05034",
-              "expiresAt": "2021-09-07T00:00:00Z",
-              "createdAt": "2021-06-09T11:06:54.132Z",
-              "timeToExpire": "P89DT12H53M5.589S",
-              "qrCodeUrl": "https://images.yapily.com/image/72095dc7-4a23-4971-9a7f-e3f9c6af7921/1623236814?size=0",
-              "userUuid": "3ddf5dd0-aa48-4d0f-baa7-fa057e9e911d",
-              "applicationUserId": "john.doe@company.com",
-              "id": "4f988304-67ea-4ea9-a61e-cb90cac37f78",
-              "state": "a55ae8debaad4fb991b73a3a912a2004",
-              "featureScope": [
-                "ACCOUNT_BALANCES",
-                "ACCOUNT_TRANSACTIONS"
-              ],
-              "status": "AWAITING_AUTHORIZATION",
-              "institutionConsentId": "bdbd7ad0-b2d1-4a5c-9173-3586f30bc575"
-            },
-            "meta": {"tracingId": "a55a89c4a27b41129e484d74fc338121"}
-          }
-        },
-        "Berlin Group Example (PIS) Response": {
-          "description": "Berlin Group Example (PIS) Response",
-          "value": {
-            "data": {
-              "createdAt": "2021-06-10T09:54:46.669Z",
-              "institutionId": "n26",
-              "qrCodeUrl": "https://images.yapily.com/image/7384ad3b-5eb1-4304-9cfa-7aa6fcc5e0c7/1623318888?size=0",
-              "userUuid": "e2578545-27a4-4edf-983f-5d33c2d7b559",
-              "applicationUserId": "john.doe@company.com",
-              "id": "53ff00d0-91dd-417d-880b-cdd7c50090ed",
-              "state": "4399535ee4de46238fce108a95669848",
-              "featureScope": ["INITIATE_PRE_AUTHORISATION"],
-              "authorisationUrl": "https://app.n26.com/open-banking?requestId=2e2b2efd-82bb-4a2b-8f67-ced1a93511b8&state=4399535ee4de46238fce108a95669848&authType=XS2A&scope=DEDICATED_PISP",
-              "status": "AWAITING_PRE_AUTHORIZATION"
-            },
-            "meta": {"tracingId": "ba79c56773de42129dbf8164b202276c"}
-          }
-        },
-        "OBIE Example Response": {
-          "description": "OBIE Example Response",
-          "value": {
-            "data": {
-              "createdAt": "2021-06-09T08:22:50.135Z",
-              "institutionId": "modelo-sandbox",
-              "qrCodeUrl": "https://images.yapily.com/image/4ef6e16c-dbe2-4d90-9e1b-868d946082ef/1623227001?size=0",
-              "userUuid": "3ddf5dd0-aa48-4d0f-baa7-fa057e9e911d",
-              "applicationUserId": "john.doe@company.com",
-              "authorizedAt": "2021-06-09T08:23:03.944Z",
-              "id": "2812b61c-9d0b-4730-8c94-22c18918e66a",
-              "state": "0623e536c5044b4aa3f6c66e7537bee0",
-              "featureScope": [
-                "ACCOUNT_STATEMENT_FILE",
-                "ACCOUNT_TRANSACTIONS",
-                "ACCOUNT_STATEMENTS",
-                "ACCOUNTS",
-                "ACCOUNT"
-              ],
-              "authorisationUrl": "https://ob19-auth1-ui.o3bank.co.uk/auth?client_id=e7f6b95b-5f35-419b-b301-8b08bcd946de&response_type=code+id_token&state=0623e536c5044b4aa3f6c66e7537bee0&nonce=0623e536c5044b4aa3f6c66e7537bee0&scope=openid+accounts&redirect_uri=https%3A%2F%2Fauth.yapily.com%2F&request=eyJraWQiOiJnRTRvU3VaZDl4TVpUNXZDdTNWYy1mdktNak0iLCJhbGciOiJQUzI1NiJ9.eyJhdWQiOiJodHRwczovL29iMTktYXV0aDEtdWkubzNiYW5rLmNvLnVrIiwic2NvcGUiOiJvcGVuaWQgYWNjb3VudHMiLCJpc3MiOiJlN2Y2Yjk1Yi01ZjM1LTQxOWItYjMwMS04YjA4YmNkOTQ2ZGUiLCJjbGllbnRfaWQiOiJlN2Y2Yjk1Yi01ZjM1LTQxOWItYjMwMS04YjA4YmNkOTQ2ZGUiLCJyZXNwb25zZV90eXBlIjoiY29kZSBpZF90b2tlbiIsInJlZGlyZWN0X3VyaSI6Imh0dHBzOi8vYXV0aC55YXBpbHkuY29tLyIsInN0YXRlIjoiMDYyM2U1MzZjNTA0NGI0YWEzZjZjNjZlNzUzN2JlZTAiLCJjbGFpbXMiOnsiaWRfdG9rZW4iOnsiYWNyIjp7InZhbHVlIjoidXJuOm9wZW5iYW5raW5nOnBzZDI6c2NhIiwiZXNzZW50aWFsIjp0cnVlfSwib3BlbmJhbmtpbmdfaW50ZW50X2lkIjp7InZhbHVlIjoiYWFjLWY3ODQ3ZTk5LTdjNjYtNGJiOC04NjQxLTYxYTI0MDU3ZjJlOCIsImVzc2VudGlhbCI6dHJ1ZX19LCJ1c2VyaW5mbyI6eyJvcGVuYmFua2luZ19pbnRlbnRfaWQiOnsidmFsdWUiOiJhYWMtZjc4NDdlOTktN2M2Ni00YmI4LTg2NDEtNjFhMjQwNTdmMmU4IiwiZXNzZW50aWFsIjp0cnVlfX19LCJub25jZSI6IjA2MjNlNTM2YzUwNDRiNGFhM2Y2YzY2ZTc1MzdiZWUwIiwianRpIjoiMjEyM2E1OGMtMTExYi00OGY2LTg2ODAtZTViYTNiMzI3MjM5IiwiaWF0IjoxNjIzMjI3MDAxLCJleHAiOjE2MjMyMjg4MDF9.JG5lc5TWjCucWZPfcyd34trk0QcGNzhYXfhHTlVrcfu1zjrAtSUI8i0o4yKqS19cOGKHq1HtuQac2hhO8gCr_vd5n7eIuIrWfjEM1MuIwsJ85jOpMBkEiSOurLRIgW77VmqHpVUVj5-0-1Tk-N-vaC_4nIdtSi576sOb4rjLQvs2EX_sFODGjyMxHXiZlnr2p71gA3nRy8M2Vv_At4-NPW8OLULS8zXclWoK797HFAGtsNLCy8tz0YCsnEaFhcLhZSliy3a7DRfxvBmIzhY23M4uQ6bpM1zCyqTPsOhqR-qdgnZorBrax_2CQ37yIeV4becUJWvZSdnjYX7gDtNltA",
-              "status": "AWAITING_RE_AUTHORIZATION",
-              "institutionConsentId": "aac-f7847e99-7c66-4bb8-8641-61a24057f2e8"
-            },
-            "meta": {"tracingId": "8719f9c97272463d9c2d1ee6108c8e24"}
-          }
-        },
-        "amf_example_3": {
-          "description": "Berlin Group Example (PIS) Response",
-          "value": {
-            "data": {
-              "createdAt": "2021-06-10T09:54:46.669Z",
-              "institutionId": "n26",
-              "qrCodeUrl": "https://images.yapily.com/image/7384ad3b-5eb1-4304-9cfa-7aa6fcc5e0c7/1623318888?size=0",
-              "userUuid": "e2578545-27a4-4edf-983f-5d33c2d7b559",
-              "applicationUserId": "john.doe@company.com",
-              "id": "53ff00d0-91dd-417d-880b-cdd7c50090ed",
-              "state": "4399535ee4de46238fce108a95669848",
-              "featureScope": ["INITIATE_ONETIME_PRE_AUTHORISATION_PAYMENTS"],
-              "authorisationUrl": "https://app.n26.com/open-banking?requestId=2e2b2efd-82bb-4a2b-8f67-ced1a93511b8&state=4399535ee4de46238fce108a95669848&authType=XS2A&scope=DEDICATED_PISP",
-              "status": "AWAITING_PRE_AUTHORIZATION"
-            },
-            "meta": {"tracingId": "ba79c56773de42129dbf8164b202276c"}
-          }
-        },
-        "amf_example_2": {
-          "description": "OBIE Example Response",
-          "value": {
-            "data": {
-              "createdAt": "2021-05-13T08:59:23.864Z",
-              "institutionId": "n26",
-              "userUuid": "e2578545-27a4-4edf-983f-5d33c2d7b559",
-              "applicationUserId": "john.doe@company.com",
-              "authorizedAt": "2021-05-13T09:00:06.867Z",
-              "id": "68e14e00-38b0-467d-a999-f70340e467b3",
-              "state": "4f4f9766f7264afc96a5269d6e65e066",
-              "featureScope": [
-                "ACCOUNT_TRANSACTIONS",
-                "INITIATE_PRE_AUTHORISATION",
-                "ACCOUNTS",
-                "ACCOUNT_TRANSACTIONS_WITH_MERCHANT"
-              ],
-              "institutionConsentId": "87ec9ded-d5ea-4fb6-80c5-ad4c88246c9f",
-              "status": "AWAITING_DECOUPLED_AUTHORIZATION"
-            },
-            "meta": {"tracingId": "ee8e5bcfedf348b18ae45a34135790cc"}
-          }
-        },
-        "amf_example_1": {
-          "description": "OBIE Example Response",
-          "value": {
-            "data": {
-              "createdAt": "2021-06-09T08:03:20.510Z",
-              "institutionId": "modelo-sandbox",
-              "qrCodeUrl": "https://images.yapily.com/image/3b634d3c-a2ce-49b8-9014-330661800604/1623225801?size=0",
-              "userUuid": "3ddf5dd0-aa48-4d0f-baa7-fa057e9e911d",
-              "applicationUserId": "john.doe@company.com",
-              "id": "2d5c3632-1729-4a5e-bc69-c7fa1cbba815",
-              "state": "7948ba4d6a064001b06ef28f8c06ca4a",
-              "featureScope": [
-                "ACCOUNT_STATEMENT_FILE",
-                "ACCOUNTS",
-                "ACCOUNT_STATEMENTS",
-                "ACCOUNT_TRANSACTIONS",
-                "ACCOUNT",
-                "ACCOUNT_BALANCES",
-                "ACCOUNT_STATEMENT",
-                "ACCOUNT_SCHEDULED_PAYMENTS",
-                "ACCOUNT_TRANSACTIONS_WITH_MERCHANT",
-                "ACCOUNT_PERIODIC_PAYMENTS",
-                "ACCOUNT_BENEFICIARIES",
-                "IDENTITY",
-                "ACCOUNT_DIRECT_DEBITS"
-              ],
-              "authorisationUrl": "https://ob19-auth1-ui.o3bank.co.uk/auth?client_id=e7f6b95b-5f35-419b-b301-8b08bcd946de&response_type=code+id_token&state=7948ba4d6a064001b06ef28f8c06ca4a&nonce=7948ba4d6a064001b06ef28f8c06ca4a&scope=openid+accounts&redirect_uri=https%3A%2F%2Fauth.yapily.com%2F&request=eyJraWQiOiJnRTRvU3VaZDl4TVpUNXZDdTNWYy1mdktNak0iLCJhbGciOiJQUzI1NiJ9.eyJhdWQiOiJodHRwczovL29iMTktYXV0aDEtdWkubzNiYW5rLmNvLnVrIiwic2NvcGUiOiJvcGVuaWQgYWNjb3VudHMiLCJpc3MiOiJlN2Y2Yjk1Yi01ZjM1LTQxOWItYjMwMS04YjA4YmNkOTQ2ZGUiLCJjbGllbnRfaWQiOiJlN2Y2Yjk1Yi01ZjM1LTQxOWItYjMwMS04YjA4YmNkOTQ2ZGUiLCJyZXNwb25zZV90eXBlIjoiY29kZSBpZF90b2tlbiIsInJlZGlyZWN0X3VyaSI6Imh0dHBzOi8vYXV0aC55YXBpbHkuY29tLyIsInN0YXRlIjoiNzk0OGJhNGQ2YTA2NDAwMWIwNmVmMjhmOGMwNmNhNGEiLCJjbGFpbXMiOnsiaWRfdG9rZW4iOnsiYWNyIjp7InZhbHVlIjoidXJuOm9wZW5iYW5raW5nOnBzZDI6c2NhIiwiZXNzZW50aWFsIjp0cnVlfSwib3BlbmJhbmtpbmdfaW50ZW50X2lkIjp7InZhbHVlIjoiYWFjLTBhNzQzYTBmLTBiN2QtNGU3Yi04N2ViLTBiYzY1ZTFkMmY5NyIsImVzc2VudGlhbCI6dHJ1ZX19LCJ1c2VyaW5mbyI6eyJvcGVuYmFua2luZ19pbnRlbnRfaWQiOnsidmFsdWUiOiJhYWMtMGE3NDNhMGYtMGI3ZC00ZTdiLTg3ZWItMGJjNjVlMWQyZjk3IiwiZXNzZW50aWFsIjp0cnVlfX19LCJub25jZSI6Ijc5NDhiYTRkNmEwNjQwMDFiMDZlZjI4ZjhjMDZjYTRhIiwianRpIjoiNTIxNGFjNTQtNTEzYi00N2Y1LTgyYjUtZWExY2NhYzg0YzNiIiwiaWF0IjoxNjIzMjI1ODAxLCJleHAiOjE2MjMyMjc2MDF9.wmNfzJD1ekN_f028qWOyVvICkFm2uJ5Umok4hmxk4HZnDY2AOWDg4VX_MJjPHDydhfW8ZciBfCbEgmnButmASBbil-tHzwDIholS4RmnOZ4DXD-AttYx_VA2_X36J53kmlCHstPZpoawSIzdcnyW0JIhmVEvs5ZsaJvsDKhWk0hgYNS2GI0PORcn85W98EaE8APVrsz-tR-EfC9NmSZu7tH1zLyyD43AuD2BqdlMiYVTlzZsJ3FGPZ-ddT0rRloJvxPV6GLibjNAEowpSLjmDLv2v7gWszmYgcrzp5UM2jllfVL2KPA6Be5Eg6LVkL60Q3FKQyOMc8SCAWhALq_7Ew",
-              "status": "AWAITING_AUTHORIZATION",
-              "institutionConsentId": "aac-0a743a0f-0b7d-4e7b-87eb-0bc65e1d2f97"
-            },
-            "meta": {"tracingId": "3b262569303f47f188d16b43acd552c0"}
-          }
-        }
-      },
-      "additionalProperties": true,
-      "type": "object",
-      "properties": {
-        "tracingId": {"type": "string"},
-        "data": {"$ref": "#/definitions/AuthorisationRequestResponse"},
-        "meta": {"$ref": "#/definitions/ResponseMeta"},
-        "raw": {
-          "type": "array",
-          "items": {"$ref": "#/definitions/RawResponse"}
-        },
-        "links": {
-          "additionalProperties": {"type": "string"},
-          "type": "object"
-        },
-        "forwardedData": {
-          "type": "array",
-          "items": {"$ref": "#/definitions/ResponseForwardedData"}
-        }
-      }
-    },
     "RawRequest": {
       "additionalProperties": true,
       "type": "object",
@@ -217,6 +34,171 @@
         "url": {"type": "string"}
       }
     },
+    "ApiResponseOfAccountAuthorisationResponse": {
+      "x-amf-examples": {
+        "obie-example-acc-auth-response-post": {
+          "description": "OBIE Example Response",
+          "value": {
+            "data": {
+              "createdAt": "2021-06-09T08:03:20.510Z",
+              "institutionId": "modelo-sandbox",
+              "qrCodeUrl": "https://images.yapily.com/image/3b634d3c-a2ce-49b8-9014-330661800604/1623225801?size=0",
+              "userUuid": "3ddf5dd0-aa48-4d0f-baa7-fa057e9e911d",
+              "applicationUserId": "john.doe@company.com",
+              "id": "2d5c3632-1729-4a5e-bc69-c7fa1cbba815",
+              "state": "7948ba4d6a064001b06ef28f8c06ca4a",
+              "featureScope": [
+                "ACCOUNT_STATEMENT_FILE",
+                "ACCOUNTS",
+                "ACCOUNT_STATEMENTS",
+                "ACCOUNT_TRANSACTIONS",
+                "ACCOUNT",
+                "ACCOUNT_BALANCES",
+                "ACCOUNT_STATEMENT",
+                "ACCOUNT_SCHEDULED_PAYMENTS",
+                "ACCOUNT_TRANSACTIONS_WITH_MERCHANT",
+                "ACCOUNT_PERIODIC_PAYMENTS",
+                "ACCOUNT_BENEFICIARIES",
+                "IDENTITY",
+                "ACCOUNT_DIRECT_DEBITS"
+              ],
+              "authorisationUrl": "https://ob19-auth1-ui.o3bank.co.uk/auth?client_id=e7f6b95b-5f35-419b-b301-8b08bcd946de&response_type=code+id_token&state=7948ba4d6a064001b06ef28f8c06ca4a&nonce=7948ba4d6a064001b06ef28f8c06ca4a&scope=openid+accounts&redirect_uri=https%3A%2F%2Fauth.yapily.com%2F&request=eyJraWQiOiJnRTRvU3VaZDl4TVpUNXZDdTNWYy1mdktNak0iLCJhbGciOiJQUzI1NiJ9.eyJhdWQiOiJodHRwczovL29iMTktYXV0aDEtdWkubzNiYW5rLmNvLnVrIiwic2NvcGUiOiJvcGVuaWQgYWNjb3VudHMiLCJpc3MiOiJlN2Y2Yjk1Yi01ZjM1LTQxOWItYjMwMS04YjA4YmNkOTQ2ZGUiLCJjbGllbnRfaWQiOiJlN2Y2Yjk1Yi01ZjM1LTQxOWItYjMwMS04YjA4YmNkOTQ2ZGUiLCJyZXNwb25zZV90eXBlIjoiY29kZSBpZF90b2tlbiIsInJlZGlyZWN0X3VyaSI6Imh0dHBzOi8vYXV0aC55YXBpbHkuY29tLyIsInN0YXRlIjoiNzk0OGJhNGQ2YTA2NDAwMWIwNmVmMjhmOGMwNmNhNGEiLCJjbGFpbXMiOnsiaWRfdG9rZW4iOnsiYWNyIjp7InZhbHVlIjoidXJuOm9wZW5iYW5raW5nOnBzZDI6c2NhIiwiZXNzZW50aWFsIjp0cnVlfSwib3BlbmJhbmtpbmdfaW50ZW50X2lkIjp7InZhbHVlIjoiYWFjLTBhNzQzYTBmLTBiN2QtNGU3Yi04N2ViLTBiYzY1ZTFkMmY5NyIsImVzc2VudGlhbCI6dHJ1ZX19LCJ1c2VyaW5mbyI6eyJvcGVuYmFua2luZ19pbnRlbnRfaWQiOnsidmFsdWUiOiJhYWMtMGE3NDNhMGYtMGI3ZC00ZTdiLTg3ZWItMGJjNjVlMWQyZjk3IiwiZXNzZW50aWFsIjp0cnVlfX19LCJub25jZSI6Ijc5NDhiYTRkNmEwNjQwMDFiMDZlZjI4ZjhjMDZjYTRhIiwianRpIjoiNTIxNGFjNTQtNTEzYi00N2Y1LTgyYjUtZWExY2NhYzg0YzNiIiwiaWF0IjoxNjIzMjI1ODAxLCJleHAiOjE2MjMyMjc2MDF9.wmNfzJD1ekN_f028qWOyVvICkFm2uJ5Umok4hmxk4HZnDY2AOWDg4VX_MJjPHDydhfW8ZciBfCbEgmnButmASBbil-tHzwDIholS4RmnOZ4DXD-AttYx_VA2_X36J53kmlCHstPZpoawSIzdcnyW0JIhmVEvs5ZsaJvsDKhWk0hgYNS2GI0PORcn85W98EaE8APVrsz-tR-EfC9NmSZu7tH1zLyyD43AuD2BqdlMiYVTlzZsJ3FGPZ-ddT0rRloJvxPV6GLibjNAEowpSLjmDLv2v7gWszmYgcrzp5UM2jllfVL2KPA6Be5Eg6LVkL60Q3FKQyOMc8SCAWhALq_7Ew",
+              "status": "AWAITING_AUTHORIZATION",
+              "institutionConsentId": "aac-0a743a0f-0b7d-4e7b-87eb-0bc65e1d2f97"
+            },
+            "meta": {"tracingId": "3b262569303f47f188d16b43acd552c0"}
+          }
+        },
+        "cbi-globe-example-acc-auth-response": {
+          "description": "CBI Globe Example Response",
+          "value": {
+            "data": {
+              "institutionId": "bpm-sandbox",
+              "authorisationUrl": "https://scasandbox.bancobpm.it/sca/login.html?idRichiestaSCA=20210609110654029&tipoRisorsa=C&codiceASPSP=05034",
+              "expiresAt": "2021-09-07T00:00:00Z",
+              "createdAt": "2021-06-09T11:06:54.132Z",
+              "timeToExpire": "P89DT12H53M5.589S",
+              "qrCodeUrl": "https://images.yapily.com/image/72095dc7-4a23-4971-9a7f-e3f9c6af7921/1623236814?size=0",
+              "userUuid": "3ddf5dd0-aa48-4d0f-baa7-fa057e9e911d",
+              "applicationUserId": "john.doe@company.com",
+              "id": "4f988304-67ea-4ea9-a61e-cb90cac37f78",
+              "state": "a55ae8debaad4fb991b73a3a912a2004",
+              "featureScope": [
+                "ACCOUNT_BALANCES",
+                "ACCOUNT_TRANSACTIONS"
+              ],
+              "status": "AWAITING_AUTHORIZATION",
+              "institutionConsentId": "bdbd7ad0-b2d1-4a5c-9173-3586f30bc575"
+            },
+            "meta": {"tracingId": "a55a89c4a27b41129e484d74fc338121"}
+          }
+        },
+        "berlin-group-example-ais-pre-auth-response": {
+          "description": "Berlin Group Example (AIS) Response",
+          "value": {
+            "data": {
+              "createdAt": "2021-05-11T13:03:43.619Z",
+              "institutionId": "n26",
+              "qrCodeUrl": "https://images.yapily.com/image/f86d382b-c00a-4650-8d0d-9ee6ba1093cd/1620738225?size=0",
+              "userUuid": "e2578545-27a4-4edf-983f-5d33c2d7b559",
+              "applicationUserId": "john.doe@company.com",
+              "id": "73064bb9-c84d-4242-897c-4150aacfa658",
+              "state": "1575102ed5664761bce34927f0caa50f",
+              "featureScope": ["INITIATE_PRE_AUTHORISATION"],
+              "authorisationUrl": "https://app.n26.com/open-banking?requestId=9ae856ce-6b10-4956-8da8-c66ee0c9d86f&state=1575102ed5664761bce34927f0caa50f&authType=XS2A&scope=DEDICATED_AISP",
+              "status": "AWAITING_PRE_AUTHORIZATION"
+            },
+            "meta": {"tracingId": "8acb66e6a9e142e79acc3ccf6cc03e04"}
+          }
+        },
+        "berlin-group-pis-pre-auth-example-response": {
+          "description": "Berlin Group Example (PIS) Response",
+          "value": {
+            "data": {
+              "createdAt": "2021-06-10T09:54:46.669Z",
+              "institutionId": "n26",
+              "qrCodeUrl": "https://images.yapily.com/image/7384ad3b-5eb1-4304-9cfa-7aa6fcc5e0c7/1623318888?size=0",
+              "userUuid": "e2578545-27a4-4edf-983f-5d33c2d7b559",
+              "applicationUserId": "john.doe@company.com",
+              "id": "53ff00d0-91dd-417d-880b-cdd7c50090ed",
+              "state": "4399535ee4de46238fce108a95669848",
+              "featureScope": ["INITIATE_ONETIME_PRE_AUTHORISATION_PAYMENTS"],
+              "authorisationUrl": "https://app.n26.com/open-banking?requestId=2e2b2efd-82bb-4a2b-8f67-ced1a93511b8&state=4399535ee4de46238fce108a95669848&authType=XS2A&scope=DEDICATED_PISP",
+              "status": "AWAITING_PRE_AUTHORIZATION"
+            },
+            "meta": {"tracingId": "ba79c56773de42129dbf8164b202276c"}
+          }
+        },
+        "obie-example-acc-auth-response-patch": {
+          "description": "OBIE Example Response",
+          "value": {
+            "data": {
+              "createdAt": "2021-06-09T08:22:50.135Z",
+              "institutionId": "modelo-sandbox",
+              "qrCodeUrl": "https://images.yapily.com/image/4ef6e16c-dbe2-4d90-9e1b-868d946082ef/1623227001?size=0",
+              "userUuid": "3ddf5dd0-aa48-4d0f-baa7-fa057e9e911d",
+              "applicationUserId": "john.doe@company.com",
+              "authorizedAt": "2021-06-09T08:23:03.944Z",
+              "id": "2812b61c-9d0b-4730-8c94-22c18918e66a",
+              "state": "0623e536c5044b4aa3f6c66e7537bee0",
+              "featureScope": [
+                "ACCOUNT_STATEMENT_FILE",
+                "ACCOUNT_TRANSACTIONS",
+                "ACCOUNT_STATEMENTS",
+                "ACCOUNTS",
+                "ACCOUNT"
+              ],
+              "authorisationUrl": "https://ob19-auth1-ui.o3bank.co.uk/auth?client_id=e7f6b95b-5f35-419b-b301-8b08bcd946de&response_type=code+id_token&state=0623e536c5044b4aa3f6c66e7537bee0&nonce=0623e536c5044b4aa3f6c66e7537bee0&scope=openid+accounts&redirect_uri=https%3A%2F%2Fauth.yapily.com%2F&request=eyJraWQiOiJnRTRvU3VaZDl4TVpUNXZDdTNWYy1mdktNak0iLCJhbGciOiJQUzI1NiJ9.eyJhdWQiOiJodHRwczovL29iMTktYXV0aDEtdWkubzNiYW5rLmNvLnVrIiwic2NvcGUiOiJvcGVuaWQgYWNjb3VudHMiLCJpc3MiOiJlN2Y2Yjk1Yi01ZjM1LTQxOWItYjMwMS04YjA4YmNkOTQ2ZGUiLCJjbGllbnRfaWQiOiJlN2Y2Yjk1Yi01ZjM1LTQxOWItYjMwMS04YjA4YmNkOTQ2ZGUiLCJyZXNwb25zZV90eXBlIjoiY29kZSBpZF90b2tlbiIsInJlZGlyZWN0X3VyaSI6Imh0dHBzOi8vYXV0aC55YXBpbHkuY29tLyIsInN0YXRlIjoiMDYyM2U1MzZjNTA0NGI0YWEzZjZjNjZlNzUzN2JlZTAiLCJjbGFpbXMiOnsiaWRfdG9rZW4iOnsiYWNyIjp7InZhbHVlIjoidXJuOm9wZW5iYW5raW5nOnBzZDI6c2NhIiwiZXNzZW50aWFsIjp0cnVlfSwib3BlbmJhbmtpbmdfaW50ZW50X2lkIjp7InZhbHVlIjoiYWFjLWY3ODQ3ZTk5LTdjNjYtNGJiOC04NjQxLTYxYTI0MDU3ZjJlOCIsImVzc2VudGlhbCI6dHJ1ZX19LCJ1c2VyaW5mbyI6eyJvcGVuYmFua2luZ19pbnRlbnRfaWQiOnsidmFsdWUiOiJhYWMtZjc4NDdlOTktN2M2Ni00YmI4LTg2NDEtNjFhMjQwNTdmMmU4IiwiZXNzZW50aWFsIjp0cnVlfX19LCJub25jZSI6IjA2MjNlNTM2YzUwNDRiNGFhM2Y2YzY2ZTc1MzdiZWUwIiwianRpIjoiMjEyM2E1OGMtMTExYi00OGY2LTg2ODAtZTViYTNiMzI3MjM5IiwiaWF0IjoxNjIzMjI3MDAxLCJleHAiOjE2MjMyMjg4MDF9.JG5lc5TWjCucWZPfcyd34trk0QcGNzhYXfhHTlVrcfu1zjrAtSUI8i0o4yKqS19cOGKHq1HtuQac2hhO8gCr_vd5n7eIuIrWfjEM1MuIwsJ85jOpMBkEiSOurLRIgW77VmqHpVUVj5-0-1Tk-N-vaC_4nIdtSi576sOb4rjLQvs2EX_sFODGjyMxHXiZlnr2p71gA3nRy8M2Vv_At4-NPW8OLULS8zXclWoK797HFAGtsNLCy8tz0YCsnEaFhcLhZSliy3a7DRfxvBmIzhY23M4uQ6bpM1zCyqTPsOhqR-qdgnZorBrax_2CQ37yIeV4becUJWvZSdnjYX7gDtNltA",
+              "status": "AWAITING_RE_AUTHORIZATION",
+              "institutionConsentId": "aac-f7847e99-7c66-4bb8-8641-61a24057f2e8"
+            },
+            "meta": {"tracingId": "8719f9c97272463d9c2d1ee6108c8e24"}
+          }
+        },
+        "obie-example-acc-auth-response-put": {
+          "description": "OBIE Example Response",
+          "value": {
+            "data": {
+              "createdAt": "2021-05-13T08:59:23.864Z",
+              "institutionId": "n26",
+              "userUuid": "e2578545-27a4-4edf-983f-5d33c2d7b559",
+              "applicationUserId": "john.doe@company.com",
+              "authorizedAt": "2021-05-13T09:00:06.867Z",
+              "id": "68e14e00-38b0-467d-a999-f70340e467b3",
+              "state": "4f4f9766f7264afc96a5269d6e65e066",
+              "featureScope": [
+                "ACCOUNT_TRANSACTIONS",
+                "INITIATE_PRE_AUTHORISATION",
+                "ACCOUNTS",
+                "ACCOUNT_TRANSACTIONS_WITH_MERCHANT"
+              ],
+              "institutionConsentId": "87ec9ded-d5ea-4fb6-80c5-ad4c88246c9f",
+              "status": "AWAITING_DECOUPLED_AUTHORIZATION"
+            },
+            "meta": {"tracingId": "ee8e5bcfedf348b18ae45a34135790cc"}
+          }
+        }
+      },
+      "additionalProperties": true,
+      "type": "object",
+      "properties": {
+        "tracingId": {"type": "string"},
+        "data": {"$ref": "#/definitions/AccountAuthorisationResponse"},
+        "meta": {"$ref": "#/definitions/ResponseMeta"},
+        "raw": {
+          "type": "array",
+          "items": {"$ref": "#/definitions/RawResponse"}
+        },
+        "links": {
+          "additionalProperties": {"type": "string"},
+          "type": "object"
+        },
+        "forwardedData": {
+          "type": "array",
+          "items": {"$ref": "#/definitions/ResponseForwardedData"}
+        }
+      }
+    },
     "ResponseForwardedData": {
       "additionalProperties": true,
       "type": "object",
@@ -233,7 +215,7 @@
       "type": "object",
       "properties": {"tracingId": {"type": "string"}}
     },
-    "AuthorisationRequestResponse": {
+    "AccountAuthorisationResponse": {
       "additionalProperties": true,
       "type": "object",
       "properties": {
@@ -313,7 +295,7 @@
       ]
     },
     "FeatureEnum": {
-      "description": "Used to describe what functions are supported by the associated `Institution`.        <br><br>For more information on each feature, see the following links:        <ul>          <li>[Financial Data Features](https://docs.yapily.com/guides/financial-data/features/)<\/li>          <li>[Payments Features](https://docs.yapily.com/guides/payments/features/)<\/li>        <\/ul>",
+      "description": "Used to describe what functions are supported by the associated `Institution`.        <br><br>For more information on each feature, see the following links:        <ul>          <li>[Financial Data Features](https://docs.yapily.com/pages/key-concepts/account-data/account-features/)<\/li>          <li>[Payments Features](https://docs.yapily.com/pages/key-concepts/payments/payment-features/)<\/li>        <\/ul>",
       "type": "string",
       "enum": [
         "INITIATE_PRE_AUTHORISATION",
@@ -348,13 +330,15 @@
         "CREATE_DOMESTIC_SINGLE_INSTANT_PAYMENT",
         "INITIATE_DOMESTIC_VARIABLE_RECURRING_PAYMENT",
         "CREATE_DOMESTIC_VARIABLE_RECURRING_PAYMENT",
+        "INITIATE_DOMESTIC_VARIABLE_RECURRING_PAYMENT_SWEEPING",
+        "INITIATE_DOMESTIC_VARIABLE_RECURRING_PAYMENT_NONSWEEPING",
+        "CREATE_DOMESTIC_VARIABLE_RECURRING_PAYMENT_SWEEPING",
+        "CREATE_DOMESTIC_VARIABLE_RECURRING_PAYMENT_NONSWEEPING",
         "INITIATE_DOMESTIC_SCHEDULED_PAYMENT",
         "CREATE_DOMESTIC_SCHEDULED_PAYMENT",
         "INITIATE_DOMESTIC_PERIODIC_PAYMENT",
         "CREATE_DOMESTIC_PERIODIC_PAYMENT",
         "PERIODIC_PAYMENT_FREQUENCY_EXTENDED",
-        "INITIATE_INTERNATIONAL_VARIABLE_RECURRING_PAYMENT",
-        "CREATE_INTERNATIONAL_VARIABLE_RECURRING_PAYMENT",
         "INITIATE_INTERNATIONAL_SCHEDULED_PAYMENT",
         "CREATE_INTERNATIONAL_SCHEDULED_PAYMENT",
         "INITIATE_INTERNATIONAL_PERIODIC_PAYMENT",
@@ -372,7 +356,10 @@
         "READ_INTERNATIONAL_SINGLE_REFUND",
         "READ_INTERNATIONAL_SCHEDULED_REFUND",
         "ACCOUNT_BENEFICIARIES",
-        "INITIATE_ONETIME_PRE_AUTHORISATION_PAYMENTS"
+        "INITIATE_ONETIME_PRE_AUTHORISATION_PAYMENTS",
+        "INITIATE_ONETIME_PRE_AUTHORISATION_ACCOUNTS",
+        "INITIATE_ONETIME_PRE_AUTHORISATION",
+        "VARIABLE_RECURRING_PAYMENT_FUNDS_CONFIRMATION"
       ]
     },
     "RawResponse": {

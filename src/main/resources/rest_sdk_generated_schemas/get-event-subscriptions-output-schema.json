@@ -1,0 +1,661 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "$ref": "#/definitions/ApiListResponseOfEventSubscriptionResponse",
+  "definitions": {
+    "EventSubscriptionResponse": {
+      "additionalProperties": true,
+      "title": "EventSubscriptionResponse",
+      "type": "object",
+      "required": [
+        "eventTypeId",
+        "applicationId",
+        "created",
+        "notification"
+      ],
+      "properties": {
+        "notification": {"$ref": "#/definitions/Notification"},
+        "eventTypeId": {
+          "description": "Event type Id.",
+          "type": "string",
+          "example": "payment.status"
+        },
+        "created": {
+          "description": "Creation date of event subscription.",
+          "type": "string",
+          "example": "28-07-2021 15:47:03"
+        },
+        "applicationId": {
+          "format": "uuid",
+          "description": "Application related to event subscription.",
+          "type": "string",
+          "example": "2698db90-6635-4f76-b673-5ce8e2aeda0e"
+        }
+      }
+    },
+    "RawRequest": {
+      "additionalProperties": true,
+      "type": "object",
+      "properties": {
+        "headers": {
+          "additionalProperties": {"type": "string"},
+          "type": "object"
+        },
+        "bodyParameters": {
+          "additionalProperties": {"type": "string"},
+          "type": "object"
+        },
+        "method": {"type": "string"},
+        "requestInstant": {
+          "format": "date-time",
+          "type": "string"
+        },
+        "startedAt": {
+          "format": "date-time",
+          "type": "string"
+        },
+        "startTime": {
+          "format": "date-time",
+          "type": "string"
+        },
+        "body": {
+          "additionalProperties": true,
+          "type": "object"
+        },
+        "url": {"type": "string"}
+      }
+    },
+    "Enrichment": {
+      "additionalProperties": true,
+      "type": "object",
+      "properties": {
+        "cleansedDescription": {"type": "string"},
+        "correctedDate": {
+          "format": "date-time",
+          "type": "string"
+        },
+        "merchant": {"$ref": "#/definitions/EnrichmentMerchant"},
+        "location": {"type": "string"},
+        "paymentProcessor": {"type": "string"},
+        "categorisation": {"$ref": "#/definitions/Categorisation"},
+        "transactionHash": {"$ref": "#/definitions/TransactionHash"}
+      }
+    },
+    "AccountIdentificationType": {
+      "description": "__Mandatory__. Used to describe the format of the account.<br><br> See [Account Identification Combinations](https://docs.yapily.com/pages/key-concepts/payments/payment-execution/intro-to-payment-execution/#account-identifications-combinations) for more information on when to specify each type.",
+      "type": "string",
+      "enum": [
+        "SORT_CODE",
+        "ACCOUNT_NUMBER",
+        "IBAN",
+        "BBAN",
+        "BIC",
+        "PAN",
+        "MASKED_PAN",
+        "MSISDN",
+        "BSB",
+        "NCC",
+        "ABA",
+        "ABA_WIRE",
+        "ABA_ACH",
+        "EMAIL",
+        "ROLL_NUMBER"
+      ],
+      "example": "SORT_CODE"
+    },
+    "ResponseForwardedData": {
+      "additionalProperties": true,
+      "type": "object",
+      "properties": {
+        "headers": {
+          "additionalProperties": {"type": "string"},
+          "type": "object"
+        },
+        "url": {"type": "string"}
+      }
+    },
+    "ApiCall": {
+      "additionalProperties": true,
+      "type": "object"
+    },
+    "Address": {
+      "description": "__Conditional__. The address of the `Payee` or `Payer`.<ul><li>`payee.address` is mandatory when the `paymentType` is an `INTERNATIONAL` payment<\/li><li>An `Institution` may require you to specify the `country` when used in the context ofthe `Payee` to be able to make a payment.<\/li><\/ul>",
+      "additionalProperties": true,
+      "type": "object",
+      "properties": {
+        "country": {
+          "description": "__Conditional__. The 2-letter country code for the address. <br><br>An `Institution` may require you to specify the `country` when used in the context of the `Payee` to be able to make a payment",
+          "type": "string",
+          "example": "GB"
+        },
+        "streetName": {
+          "description": "__Optional__. The street name of the address",
+          "type": "string",
+          "example": "Oxford Road"
+        },
+        "townName": {
+          "description": "__Optional__. The town name of the address",
+          "type": "string",
+          "example": "Aylesbury"
+        },
+        "addressType": {"$ref": "#/definitions/AddressTypeEnum"},
+        "county": {
+          "description": "__Optional__. The list of counties for the address",
+          "type": "array",
+          "items": {"type": "string"},
+          "example": "Buckinghamshire"
+        },
+        "buildingNumber": {
+          "description": "__Optional__. The building number of the address",
+          "type": "string",
+          "example": "45"
+        },
+        "postCode": {
+          "description": "__Optional__. The post code of the address",
+          "type": "string",
+          "example": "HP19 3EQ"
+        },
+        "addressLines": {
+          "description": "__Optional__. The address line of the address",
+          "type": "array",
+          "items": {"type": "string"},
+          "example": "Ardenham Court"
+        },
+        "subDepartment": {
+          "description": "__Optional__. The sub-department for the address",
+          "type": "string",
+          "example": "Floor 3"
+        },
+        "department": {
+          "description": "__Optional__. The department for the address",
+          "type": "string",
+          "example": "Unit 2"
+        }
+      },
+      "example": {"country": "GB"}
+    },
+    "TransactionBalance": {
+      "additionalProperties": true,
+      "type": "object",
+      "properties": {
+        "type": {"$ref": "#/definitions/AccountBalanceType"},
+        "balanceAmount": {"$ref": "#/definitions/Amount"}
+      }
+    },
+    "EnrichmentMerchant": {
+      "additionalProperties": true,
+      "type": "object",
+      "properties": {
+        "parentGroup": {"type": "string"},
+        "merchantName": {"type": "string"}
+      }
+    },
+    "IsoCodeDetails": {
+      "additionalProperties": true,
+      "type": "object",
+      "properties": {
+        "code": {
+          "default": "UNKNOWN",
+          "type": "string"
+        },
+        "name": {
+          "default": "UNKNOWN",
+          "type": "string"
+        }
+      }
+    },
+    "AccountIdentification": {
+      "additionalProperties": true,
+      "type": "object",
+      "required": [
+        "type",
+        "identification"
+      ],
+      "properties": {
+        "identification": {
+          "description": "__Mandatory__. The value associated with the account identification type.<br><br> See [Account Identification Combinations](https://docs.yapily.com/pages/key-concepts/payments/payment-execution/intro-to-payment-execution/#account-identifications-combinations) for more information on the format of the values.",
+          "type": "string",
+          "example": "401016"
+        },
+        "type": {"$ref": "#/definitions/AccountIdentificationType"}
+      }
+    },
+    "StatementReference": {
+      "additionalProperties": true,
+      "type": "object",
+      "properties": {"value": {"type": "string"}}
+    },
+    "Notification": {
+      "additionalProperties": true,
+      "title": "Notification",
+      "type": "object",
+      "required": [
+        "type",
+        "url"
+      ],
+      "properties": {
+        "type": {
+          "description": "Notification type.",
+          "type": "string",
+          "example": "WEBHOOK"
+        },
+        "url": {
+          "description": "Url related to the notification.",
+          "type": "string",
+          "example": "https://httpbin.com/new_endpoint"
+        }
+      }
+    },
+    "Pagination": {
+      "additionalProperties": true,
+      "type": "object",
+      "properties": {
+        "next": {"$ref": "#/definitions/Next"},
+        "self": {"$ref": "#/definitions/FilterAndSort"},
+        "totalCount": {
+          "maximum": 9.223372036854776E+18,
+          "type": "integer",
+          "minimum": -9.223372036854776E+18
+        }
+      }
+    },
+    "Categorisation": {
+      "additionalProperties": true,
+      "type": "object",
+      "properties": {
+        "categories": {
+          "type": "array",
+          "items": {"type": "string"}
+        },
+        "source": {"type": "string"}
+      }
+    },
+    "AddressTypeEnum": {
+      "description": "__Optional__. The type of address",
+      "type": "string",
+      "enum": [
+        "BUSINESS",
+        "CORRESPONDENCE",
+        "DELIVERY_TO",
+        "MAIL_TO",
+        "PO_BOX",
+        "POSTAL",
+        "RESIDENTIAL",
+        "STATEMENT",
+        "UNKNOWN"
+      ]
+    },
+    "Merchant": {
+      "additionalProperties": true,
+      "type": "object",
+      "properties": {
+        "merchantCategoryCode": {"type": "string"},
+        "merchantName": {"type": "string"}
+      }
+    },
+    "FilterAndSort": {
+      "additionalProperties": true,
+      "type": "object",
+      "properties": {
+        "cursor": {"type": "string"},
+        "offset": {
+          "maximum": 2147483647,
+          "type": "integer",
+          "minimum": -2147483648
+        },
+        "before": {
+          "format": "date-time",
+          "type": "string"
+        },
+        "limit": {
+          "maximum": 2147483647,
+          "type": "integer",
+          "minimum": -2147483648
+        },
+        "from": {
+          "format": "date-time",
+          "type": "string"
+        },
+        "sort": {"$ref": "#/definitions/SortEnum"}
+      }
+    },
+    "AccountBalanceType": {
+      "type": "string",
+      "enum": [
+        "CLOSING_AVAILABLE",
+        "CLOSING_BOOKED",
+        "CLOSING_CLEARED",
+        "EXPECTED",
+        "FORWARD_AVAILABLE",
+        "INFORMATION",
+        "INTERIM_AVAILABLE",
+        "INTERIM_BOOKED",
+        "INTERIM_CLEARED",
+        "OPENING_AVAILABLE",
+        "OPENING_BOOKED",
+        "OPENING_CLEARED",
+        "PREVIOUSLY_CLOSED_BOOKED",
+        "AUTHORISED",
+        "OTHER",
+        "UNKNOWN"
+      ]
+    },
+    "ResponseListMeta": {
+      "additionalProperties": true,
+      "type": "object",
+      "properties": {
+        "tracingId": {"type": "string"},
+        "pagination": {"$ref": "#/definitions/Pagination"},
+        "count": {
+          "maximum": 2147483647,
+          "type": "integer",
+          "minimum": -2147483648
+        }
+      }
+    },
+    "RawResponse": {
+      "additionalProperties": true,
+      "type": "object",
+      "properties": {
+        "duration": {
+          "format": "iso8601",
+          "type": "string"
+        },
+        "result": {
+          "additionalProperties": true,
+          "type": "object"
+        },
+        "request": {"$ref": "#/definitions/RawRequest"},
+        "headers": {
+          "additionalProperties": {"type": "string"},
+          "type": "object"
+        },
+        "resultCode": {
+          "maximum": 2147483647,
+          "type": "integer",
+          "minimum": -2147483648
+        }
+      }
+    },
+    "Payer": {
+      "description": "__Conditional__. The `Payer` object contains details of the benefactor [person or business]. If you define this in your payment request, you mustdefine this along with all of the nested mandatory properties.<ol>     <li>The `Payer` object is mandatory along with its mandatory properties when the account of the benefactor is from an `Institution` in Europe.          See [Berlin Group](https://docs.yapily.com/pages/knowledge/open-banking/berlin_group/) for more information.<\/li>     <li>The `Payer` should be specified if the `Payer` account is intended to be locked.<\/li><\/ol>",
+      "additionalProperties": true,
+      "type": "object",
+      "required": ["accountIdentifications"],
+      "properties": {
+        "accountIdentifications": {
+          "uniqueItems": true,
+          "description": "__Mandatory__. The account identifications that identify the `Payer` bank account.",
+          "type": "array",
+          "items": {"$ref": "#/definitions/AccountIdentification"}
+        },
+        "address": {"$ref": "#/definitions/Address"},
+        "name": {
+          "description": "__Mandatory__. The account holder name of the Payer.",
+          "type": "string",
+          "example": "John Doe"
+        }
+      }
+    },
+    "FilteredClientPayloadListTransaction": {
+      "additionalProperties": true,
+      "type": "object",
+      "properties": {
+        "data": {
+          "type": "array",
+          "items": {"$ref": "#/definitions/Transaction"}
+        },
+        "apiCall": {"$ref": "#/definitions/ApiCall"},
+        "totalCount": {
+          "maximum": 9.223372036854776E+18,
+          "type": "integer",
+          "minimum": -9.223372036854776E+18
+        },
+        "nextCursorHash": {"type": "string"},
+        "nextLink": {"type": "string"},
+        "pagingMap": {
+          "additionalProperties": {
+            "additionalProperties": true,
+            "type": "object",
+            "properties": {
+              "cursor": {"type": "string"},
+              "offset": {
+                "maximum": 2147483647,
+                "type": "integer",
+                "minimum": -2147483648
+              },
+              "before": {
+                "format": "date-time",
+                "type": "string"
+              },
+              "limit": {
+                "maximum": 2147483647,
+                "type": "integer",
+                "minimum": -2147483648
+              },
+              "from": {
+                "format": "date-time",
+                "type": "string"
+              },
+              "sort": {"$ref": "#/definitions/SortEnum"}
+            }
+          },
+          "type": "object"
+        }
+      }
+    },
+    "ProprietaryBankTransactionCode": {
+      "additionalProperties": true,
+      "type": "object",
+      "properties": {
+        "code": {"type": "string"},
+        "issuer": {"type": "string"}
+      }
+    },
+    "ApiListResponseOfEventSubscriptionResponse": {
+      "additionalProperties": true,
+      "type": "object",
+      "properties": {
+        "tracingId": {"type": "string"},
+        "data": {
+          "type": "array",
+          "items": {"$ref": "#/definitions/EventSubscriptionResponse"}
+        },
+        "meta": {"$ref": "#/definitions/ResponseListMeta"},
+        "raw": {
+          "type": "array",
+          "items": {"$ref": "#/definitions/RawResponse"}
+        },
+        "links": {
+          "additionalProperties": {"type": "string"},
+          "type": "object"
+        },
+        "forwardedData": {
+          "type": "array",
+          "items": {"$ref": "#/definitions/ResponseForwardedData"}
+        },
+        "paging": {"$ref": "#/definitions/FilteredClientPayloadListTransaction"}
+      }
+    },
+    "AddressDetails": {
+      "additionalProperties": true,
+      "type": "object",
+      "properties": {"addressLine": {"type": "string"}}
+    },
+    "Amount": {
+      "description": "__Mandatory__. The `Amount` object that contains the amount and currency of the payment.",
+      "additionalProperties": true,
+      "type": "object",
+      "required": [
+        "amount",
+        "currency"
+      ],
+      "properties": {
+        "amount": {
+          "description": "__Mandatory__. The monetary value",
+          "type": "number",
+          "example": 10
+        },
+        "currency": {
+          "description": "__Mandatory__. The [ISO 4217](https://www.xe.com/iso4217.php) currency code",
+          "type": "string",
+          "example": "GBP"
+        }
+      }
+    },
+    "IsoBankTransactionCode": {
+      "additionalProperties": true,
+      "type": "object",
+      "properties": {
+        "domainCode": {"$ref": "#/definitions/IsoCodeDetails"},
+        "familyCode": {"$ref": "#/definitions/IsoCodeDetails"},
+        "subFamilyCode": {"$ref": "#/definitions/IsoCodeDetails"}
+      }
+    },
+    "CurrencyExchange": {
+      "additionalProperties": true,
+      "type": "object",
+      "properties": {
+        "targetCurrency": {"type": "string"},
+        "exchangeRate": {"type": "number"},
+        "unitCurrency": {"type": "string"},
+        "sourceCurrency": {"type": "string"}
+      }
+    },
+    "Transaction": {
+      "additionalProperties": true,
+      "type": "object",
+      "properties": {
+        "date": {
+          "format": "date-time",
+          "type": "string"
+        },
+        "payerDetails": {"$ref": "#/definitions/Payer"},
+        "amount": {"type": "number"},
+        "payeeDetails": {"$ref": "#/definitions/Payee"},
+        "bookingDateTime": {
+          "format": "date-time",
+          "type": "string"
+        },
+        "statementReferences": {
+          "type": "array",
+          "items": {"$ref": "#/definitions/StatementReference"}
+        },
+        "description": {"type": "string"},
+        "merchant": {"$ref": "#/definitions/Merchant"},
+        "addressDetails": {"$ref": "#/definitions/AddressDetails"},
+        "grossAmount": {"$ref": "#/definitions/Amount"},
+        "chargeDetails": {"$ref": "#/definitions/TransactionChargeDetails"},
+        "supplementaryData": {
+          "additionalProperties": true,
+          "type": "object"
+        },
+        "currencyExchange": {"$ref": "#/definitions/CurrencyExchange"},
+        "reference": {"type": "string"},
+        "enrichment": {"$ref": "#/definitions/Enrichment"},
+        "balance": {"$ref": "#/definitions/TransactionBalance"},
+        "transactionAmount": {"$ref": "#/definitions/Amount"},
+        "proprietaryBankTransactionCode": {"$ref": "#/definitions/ProprietaryBankTransactionCode"},
+        "valueDateTime": {
+          "format": "date-time",
+          "type": "string"
+        },
+        "currency": {"type": "string"},
+        "id": {"type": "string"},
+        "transactionInformation": {
+          "type": "array",
+          "items": {"type": "string"}
+        },
+        "isoBankTransactionCode": {"$ref": "#/definitions/IsoBankTransactionCode"},
+        "status": {"$ref": "#/definitions/TransactionStatusEnum"}
+      }
+    },
+    "Next": {
+      "additionalProperties": true,
+      "type": "object",
+      "properties": {
+        "cursor": {"type": "string"},
+        "before": {
+          "format": "date-time",
+          "type": "string"
+        },
+        "limit": {
+          "maximum": 2147483647,
+          "type": "integer",
+          "minimum": -2147483648
+        },
+        "from": {
+          "format": "date-time",
+          "type": "string"
+        }
+      }
+    },
+    "TransactionHash": {
+      "additionalProperties": true,
+      "type": "object",
+      "properties": {"hash": {"type": "string"}}
+    },
+    "TransactionChargeDetails": {
+      "additionalProperties": true,
+      "type": "object",
+      "properties": {"chargeAmount": {"$ref": "#/definitions/Amount"}}
+    },
+    "TransactionStatusEnum": {
+      "type": "string",
+      "enum": [
+        "BOOKED",
+        "PENDING"
+      ]
+    },
+    "Payee": {
+      "description": "__Mandatory__. The `Payee` object contains details of the beneficiary [person or business]. You must define this in your payment request alongwith all of the nested mandatory properties.",
+      "additionalProperties": true,
+      "type": "object",
+      "required": [
+        "name",
+        "accountIdentifications"
+      ],
+      "properties": {
+        "accountIdentifications": {
+          "uniqueItems": true,
+          "description": "__Mandatory__. The account identifications that identify the `Payee` bank account.",
+          "type": "array",
+          "items": {"$ref": "#/definitions/AccountIdentification"},
+          "example": [
+            {
+              "identification": "401016",
+              "type": "SORT_CODE"
+            },
+            {
+              "identification": "71518920",
+              "type": "ACCOUNT_NUMBER"
+            }
+          ]
+        },
+        "address": {"$ref": "#/definitions/Address"},
+        "merchantId": {
+          "description": "__Optional__. The merchant ID is a unique code provided by the payment processor to the merchant.",
+          "type": "string",
+          "example": "24589303"
+        },
+        "merchantCategoryCode": {
+          "description": "__Optional__. The category code of the merchant in case the `Payee` is a business.",
+          "type": "string",
+          "example": "5551"
+        },
+        "name": {
+          "description": "__Mandatory__. The account holder name of the beneficiary.",
+          "type": "string",
+          "example": "Jane Doe"
+        }
+      }
+    },
+    "SortEnum": {
+      "description": "Valid options for the sort parameter",
+      "type": "string",
+      "enum": [
+        "date",
+        "-date"
+      ]
+    }
+  }
+}

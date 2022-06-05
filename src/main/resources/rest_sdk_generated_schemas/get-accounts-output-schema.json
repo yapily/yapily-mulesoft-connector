@@ -38,47 +38,54 @@
       "additionalProperties": true,
       "type": "object",
       "properties": {
+        "accountType": {"$ref": "#/definitions/AccountType"},
+        "description": {
+          "description": "Product name as defined by the financial institution for this account",
+          "type": "string"
+        },
+        "type": {
+          "description": "Specifies the type of account e.g. (BUSINESS_CURRENT).",
+          "type": "string"
+        },
+        "consolidatedAccountInformation": {"$ref": "#/definitions/ConsolidatedAccountInformation"},
+        "accountNames": {
+          "type": "array",
+          "items": {"$ref": "#/definitions/AccountName"}
+        },
         "accountIdentifications": {
           "uniqueItems": true,
           "type": "array",
           "items": {"$ref": "#/definitions/AccountIdentification"}
         },
-        "balance": {"type": "number"},
+        "balance": {
+          "description": "Main / headline balance for the account. <br><br> Use of this field is recommended as fallback only. Instead, use of the typed balances (accountBalances) is recommended.",
+          "type": "number"
+        },
         "accountBalances": {
           "type": "array",
           "items": {"$ref": "#/definitions/AccountBalance"}
         },
-        "accountType": {"$ref": "#/definitions/AccountType"},
         "nickname": {
-          "description": "Name of the account as defined by the financial institution or the end user",
-          "type": "string"
-        },
-        "description": {
-          "description": "Product name as defined by the financial institution for this account",
+          "description": "Nickname of the account that was provided by the account owner. <br><br> May be used to aid identification of the account.",
           "type": "string"
         },
         "currency": {
-          "description": "ISO 4217 currency code",
+          "description": "Currency the bank account balance is denoted in. <br><br> Specified as a 3-letter ISO 4217 currency code",
           "type": "string"
         },
         "details": {
-          "description": "Specifications that might be provided by the institution\n - characteristics of the account\n- characteristics of the relevant card",
+          "description": "Supplementary specifications that might be provided by the Bank. These provide further characteristics about the account.",
           "type": "string"
         },
         "id": {
-          "description": "Account Id returned by the institution if present",
+          "description": "Unique identifier of the account.",
           "type": "string"
-        },
-        "type": {"type": "string"},
-        "accountNames": {
-          "type": "array",
-          "items": {"$ref": "#/definitions/AccountName"}
         },
         "usageType": {"$ref": "#/definitions/UsageType"}
       }
     },
     "AccountIdentificationType": {
-      "description": "__Mandatory__. Used to describe the format of the account.<br><br> See [Account Identification Combinations](https://docs.yapily.com/guides/payments/payment-execution/#account-identifications-combinations) for more information on when to specify each type.",
+      "description": "__Mandatory__. Used to describe the format of the account.<br><br> See [Account Identification Combinations](https://docs.yapily.com/pages/key-concepts/payments/payment-execution/intro-to-payment-execution/#account-identifications-combinations) for more information on when to specify each type.",
       "type": "string",
       "enum": [
         "SORT_CODE",
@@ -135,7 +142,7 @@
       }
     },
     "AccountApiListResponse": {
-      "x-amf-examples": {"OBIE Example Response": {
+      "x-amf-examples": {"obie-example-accounts-response": {
         "description": "OBIE Example Response",
         "value": {
           "data": [{
@@ -220,7 +227,6 @@
       }
     },
     "AccountIdentification": {
-      "description": "__Mandatory__. The `AccountIdentification` object for the user's account identifications for the account",
       "additionalProperties": true,
       "type": "object",
       "required": [
@@ -229,7 +235,7 @@
       ],
       "properties": {
         "identification": {
-          "description": "__Mandatory__. The value associated with the account identification type.<br><br> See [Account Identification Combinations](https://docs.yapily.com/guides/payments/payment-execution/#account-identifications-combinations) for more information on the format of the values.",
+          "description": "__Mandatory__. The value associated with the account identification type.<br><br> See [Account Identification Combinations](https://docs.yapily.com/pages/key-concepts/payments/payment-execution/intro-to-payment-execution/#account-identifications-combinations) for more information on the format of the values.",
           "type": "string",
           "example": "401016"
         },
@@ -340,12 +346,17 @@
       "properties": {
         "dateTime": {
           "format": "date-time",
+          "description": "Date and time of the reported balance.",
           "type": "string"
         },
-        "creditLineIncluded": {"type": "boolean"},
+        "creditLineIncluded": {
+          "description": "_Optional_. Indicates whether any credit lines are included in the balance.",
+          "type": "boolean"
+        },
         "type": {"$ref": "#/definitions/AccountBalanceType"},
         "balanceAmount": {"$ref": "#/definitions/Amount"},
         "creditLines": {
+          "description": "_Optional_. Specifies the type of balance.",
           "type": "array",
           "items": {"$ref": "#/definitions/CreditLine"}
         }
@@ -431,6 +442,21 @@
         }
       }
     },
+    "ConsolidatedAccountInformation": {
+      "description": "Summary information regarding account balances of the overall account provided by the bank",
+      "additionalProperties": true,
+      "type": "object",
+      "properties": {
+        "accountBalances": {
+          "type": "array",
+          "items": {"$ref": "#/definitions/AccountBalance"}
+        },
+        "id": {
+          "description": "Identifier of the consolidated account. When used in Get Account Transactions calls, the transactions between the sub-accounts will not be reported",
+          "type": "string"
+        }
+      }
+    },
     "SortEnum": {
       "description": "Valid options for the sort parameter",
       "type": "string",
@@ -466,7 +492,10 @@
     "AccountName": {
       "additionalProperties": true,
       "type": "object",
-      "properties": {"name": {"type": "string"}}
+      "properties": {"name": {
+        "description": "The bank account holder's name given by the account owner.",
+        "type": "string"
+      }}
     }
   }
 }

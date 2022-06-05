@@ -35,7 +35,7 @@
       }
     },
     "ApiListResponseOfBeneficiary": {
-      "x-amf-examples": {"OBIE Example Response": {
+      "x-amf-examples": {"obie-example-acc-beneficiaries-response": {
         "description": "OBIE Example Response",
         "value": {"data": [{
           "reference": "Rent",
@@ -80,7 +80,7 @@
       }
     },
     "AccountIdentificationType": {
-      "description": "__Mandatory__. Used to describe the format of the account.<br><br> See [Account Identification Combinations](https://docs.yapily.com/guides/payments/payment-execution/#account-identifications-combinations) for more information on when to specify each type.",
+      "description": "__Mandatory__. Used to describe the format of the account.<br><br> See [Account Identification Combinations](https://docs.yapily.com/pages/key-concepts/payments/payment-execution/intro-to-payment-execution/#account-identifications-combinations) for more information on when to specify each type.",
       "type": "string",
       "enum": [
         "SORT_CODE",
@@ -169,7 +169,6 @@
       "example": {"country": "GB"}
     },
     "AccountIdentification": {
-      "description": "__Mandatory__. The `AccountIdentification` object for the user's account identifications for the account",
       "additionalProperties": true,
       "type": "object",
       "required": [
@@ -178,7 +177,7 @@
       ],
       "properties": {
         "identification": {
-          "description": "__Mandatory__. The value associated with the account identification type.<br><br> See [Account Identification Combinations](https://docs.yapily.com/guides/payments/payment-execution/#account-identifications-combinations) for more information on the format of the values.",
+          "description": "__Mandatory__. The value associated with the account identification type.<br><br> See [Account Identification Combinations](https://docs.yapily.com/pages/key-concepts/payments/payment-execution/intro-to-payment-execution/#account-identifications-combinations) for more information on the format of the values.",
           "type": "string",
           "example": "401016"
         },

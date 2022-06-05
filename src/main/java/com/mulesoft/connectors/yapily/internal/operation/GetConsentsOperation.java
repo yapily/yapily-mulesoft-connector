@@ -50,7 +50,7 @@ public class GetConsentsOperation extends GetConsentsOperationRefinement {
    * @param filterinstitutionQueryParams __Optional__. Filter records based on the list of
    *     `Institution` provided.
    * @param filterstatusQueryParams __Optional__. Filter records based on the list of `Consent`
-   *     [statuses](https://docs.yapily.com/api/#tocS_AuthorisationStatus).
+   *     [statuses](https://docs.yapily.com/api/reference/#operation/getConsents!c=200&path=data/status&t=response).
    * @param fromQueryParam __Optional__. Returned transactions will be on or after this date
    *     (yyyy-MM-dd'T'HH:mm:ss.SSSZ).
    * @param beforeQueryParam __Optional__. Returned transactions will be on or before this date
@@ -93,7 +93,7 @@ public class GetConsentsOperation extends GetConsentsOperationRefinement {
           @NullSafe
           @DisplayName("filter[status]")
           @Summary(
-              "__Optional__. Filter records based on the list of `Consent` [statuses](https://docs.yapily.com/api/#tocS_AuthorisationStatus).")
+              "__Optional__. Filter records based on the list of `Consent` [statuses](https://docs.yapily.com/api/reference/#operation/getConsents!c=200&path=data/status&t=response).")
           List<String> filterstatusQueryParams,
       @Optional
           @DisplayName("from")

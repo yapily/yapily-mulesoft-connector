@@ -40,7 +40,7 @@ public class ReAuthoriseAccountOperation extends ReAuthoriseAccountOperationRefi
    * retrieve data.<br>
    * <br>
    * See
-   * [Re-Authorisation](https://docs.yapily.com/guides/financial-data/consents/#re-authorisation)
+   * [Re-Authorisation](https://docs.yapily.com/pages/key-concepts/account-data/account-consents/#re-authorisation)
    * for more information.
    *
    * <p>This operation makes an HTTP PATCH request to the /account-auth-requests endpoint
@@ -54,17 +54,20 @@ public class ReAuthoriseAccountOperation extends ReAuthoriseAccountOperationRefi
    * @param psuIdHeader __Conditional__. Represents the user's login ID for the `Institution` to a
    *     personal account. <br>
    *     <br>
-   *     See [PSU identifiers](https://docs.yapily.com/knowledge/psu_identifiers/) to see if this
-   *     header is required.
+   *     See [PSU
+   *     identifiers](https://docs.yapily.com/pages/knowledge/open-banking/psu_identifiers/) to see
+   *     if this header is required.
    * @param psuCorporateIdHeader __Conditional__. Represents the user's login ID for the
    *     `Institution` to a business account. <br>
    *     <br>
-   *     See [PSU identifiers](https://docs.yapily.com/knowledge/psu_identifiers/) to see if this
-   *     header is required.
+   *     See [PSU
+   *     identifiers](https://docs.yapily.com/pages/knowledge/open-banking/psu_identifiers/) to see
+   *     if this header is required.
    * @param psuIpAddressHeader __Conditional__. The IP address of the PSU. <br>
    *     <br>
-   *     See [PSU identifiers](https://docs.yapily.com/knowledge/psu_identifiers/) to see if this
-   *     header is required.
+   *     See [PSU
+   *     identifiers](https://docs.yapily.com/pages/knowledge/open-banking/psu_identifiers/) to see
+   *     if this header is required.
    * @param parameters the {@link RequestParameters}
    * @param overrides the {@link ConfigurationOverrides}
    * @param callback the operation's {@link CompletionCallback}
@@ -92,17 +95,17 @@ public class ReAuthoriseAccountOperation extends ReAuthoriseAccountOperationRefi
       @Optional
           @DisplayName("Psu id")
           @Summary(
-              "__Conditional__. Represents the user's login ID for the `Institution` to a personal account. <br><br>See [PSU identifiers](https://docs.yapily.com/knowledge/psu_identifiers/) to see if this header is required.")
+              "__Conditional__. Represents the user's login ID for the `Institution` to a personal account. <br><br>See [PSU identifiers](https://docs.yapily.com/pages/knowledge/open-banking/psu_identifiers/) to see if this header is required.")
           String psuIdHeader,
       @Optional
           @DisplayName("Psu corporate id")
           @Summary(
-              "__Conditional__. Represents the user's login ID for the `Institution` to a business account. <br><br>See [PSU identifiers](https://docs.yapily.com/knowledge/psu_identifiers/) to see if this header is required.")
+              "__Conditional__. Represents the user's login ID for the `Institution` to a business account. <br><br>See [PSU identifiers](https://docs.yapily.com/pages/knowledge/open-banking/psu_identifiers/) to see if this header is required.")
           String psuCorporateIdHeader,
       @Optional
           @DisplayName("Psu ip address")
           @Summary(
-              "__Conditional__. The IP address of the PSU. <br><br>See [PSU identifiers](https://docs.yapily.com/knowledge/psu_identifiers/) to see if this header is required.")
+              "__Conditional__. The IP address of the PSU. <br><br>See [PSU identifiers](https://docs.yapily.com/pages/knowledge/open-banking/psu_identifiers/) to see if this header is required.")
           String psuIpAddressHeader,
       @ParameterGroup(name = REQUEST_PARAMETERS_GROUP_NAME) RequestParameters parameters,
       @ParameterGroup(name = CONNECTOR_OVERRIDES) ConfigurationOverrides overrides,

@@ -20,7 +20,7 @@ import org.mule.runtime.http.api.HttpConstants;
 
 /** Higher part of the Operation. It has the implementation of the operation. */
 public abstract class GetUserProfileOperationBase extends BaseRestOperation {
-  protected static final String OPERATION_PATH = "/users/{userUuid}/profile";
+  protected static final String OPERATION_PATH = "/users/{userUuid}/profile/transaction-groups";
 
   protected static final RestRequestBuilder.ParameterArrayFormat QUERY_PARAM_FORMAT =
       RestRequestBuilder.ParameterArrayFormat.MULTIMAP;

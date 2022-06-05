@@ -39,9 +39,9 @@ public class GetFeatureDetailsOperation extends GetFeatureDetailsOperationRefine
    * <br>
    * Note: Every `Institution` does not necessarily support every feature. To see which features are
    * available for a particular Institution, use either the [Get
-   * Institutions](https://docs.yapily.com/api/#get-institutions) or [Get
-   * Institution](https://docs.yapily.com/api/#get-institution) endpoint and check the features
-   * array within the `Institution` payload.
+   * Institutions](https://docs.yapily.com/api/reference/#operation/getInstitutions) or [Get
+   * Institution](https://docs.yapily.com/api/reference/#operation/getInstitution) endpoint and
+   * check the features array within the `Institution` payload.
    *
    * <p>This operation makes an HTTP GET request to the /features endpoint
    *

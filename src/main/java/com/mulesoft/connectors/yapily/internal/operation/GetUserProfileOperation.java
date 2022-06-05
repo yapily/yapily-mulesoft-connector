@@ -34,10 +34,11 @@ public class GetUserProfileOperation extends GetUserProfileOperationRefinement {
   }
 
   /**
-   * Used to retrieve a `FinancialProfile` for a `User`. Status will be `PENDING` until all
+   * Used to retrieve a `TransactionGroups` for a `User`. Status will be `PENDING` until all
    * ProfileConsents are `COMPLETED`.
    *
-   * <p>This operation makes an HTTP GET request to the /users/{userUuid}/profile endpoint
+   * <p>This operation makes an HTTP GET request to the /users/{userUuid}/profile/transaction-groups
+   * endpoint
    *
    * @param config the configuration to use
    * @param connection the connection to use
@@ -49,7 +50,7 @@ public class GetUserProfileOperation extends GetUserProfileOperationRefinement {
   @Throws(RequestErrorTypeProvider.class)
   @DisplayName("Get User Profile")
   @Summary(
-      "Used to retrieve a `FinancialProfile` for a `User`.  Status will be `PENDING` until all ProfileConsents are `COMPLETED`.")
+      "Used to retrieve a `TransactionGroups` for a `User`.  Status will be `PENDING` until all ProfileConsents are `COMPLETED`.")
   @MediaType("application/json")
   @OutputResolver(
       output = GetUserProfileOutputMetadataResolver.class,

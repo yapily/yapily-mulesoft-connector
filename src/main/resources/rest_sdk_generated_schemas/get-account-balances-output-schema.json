@@ -68,12 +68,17 @@
       "properties": {
         "dateTime": {
           "format": "date-time",
+          "description": "Date and time of the reported balance.",
           "type": "string"
         },
-        "creditLineIncluded": {"type": "boolean"},
+        "creditLineIncluded": {
+          "description": "_Optional_. Indicates whether any credit lines are included in the balance.",
+          "type": "boolean"
+        },
         "type": {"$ref": "#/definitions/AccountBalanceType"},
         "balanceAmount": {"$ref": "#/definitions/Amount"},
         "creditLines": {
+          "description": "_Optional_. Specifies the type of balance.",
           "type": "array",
           "items": {"$ref": "#/definitions/CreditLine"}
         }
@@ -141,7 +146,7 @@
       }
     },
     "ApiResponseOfBalances": {
-      "x-amf-examples": {"CBI Globe Example Response": {
+      "x-amf-examples": {"cbi-globe-example-acc-balance-response": {
         "description": "CBI Globe Example Response",
         "value": {
           "data": {

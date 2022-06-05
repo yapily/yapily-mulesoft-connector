@@ -3,7 +3,7 @@
   "$ref": "#/definitions/ApiResponseOfUserDeleteResponse",
   "definitions": {
     "ApiResponseOfUserDeleteResponse": {
-      "x-amf-examples": {"Example Response": {
+      "x-amf-examples": {"delete-user_example-response": {
         "description": "Example Response",
         "value": {
           "data": {

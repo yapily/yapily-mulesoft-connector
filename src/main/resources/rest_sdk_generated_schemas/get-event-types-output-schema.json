@@ -1,0 +1,32 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "$ref": "#/definitions/schema",
+  "definitions": {
+    "schema": {
+      "title": "EventTypesArrayResponse",
+      "type": "array",
+      "items": {"$ref": "#/definitions/EventTypesResponse"}
+    },
+    "EventTypesResponse": {
+      "additionalProperties": true,
+      "title": "EventTypesResponse",
+      "type": "object",
+      "required": [
+        "id",
+        "description"
+      ],
+      "properties": {
+        "description": {
+          "description": "short event type description.",
+          "type": "string",
+          "example": "notification for payment status updates"
+        },
+        "id": {
+          "description": "Used to identify event subscription",
+          "type": "string",
+          "example": "payment.status"
+        }
+      }
+    }
+  }
+}

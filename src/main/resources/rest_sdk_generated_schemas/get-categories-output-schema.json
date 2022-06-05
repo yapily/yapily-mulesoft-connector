@@ -196,7 +196,7 @@
       }
     },
     "ApiListResponseOfCategory": {
-      "x-amf-examples": {"Example Response": {
+      "x-amf-examples": {"categories-example-response": {
         "description": "Example Response",
         "value": {
           "data": [

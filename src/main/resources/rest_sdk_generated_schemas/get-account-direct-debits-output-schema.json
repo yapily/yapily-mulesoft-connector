@@ -107,7 +107,7 @@
       }
     },
     "ApiListResponseOfDirectDebitResponse": {
-      "x-amf-examples": {"OBIE Example Response": {
+      "x-amf-examples": {"obie-example-acc-direct-debits-response": {
         "description": "OBIE Example Response",
         "value": {
           "data": [

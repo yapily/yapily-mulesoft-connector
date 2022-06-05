@@ -63,7 +63,7 @@
       "example": "ACCC"
     },
     "AccountIdentificationType": {
-      "description": "__Mandatory__. Used to describe the format of the account.<br><br> See [Account Identification Combinations](https://docs.yapily.com/guides/payments/payment-execution/#account-identifications-combinations) for more information on when to specify each type.",
+      "description": "__Mandatory__. Used to describe the format of the account.<br><br> See [Account Identification Combinations](https://docs.yapily.com/pages/key-concepts/payments/payment-execution/intro-to-payment-execution/#account-identifications-combinations) for more information on when to specify each type.",
       "type": "string",
       "enum": [
         "SORT_CODE",
@@ -152,7 +152,6 @@
       "example": {"country": "GB"}
     },
     "AccountIdentification": {
-      "description": "__Mandatory__. The `AccountIdentification` object for the user's account identifications for the account",
       "additionalProperties": true,
       "type": "object",
       "required": [
@@ -161,7 +160,7 @@
       ],
       "properties": {
         "identification": {
-          "description": "__Mandatory__. The value associated with the account identification type.<br><br> See [Account Identification Combinations](https://docs.yapily.com/guides/payments/payment-execution/#account-identifications-combinations) for more information on the format of the values.",
+          "description": "__Mandatory__. The value associated with the account identification type.<br><br> See [Account Identification Combinations](https://docs.yapily.com/pages/key-concepts/payments/payment-execution/intro-to-payment-execution/#account-identifications-combinations) for more information on the format of the values.",
           "type": "string",
           "example": "401016"
         },
@@ -358,7 +357,7 @@
       }
     },
     "Payer": {
-      "description": "__Conditional__. The `Payer` object contains details of the benefactor [person or business]. If you define this in your payment request, you mustdefine this along with all of the nested mandatory properties.<ol>     <li>The `Payer` object is mandatory along with its mandatory properties when the account of the benefactor is from an `Institution` in Europe.          See [Berlin Group](https://docs.yapily.com/knowledge/berlin_group/) for more information.<\/li>     <li>The `Payer` should be specified if the `Payer` account is intended to be locked.<\/li><\/ol>",
+      "description": "__Conditional__. The `Payer` object contains details of the benefactor [person or business]. If you define this in your payment request, you mustdefine this along with all of the nested mandatory properties.<ol>     <li>The `Payer` object is mandatory along with its mandatory properties when the account of the benefactor is from an `Institution` in Europe.          See [Berlin Group](https://docs.yapily.com/pages/knowledge/open-banking/berlin_group/) for more information.<\/li>     <li>The `Payer` should be specified if the `Payer` account is intended to be locked.<\/li><\/ol>",
       "additionalProperties": true,
       "type": "object",
       "required": ["accountIdentifications"],
@@ -379,45 +378,7 @@
     },
     "ApiResponseOfPaymentResponse": {
       "x-amf-examples": {
-        "EUR Domestic Single Payment Example Response": {
-          "description": "EUR Domestic Single Payment Example Response",
-          "value": {
-            "data": {
-              "reference": "Bill Payment",
-              "amount": 1,
-              "payeeDetails": {
-                "accountIdentifications": [{
-                  "identification": "BE12345678901234",
-                  "type": "IBAN"
-                }],
-                "name": "Jane Doe"
-              },
-              "statusDetails": {
-                "isoStatus": {
-                  "code": "ACCP",
-                  "name": "AcceptedCustomerProfile"
-                },
-                "status": "COMPLETED"
-              },
-              "currency": "EUR",
-              "id": "a9582f8e-08be-4cca-9f01-1ad3be96532d",
-              "payer": {
-                "accountIdentifications": [{
-                  "identification": "DE12345678901234567890",
-                  "type": "IBAN"
-                }],
-                "name": "John Doe"
-              },
-              "amountDetails": {
-                "amount": 1,
-                "currency": "EUR"
-              },
-              "status": "COMPLETED"
-            },
-            "meta": {"tracingId": "0f14e900011b445fa6b6c2c4272d7321"}
-          }
-        },
-        "GBP Domestic Single Payment Example Response": {
+        "gbp-domestic-single-payment-example-response": {
           "description": "GBP Domestic Single Payment Example Response",
           "value": {
             "data": {
@@ -459,7 +420,45 @@
             "meta": {"tracingId": "2b93dc6029634a5095b3415cc5cc0e84"}
           }
         },
-        "UK Bulk Payment Example Response": {
+        "eur-domestic-single-payment-example-response": {
+          "description": "EUR Domestic Single Payment Example Response",
+          "value": {
+            "data": {
+              "reference": "Bill Payment",
+              "amount": 1,
+              "payeeDetails": {
+                "accountIdentifications": [{
+                  "identification": "BE12345678901234",
+                  "type": "IBAN"
+                }],
+                "name": "Jane Doe"
+              },
+              "statusDetails": {
+                "isoStatus": {
+                  "code": "ACCP",
+                  "name": "AcceptedCustomerProfile"
+                },
+                "status": "COMPLETED"
+              },
+              "currency": "EUR",
+              "id": "a9582f8e-08be-4cca-9f01-1ad3be96532d",
+              "payer": {
+                "accountIdentifications": [{
+                  "identification": "DE12345678901234567890",
+                  "type": "IBAN"
+                }],
+                "name": "John Doe"
+              },
+              "amountDetails": {
+                "amount": 1,
+                "currency": "EUR"
+              },
+              "status": "COMPLETED"
+            },
+            "meta": {"tracingId": "0f14e900011b445fa6b6c2c4272d7321"}
+          }
+        },
+        "uk-bulk-payment-example-response": {
           "description": "UK Bulk Payment Example Response",
           "value": {
             "data": {

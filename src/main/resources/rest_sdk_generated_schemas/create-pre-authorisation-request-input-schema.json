@@ -4,20 +4,20 @@
   "definitions": {
     "PreAuthorisationRequest": {
       "x-amf-examples": {
-        "Berlin Group (PIS) Example Request": {
-          "description": "Berlin Group (PIS) Example Request",
-          "value": {
-            "institutionId": "n26",
-            "scope": "PIS",
-            "applicationUserId": "john.doe@company.com",
-            "callback": "https://display-parameters.com/"
-          }
-        },
-        "Berlin Group (AIS) Example Request": {
+        "berlin-group-ais-pre-auth-example-request": {
           "description": "Berlin Group (AIS) Example Request",
           "value": {
             "institutionId": "n26",
             "scope": "AIS",
+            "applicationUserId": "john.doe@company.com",
+            "callback": "https://display-parameters.com/"
+          }
+        },
+        "berlin-group-pis-pre-auth-example-request": {
+          "description": "Berlin Group (PIS) Example Request",
+          "value": {
+            "institutionId": "n26",
+            "scope": "PIS",
             "applicationUserId": "john.doe@company.com",
             "callback": "https://display-parameters.com/"
           }
@@ -55,12 +55,12 @@
           "example": "user-234562290"
         },
         "callback": {
-          "description": "__Optional__. The server to redirect the user to after the user complete the authorisation at the `Institution`. <br><br>See [Using a callback (Optional)](https://docs.yapily.com/knowledge/callback_url/#using-a-callback-optional) for more information.",
+          "description": "__Optional__. The server to redirect the user to after the user complete the authorisation at the `Institution`. <br><br>See [Using a callback (Optional)](https://docs.yapily.com/pages/knowledge/yapily-concepts/callback_url/#using-a-callback-optional) for more information.",
           "type": "string",
           "example": "https://display-parameters.com"
         },
         "oneTimeToken": {
-          "description": "__Conditional__. Used to receive a `oneTimeToken` rather than a `consentToken` at the `callback` for additional security. This can only be used when the `callback` is set. <br><br>See [Using a callback with an OTT (Optional)](https://docs.yapily.com/knowledge/callback_url/#using-a-callback-with-an-ott-optional) for more information.",
+          "description": "__Conditional__. Used to receive a `oneTimeToken` rather than a `consentToken` at the `callback` for additional security. This can only be used when the `callback` is set. <br><br>See [Using a callback with an OTT (Optional)](https://docs.yapily.com/pages/knowledge/yapily-concepts/callback_url/#using-a-callback-with-an-ott-optional) for more information.",
           "type": "boolean",
           "example": false
         }

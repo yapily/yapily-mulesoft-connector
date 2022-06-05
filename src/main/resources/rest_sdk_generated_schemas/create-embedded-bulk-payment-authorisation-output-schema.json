@@ -109,80 +109,7 @@
     },
     "ApiResponseOfPaymentEmbeddedAuthorisationRequestResponse": {
       "x-amf-examples": {
-        "Berlin Group EUR Single Domestic Payment (SCA Code) Example Response": {
-          "description": "Berlin Group EUR Single Domestic Payment (SCA Code) Example Response",
-          "value": {
-            "data": {
-              "createdAt": "2021-01-25T18:32:23.933Z",
-              "institutionId": "postbank-sandbox",
-              "userUuid": "95f71ebc-c8ae-4e25-aded-86e9bbd62966",
-              "applicationUserId": "john.doe@company.com",
-              "authorizedAt": "2021-01-25T18:33:18.248Z",
-              "id": "1767d386-c20a-4136-a311-0a455dd41a78",
-              "state": "048a1187a9324652bedb6a653211a8a3",
-              "featureScope": [
-                "CREATE_DOMESTIC_SINGLE_PAYMENT",
-                "EXISTING_PAYMENT_INITIATION_DETAILS",
-                "EXISTING_PAYMENTS_DETAILS"
-              ],
-              "status": "AUTHORIZED"
-            },
-            "meta": {"tracingId": "94563449b4634d13b89b8f1c78c21882"}
-          }
-        },
-        "Berlin Group EUR Single Domestic Payment (Selected SCA Method) Example Response": {
-          "description": "Berlin Group EUR Single Domestic Payment (Selected SCA Method) Example Response",
-          "value": {
-            "data": {
-              "createdAt": "2021-01-25T18:32:23.933Z",
-              "institutionId": "postbank-sandbox",
-              "userUuid": "95f71ebc-c8ae-4e25-aded-86e9bbd62966",
-              "applicationUserId": "john.doe@company.com",
-              "selectedScaMethod": {"id": "591655"},
-              "id": "1767d386-c20a-4136-a311-0a455dd41a78",
-              "state": "048a1187a9324652bedb6a653211a8a3",
-              "featureScope": [
-                "CREATE_DOMESTIC_SINGLE_PAYMENT",
-                "EXISTING_PAYMENT_INITIATION_DETAILS",
-                "EXISTING_PAYMENTS_DETAILS"
-              ],
-              "status": "AWAITING_SCA_CODE"
-            },
-            "meta": {"tracingId": "f69f66322b4b482c93099a206d9f003e"}
-          }
-        },
-        "Berlin Group EUR Embedded Bulk Payment Example Response": {
-          "description": "Berlin Group EUR Embedded Bulk Payment Example Response",
-          "value": {
-            "data": {
-              "createdAt": "2021-08-02T14:58:45.446Z",
-              "scaMethods": [{
-                "description": "SmartTAN plus",
-                "id": "932",
-                "type": "CHIP_OTP"
-              }],
-              "institutionId": "fiducia-sandbox",
-              "userUuid": "3ddf5dd0-aa48-4d0f-baa7-fa057e9e911d",
-              "applicationUserId": "john.doe@company.com",
-              "selectedScaMethod": {
-                "description": "SmartTAN plus",
-                "id": "932",
-                "type": "CHIP_OTP"
-              },
-              "id": "6117b6dd-5a43-4f26-8e36-b91b9bf3c434",
-              "state": "85853421299c44e0829debefffd8622e",
-              "featureScope": [
-                "EXISTING_PAYMENT_INITIATION_DETAILS",
-                "CREATE_BULK_PAYMENT",
-                "EXISTING_PAYMENTS_DETAILS"
-              ],
-              "status": "AWAITING_SCA_CODE",
-              "institutionConsentId": "0515485612080120206PSDLT-BL-LB002045PA9545RW"
-            },
-            "meta": {"tracingId": "4ab90c8cc13a4b74ba855a48100d6084"}
-          }
-        },
-        "Berlin Group EUR Single Domestic Payment Example Response": {
+        "berlin-group-eur-single-domestic-embedded-payment-example-response": {
           "description": "Berlin Group EUR Single Domestic Payment Example Response",
           "value": {
             "data": {
@@ -224,7 +151,28 @@
             "meta": {"tracingId": "bcebc29b55434cc8b2aae80cb782edff"}
           }
         },
-        "Berlin Group EUR Embedded Bulk Payment (SCA Code) Example Response": {
+        "berlin-group-eur-single-domestic-payment-selected-sca-method-example-response": {
+          "description": "Berlin Group EUR Single Domestic Payment (Selected SCA Method) Example Response",
+          "value": {
+            "data": {
+              "createdAt": "2021-01-25T18:32:23.933Z",
+              "institutionId": "postbank-sandbox",
+              "userUuid": "95f71ebc-c8ae-4e25-aded-86e9bbd62966",
+              "applicationUserId": "john.doe@company.com",
+              "selectedScaMethod": {"id": "591655"},
+              "id": "1767d386-c20a-4136-a311-0a455dd41a78",
+              "state": "048a1187a9324652bedb6a653211a8a3",
+              "featureScope": [
+                "CREATE_DOMESTIC_SINGLE_PAYMENT",
+                "EXISTING_PAYMENT_INITIATION_DETAILS",
+                "EXISTING_PAYMENTS_DETAILS"
+              ],
+              "status": "AWAITING_SCA_CODE"
+            },
+            "meta": {"tracingId": "f69f66322b4b482c93099a206d9f003e"}
+          }
+        },
+        "berlin-group-eur-embedded-bulk-payment-sca-code-example-response": {
           "description": "Berlin Group EUR Embedded Bulk Payment (SCA Code) Example Response",
           "value": {
             "data": {
@@ -244,6 +192,58 @@
               "institutionConsentId": "0515485612080120206PSDLT-BL-LB002045PA9545RW"
             },
             "meta": {"tracingId": "cfa351c5de6f4398bb9deea04041acc5"}
+          }
+        },
+        "berlin-group-eur-single-domestic-payment-sca-code-example-response": {
+          "description": "Berlin Group EUR Single Domestic Payment (SCA Code) Example Response",
+          "value": {
+            "data": {
+              "createdAt": "2021-01-25T18:32:23.933Z",
+              "institutionId": "postbank-sandbox",
+              "userUuid": "95f71ebc-c8ae-4e25-aded-86e9bbd62966",
+              "applicationUserId": "john.doe@company.com",
+              "authorizedAt": "2021-01-25T18:33:18.248Z",
+              "id": "1767d386-c20a-4136-a311-0a455dd41a78",
+              "state": "048a1187a9324652bedb6a653211a8a3",
+              "featureScope": [
+                "CREATE_DOMESTIC_SINGLE_PAYMENT",
+                "EXISTING_PAYMENT_INITIATION_DETAILS",
+                "EXISTING_PAYMENTS_DETAILS"
+              ],
+              "status": "AUTHORIZED"
+            },
+            "meta": {"tracingId": "94563449b4634d13b89b8f1c78c21882"}
+          }
+        },
+        "berlin-group-eur-embedded-bulk-payment-example-response": {
+          "description": "Berlin Group EUR Embedded Bulk Payment Example Response",
+          "value": {
+            "data": {
+              "createdAt": "2021-08-02T14:58:45.446Z",
+              "scaMethods": [{
+                "description": "SmartTAN plus",
+                "id": "932",
+                "type": "CHIP_OTP"
+              }],
+              "institutionId": "fiducia-sandbox",
+              "userUuid": "3ddf5dd0-aa48-4d0f-baa7-fa057e9e911d",
+              "applicationUserId": "john.doe@company.com",
+              "selectedScaMethod": {
+                "description": "SmartTAN plus",
+                "id": "932",
+                "type": "CHIP_OTP"
+              },
+              "id": "6117b6dd-5a43-4f26-8e36-b91b9bf3c434",
+              "state": "85853421299c44e0829debefffd8622e",
+              "featureScope": [
+                "EXISTING_PAYMENT_INITIATION_DETAILS",
+                "CREATE_BULK_PAYMENT",
+                "EXISTING_PAYMENTS_DETAILS"
+              ],
+              "status": "AWAITING_SCA_CODE",
+              "institutionConsentId": "0515485612080120206PSDLT-BL-LB002045PA9545RW"
+            },
+            "meta": {"tracingId": "4ab90c8cc13a4b74ba855a48100d6084"}
           }
         }
       },
@@ -380,7 +380,7 @@
       }
     },
     "FeatureEnum": {
-      "description": "Used to describe what functions are supported by the associated `Institution`.        <br><br>For more information on each feature, see the following links:        <ul>          <li>[Financial Data Features](https://docs.yapily.com/guides/financial-data/features/)<\/li>          <li>[Payments Features](https://docs.yapily.com/guides/payments/features/)<\/li>        <\/ul>",
+      "description": "Used to describe what functions are supported by the associated `Institution`.        <br><br>For more information on each feature, see the following links:        <ul>          <li>[Financial Data Features](https://docs.yapily.com/pages/key-concepts/account-data/account-features/)<\/li>          <li>[Payments Features](https://docs.yapily.com/pages/key-concepts/payments/payment-features/)<\/li>        <\/ul>",
       "type": "string",
       "enum": [
         "INITIATE_PRE_AUTHORISATION",
@@ -415,13 +415,15 @@
         "CREATE_DOMESTIC_SINGLE_INSTANT_PAYMENT",
         "INITIATE_DOMESTIC_VARIABLE_RECURRING_PAYMENT",
         "CREATE_DOMESTIC_VARIABLE_RECURRING_PAYMENT",
+        "INITIATE_DOMESTIC_VARIABLE_RECURRING_PAYMENT_SWEEPING",
+        "INITIATE_DOMESTIC_VARIABLE_RECURRING_PAYMENT_NONSWEEPING",
+        "CREATE_DOMESTIC_VARIABLE_RECURRING_PAYMENT_SWEEPING",
+        "CREATE_DOMESTIC_VARIABLE_RECURRING_PAYMENT_NONSWEEPING",
         "INITIATE_DOMESTIC_SCHEDULED_PAYMENT",
         "CREATE_DOMESTIC_SCHEDULED_PAYMENT",
         "INITIATE_DOMESTIC_PERIODIC_PAYMENT",
         "CREATE_DOMESTIC_PERIODIC_PAYMENT",
         "PERIODIC_PAYMENT_FREQUENCY_EXTENDED",
-        "INITIATE_INTERNATIONAL_VARIABLE_RECURRING_PAYMENT",
-        "CREATE_INTERNATIONAL_VARIABLE_RECURRING_PAYMENT",
         "INITIATE_INTERNATIONAL_SCHEDULED_PAYMENT",
         "CREATE_INTERNATIONAL_SCHEDULED_PAYMENT",
         "INITIATE_INTERNATIONAL_PERIODIC_PAYMENT",
@@ -439,7 +441,10 @@
         "READ_INTERNATIONAL_SINGLE_REFUND",
         "READ_INTERNATIONAL_SCHEDULED_REFUND",
         "ACCOUNT_BENEFICIARIES",
-        "INITIATE_ONETIME_PRE_AUTHORISATION_PAYMENTS"
+        "INITIATE_ONETIME_PRE_AUTHORISATION_PAYMENTS",
+        "INITIATE_ONETIME_PRE_AUTHORISATION_ACCOUNTS",
+        "INITIATE_ONETIME_PRE_AUTHORISATION",
+        "VARIABLE_RECURRING_PAYMENT_FUNDS_CONFIRMATION"
       ]
     },
     "RawResponse": {

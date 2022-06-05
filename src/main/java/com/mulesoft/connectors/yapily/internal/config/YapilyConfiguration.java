@@ -8,11 +8,13 @@ import com.mulesoft.connectors.yapily.internal.operation.CreateBulkPaymentOperat
 import com.mulesoft.connectors.yapily.internal.operation.CreateConsentWithCodeOperation;
 import com.mulesoft.connectors.yapily.internal.operation.CreateEmbeddedBulkPaymentAuthorisationOperation;
 import com.mulesoft.connectors.yapily.internal.operation.CreateEmbeddedPaymentAuthorisationOperation;
+import com.mulesoft.connectors.yapily.internal.operation.CreateEventSubscriptionOperation;
 import com.mulesoft.connectors.yapily.internal.operation.CreatePaymentAuthorisationOperation;
 import com.mulesoft.connectors.yapily.internal.operation.CreatePaymentOperation;
 import com.mulesoft.connectors.yapily.internal.operation.CreatePaymentPreAuthorisationRequestOperation;
 import com.mulesoft.connectors.yapily.internal.operation.CreatePreAuthorisationRequestOperation;
 import com.mulesoft.connectors.yapily.internal.operation.CreateProfileConsentOperation;
+import com.mulesoft.connectors.yapily.internal.operation.DeleteEventSubscriptionByIdOperation;
 import com.mulesoft.connectors.yapily.internal.operation.DeleteOperation;
 import com.mulesoft.connectors.yapily.internal.operation.DeleteProfileConsentOperation;
 import com.mulesoft.connectors.yapily.internal.operation.DeleteUserOperation;
@@ -28,6 +30,9 @@ import com.mulesoft.connectors.yapily.internal.operation.GetCategoriesOperation;
 import com.mulesoft.connectors.yapily.internal.operation.GetConsentByIdOperation;
 import com.mulesoft.connectors.yapily.internal.operation.GetConsentBySingleAccessConsentOperation;
 import com.mulesoft.connectors.yapily.internal.operation.GetConsentsOperation;
+import com.mulesoft.connectors.yapily.internal.operation.GetEventSubscriptionByIdOperation;
+import com.mulesoft.connectors.yapily.internal.operation.GetEventSubscriptionsOperation;
+import com.mulesoft.connectors.yapily.internal.operation.GetEventTypesOperation;
 import com.mulesoft.connectors.yapily.internal.operation.GetFeatureDetailsOperation;
 import com.mulesoft.connectors.yapily.internal.operation.GetIdentityOperation;
 import com.mulesoft.connectors.yapily.internal.operation.GetInstitutionOperation;
@@ -101,7 +106,12 @@ import org.mule.runtime.extension.api.annotation.connectivity.ConnectionProvider
   CreateProfileConsentOperation.class,
   GetProfileConsentOperation.class,
   DeleteProfileConsentOperation.class,
-  GetUserProfileOperation.class
+  GetUserProfileOperation.class,
+  GetEventTypesOperation.class,
+  CreateEventSubscriptionOperation.class,
+  GetEventSubscriptionsOperation.class,
+  GetEventSubscriptionByIdOperation.class,
+  DeleteEventSubscriptionByIdOperation.class
 })
 @ConnectionProviders({BasicAuthConnectionProvider.class})
 public class YapilyConfiguration extends YapilyConfigurationRefinement {}
